@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,30 +71,35 @@
                 </div>
             </div>
 
-            <div class="container" style="margin-top: 60px;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" ng-repeat="d in movie.dates">
-                                    <img src="https://cdn.galaxycine.vn/media/2023/10/11/dat-rung-sneak-4_1697007647619.jpg" class="img-fluid" alt="Hình ảnh">
-                                    <div class="ticket-showtime-detail">
-                                        <h2 class="ng-binding">{{ d.movieTitle }}</h2>
-                                        <div class="ticket-showtime-icon">
-                                            <span class="ng-binding">{{ d.year }}</span>
-                                            <span>
-                                                    <galaxy-icon-movie ng-age="movie.age" class="ng-isolate-scope"></galaxy-icon-movie>
-                                                </span>
-                                            <span class="ng-binding"><i class="icon-time-left">&nbsp;</i>{{ d.duration }}</span>
-                                        </div>
-                                        <div ng-repeat="bundle in d.bundles" class="showtimes-item ng-scope">
-                                            <label class="ng-binding">{{ bundle.label }}</label>
-                                            <div class="showtimes-list-wrapper">
-                                                <galaxy-buy-ticket ng-if="currentDate == session.showDate" ng-repeat="session in bundle.sessions" ng-model="session" ng-movie-slug="movie.slug" class="ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope ng-not-empty">
-                                                    <a class="showtimes-list ng-binding" ng-click="selectSession($event)">{{ session.showtime }}</a>
-                                                </galaxy-buy-ticket>
-                                            </div>
-                                        </div>
+            <!--            -------------->
+            <div th:each="i : ${#numbers.sequence(1, 5)}">
+                <div class="container" style="margin-top: 60px;">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active" ng-repeat="d in movie.dates">
+                                        <img src="https://cdn.galaxycine.vn/media/2023/10/11/dat-rung-sneak-4_1697007647619.jpg" class="img-fluid" alt="Hình ảnh" style="width: 200px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="ticket-showtime-detail">
+                                <h2 class="ng-binding">Đất rừng phương nam</h2>
+                                <div class="ticket-showtime-icon">
+                                    <span class="ng-binding">2023</span>
+                                    <span>
+                                    <galaxy-icon-movie ng-age="movie.age" class="ng-isolate-scope"></galaxy-icon-movie>
+                                </span>
+                                    <span class="ng-binding"><i class="icon-time-left">&nbsp;</i>110 phút</span>
+                                </div>
+                                <div ng-repeat="bundle in d.bundles" class="showtimes-item ng-scope">
+                                    <label class="ng-binding">21:30</label>
+                                    <div class="showtimes-list-wrapper">
+                                        <galaxy-buy-ticket ng-if="currentDate == session.showDate" ng-repeat="session in bundle.sessions" ng-model="session" ng-movie-slug="movie.slug" class="ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope ng-not-empty">
+                                            <a class="showtimes-list ng-binding" ng-click="selectSession($event)">2D - Phụ đề</a>
+                                        </galaxy-buy-ticket>
                                     </div>
                                 </div>
                             </div>
@@ -102,79 +107,27 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
+
         <div class="col-md-8" style="margin-top: 50px;">
-            <div class="container">
-                <h1>GIÁ VÉ</h1>
-                <img src="https://cdn.galaxycine.vn/media/2023/8/25/banggiave-09-2023-nguyen-du_1692936159184.jpg" class="img-fluid" alt="Hình minh họa">
+            <div class="row">
+                <div class="container">
+                    <h1>GIÁ VÉ</h1>
+                    <img src="https://cdn.galaxycine.vn/media/2023/8/25/banggiave-09-2023-nguyen-du_1692936159184.jpg" class="img-fluid" alt="Hình minh họa">
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <h4>MÔ TẢ</h4>
+                    <img src="https://cdn.galaxycine.vn/media/2019/5/6/rapgiave-hinhrap-camau-01_1557128016683.jpg" class="img-fluid" alt="Hình minh họa">
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- ------------------------------------------------     -->
-<!-- Footer -->
-<footer class="footer-bg text-center" style="position: relative; bottom: 0; background-color: #1A1A1A;">
-    <div class="container">
-        <div class="row" style="color: aliceblue;">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                <div class="widget-container widget_nav_menu">
-                    <h1 class="title-widget">Giới thiệu</h1>
-                    <ul>
-                        <li><a href="/ve-chung-toi"><i class="fa fa-angle-double-right"></i> Về chúng tôi</a></li>
-                        <li><a href="/thoa-thuan-su-dung"><i class="fa fa-angle-double-right"></i> Thoả thuận sử dụng</a></li>
-                        <li><a href="/quy-che-hoat-dong"><i class="fa fa-angle-double-right"></i> Quy chế hoạt động</a></li>
-                        <li><a href="/chinh-sach-bao-mat"><i class="fa fa-angle-double-right"></i> Chính sách bảo mật</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                <div class="widget-container widget_nav_menu">
-                    <h1 class="title-widget">Góc điện ảnh</h1>
-                    <ul>
-                        <li><a href="/dien-anh"><i class="fa fa-angle-double-right"></i> Thể loại phim</a></li>
-                        <li><a href="/binh-luan-phim"><i class="fa fa-angle-double-right"></i> Bình luận phim</a></li>
-                        <li><a href="/movie-blog"><i class="fa fa-angle-double-right"></i> Blog điện ảnh</a></li>
-                        <li><a href="/phim-hay"><i class="fa fa-angle-double-right"></i> Phim hay tháng</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                <div class="widget-container widget_nav_menu">
-                    <h1 class="title-widget">Hỗ trợ</h1>
-                    <ul>
-                        <li><a href="/gop-y"><i class="fa fa-angle-double-right"></i> Góp ý</a></li>
-                        <li><a href="/sale-and-service"><i class="fa fa-angle-double-right"></i> Sale &amp; Services</a></li>
-                        <li><a href="/rap-gia-ve"><i class="fa fa-angle-double-right"></i> Rạp / giá vé</a></li>
-                        <li><a href="/tuyen-dung"><i class="fa fa-angle-double-right"></i> Tuyển dụng</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                <div class="widget-container widget_recent_news">
-                    <h1 class="title-widget">Kết nối Galaxy cinema</h1>
-                    <div class="social-icons">
-                        <ul class="nomargin">
-                            <li><a href="https://facebook.com/galaxycine.vn" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="https://www.youtube.com/user/galaxymovies" target="_blank"><i class="fa fa-youtube"></i></a></li>
-                            <li><a href="https://www.instagram.com/galaxycinema/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container ano-trade">
-        <div class="wrap-icon">
-            <a href="http://online.gov.vn/Home/WebDetails/5005">
-                <img src="/website/images/glx_trade.png" alt="Galaxy Cinema Trade" width="150px">
-            </a>
-        </div>
-    </div>
-</footer>
-
-<!-- ------------------------------------------------------     -->
 
 <script type="text/javascript">
     $(function() {
