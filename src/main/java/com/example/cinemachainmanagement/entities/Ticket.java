@@ -3,29 +3,20 @@ package com.example.cinemachainmanagement.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "Tickets")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket {
+public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_id")
-    private int ticketId;
-
-    @ManyToOne
-    @JoinColumn(name = "showtime_id")
-    private Showtime showtime;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private TheaterRoom room;
+    private Long ticketId;
 
     @Column(name = "seat_number")
     private String seatNumber;
@@ -35,4 +26,12 @@ public class Ticket {
 
     @Column(name = "ticket_status")
     private String ticketStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "showtime_id")
+    Showtime showTimes;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

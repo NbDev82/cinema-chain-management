@@ -3,19 +3,21 @@ package com.example.cinemachainmanagement.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movie {
+public class Movie implements Serializable {
     // Getters and setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
-    private int movieId;
+    private Long movieId;
 
     private String title;
 
@@ -25,5 +27,9 @@ public class Movie {
     private Date releaseDate;
 
     private int duration;
+
     private String genre;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Theater> theaters;
 }
