@@ -21,7 +21,7 @@ public class SnackOrder implements Serializable {
     @Column(name = "order_time")
     private Date orderTime;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "snackOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<SnackItemSold> snackItems;
 
     @ManyToOne

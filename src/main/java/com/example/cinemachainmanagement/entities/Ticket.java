@@ -27,9 +27,9 @@ public class Ticket implements Serializable {
     @Column(name = "ticket_status")
     private String ticketStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "showtime_id")
-    Showtime showTimes;
+    Showtime showTime;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

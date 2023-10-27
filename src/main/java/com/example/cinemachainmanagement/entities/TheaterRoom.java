@@ -30,9 +30,9 @@ public class TheaterRoom implements Serializable {
     @JoinColumn(name = "theater_id")
     private Theater theater;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<Seat> seats;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<Showtime> showTimes;
 }

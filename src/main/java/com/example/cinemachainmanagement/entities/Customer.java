@@ -35,15 +35,19 @@ public class Customer implements Serializable {
     @Column(name="password_hash")
     private String passHash;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<SnackOrder> snackOrders;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Ticket> tickets;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Transaction> transactions;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<PaymentMethod> paymentMethods;
+    @ManyToMany
+    @JoinTable(
+            name = "customer_paymentmethod",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
+    private List<PaymentMethod> paymentMethods;
 }
