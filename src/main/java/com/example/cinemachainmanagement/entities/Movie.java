@@ -30,6 +30,6 @@ public class Movie implements Serializable {
 
     private String genre;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "movies")
     private List<Theater> theaters;
 }

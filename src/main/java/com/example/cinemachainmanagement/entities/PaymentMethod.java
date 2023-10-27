@@ -25,9 +25,9 @@ public class PaymentMethod implements Serializable {
     @Embedded
     private DetailPaymentMethod details;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "paymentMethod", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "paymentMethods")
     private List<Customer> customers;
 }

@@ -26,7 +26,7 @@ public class Showtime implements Serializable {
     @Column(name = "end_time")
     private Date endTime;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "showTime", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
     @ManyToOne

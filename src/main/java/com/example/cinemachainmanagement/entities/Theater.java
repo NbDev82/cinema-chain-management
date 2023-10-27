@@ -28,9 +28,13 @@ public class Theater implements Serializable {
     @Column(name = "total_seating_capacity")
     private int totalSeatingCapacity;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "theater",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TheaterRoom> rooms;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "theater_movie",
+            joinColumns = @JoinColumn(name = "theater_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies;
 }
