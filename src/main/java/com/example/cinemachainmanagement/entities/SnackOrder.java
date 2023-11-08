@@ -22,7 +22,7 @@ public class SnackOrder implements Serializable {
     private Date orderTime;
 
     @OneToMany(mappedBy = "snackOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    List<SnackItemSold> snackItems;
+    List<ShoppingCartItem> shoppingCartItems;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm sản phẩm</title>
+    <!-- Đảm bảo bạn đã kết nối với thư viện Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Thêm sản phẩm</h1>
+<form action="add-product" method="post"  enctype="multipart/form-data">
+    <!-- Dropdown menu để chọn danh mục sản phẩm -->
+    <div class="form-group">
+        <label for="productCategory">Danh mục sản phẩm:</label>
+        <select class="form-control" id="productCategory" name="categoryId">
+            <th:block th:each="item : ${products_category_manager}">
+                <option th:value="${item.id}" th:text="${item.categoryName}"></option>
+            </th:block>
+        </select>
+    </div>
+
+    <!-- Các trường dữ liệu khác -->
+    <div class="form-group">
+        <label for="name">Tên sản phẩm:</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="description">Mô tả sản phẩm:</label>
+        <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="price">Giá sản phẩm:</label>
+        <input type="number" class="form-control" id="price" name="price">
+    </div>
+    <div class="form-group">
+        <label for="image_url">Hình ảnh sản phẩm:</label>
+        <input type="file" class="form-control" id="image_url" name="image_url" placeholder="image_url">
+    </div>
+    <div class="form-group">
+        <label for="quantity">Số lượng sản phẩm:</label>
+        <input type="number" class="form-control" id="quantity" name="quantity">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+</form>
+</body>
+</html>
