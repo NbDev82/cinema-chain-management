@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/dat-ve")
@@ -57,10 +56,13 @@ public class BookTicketController {
                     }
                 }
             }
+            if(theatersHasMovie == null)
+                theatersHasMovie = new ArrayList<>();
+            List<TheaterDTO> theaters = mapper.mapperEntityToDto(theatersHasMovie,TheaterDTO.class);
             List<MovieDTO> movieIsShowing = mapper.mapperEntityToDto(movieService.findShowingMovie(), MovieDTO.class);
             model.addAttribute("movieIsShowing",movieIsShowing);
             model.addAttribute("movie",movie);
-            model.addAttribute("theaters",theatersHasMovie);
+            model.addAttribute("theaters",theaters);
             model.addAttribute("citySelectConfig",selectedCity);
             model.addAttribute("movieTimeConfig",selectedMovieTime);
             model.addAttribute("theaterSelectConfig",selectedTheater);
