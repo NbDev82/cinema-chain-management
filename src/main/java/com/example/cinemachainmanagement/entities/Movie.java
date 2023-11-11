@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.entities;
 
+import com.example.cinemachainmanagement.enums.ERating;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "movies")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movie implements Serializable {
@@ -30,6 +32,35 @@ public class Movie implements Serializable {
 
     private String genre;
 
+    private ERating rating;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Showtime> showTimes;
+
     @ManyToMany(mappedBy = "movies")
     private List<Theater> theaters;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="actor_movie",
+            joinColumns = @JoinColumn(name="movie_id"),
+            inverseJoinColumns = @JoinColumn(name="actor_id")
+    )
+    private List<Actor> actors;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="producer_movie",
+            joinColumns = @JoinColumn(name="movie_id"),
+            inverseJoinColumns = @JoinColumn(name="producer_id")
+    )
+    private List<Producer> producers;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="director_movie",
+            joinColumns = @JoinColumn(name="movie_id"),
+            inverseJoinColumns = @JoinColumn(name="director_id")
+    )
+    private List<Director> directors;
 }
