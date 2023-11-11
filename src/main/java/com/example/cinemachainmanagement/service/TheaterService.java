@@ -13,7 +13,5 @@ public interface TheaterService {
 
     List<Theater> filterTheatersByTheaterName(List<Theater> theatersHasMovie, String selectedTheater);
 
-    Optional<TheaterRoom> getTheaterRoomById(Long roomId);
-
     List<Theater> filterTheatersByRoom(List<Showtime> showtimes);
 }

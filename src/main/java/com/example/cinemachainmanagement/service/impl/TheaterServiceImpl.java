@@ -4,7 +4,6 @@ package com.example.cinemachainmanagement.service.impl;
 import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.TheaterRoom;
-import com.example.cinemachainmanagement.repositories.TheaterRoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.cinemachainmanagement.entities.Theater;
@@ -17,12 +16,9 @@ import java.util.*;
 public class TheaterServiceImpl implements TheaterService {
     private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
     private final TheaterRepository theaterRepo;
-    private final TheaterRoomRepository theaterRoomRepository;
 
-
-    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepository) {
+    public TheaterServiceImpl(TheaterRepository theaterRepo) {
         this.theaterRepo = theaterRepo;
-        this.theaterRoomRepository = theaterRoomRepository;
     }
 
     @Override
@@ -30,11 +26,6 @@ public class TheaterServiceImpl implements TheaterService {
 
     @Override
     public List<Theater> filterTheatersByTheaterName(List<Theater> theaters, String selectedTheater) { return theaters.stream().filter(theater -> theater.getName().equals(selectedTheater)).toList(); }
-
-    @Override
-    public Optional<TheaterRoom> getTheaterRoomById(Long roomId) {
-        return theaterRoomRepository.findById(roomId);
-    }
 
     @Override
     public List<Theater> filterTheatersByRoom(List<Showtime> showtimes) {
