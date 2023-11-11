@@ -70,6 +70,6 @@ public class BookTicketController {
             logger.error("name movie not exist!");
             return "views/404.html";
         }
-        return "views/bookTickets";
+        return "view/bookTickets";
     }
 }
