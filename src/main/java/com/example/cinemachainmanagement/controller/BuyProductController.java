@@ -2,7 +2,10 @@ package com.example.cinemachainmanagement.controller;
 
 import com.example.cinemachainmanagement.DTO.ProductDTO;
 import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
+import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.Customer;
+import com.example.cinemachainmanagement.entities.Product;
+import com.example.cinemachainmanagement.entities.ShoppingCartItem;
 import com.example.cinemachainmanagement.entities.SnackOrder;
 import com.example.cinemachainmanagement.model.CartItem;
 import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
@@ -85,21 +88,22 @@ public class BuyProductController {
         return "redirect:/customer/view-cart";
     }
 
-//    @PostMapping("/pay")
-//    private String pay(@RequestParam(name = "productId")List<String> productIds, @RequestParam(name = "pty") Integer pty){
-//        ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
-//        try {
-//
-//            SnackOrder snackOrder = new SnackOrder();
-//            snackOrderService.addSnackOrder(snackOrder);
-//            for (String productId : productIds) {
-//                shoppingCartItemService.addShoppingCartItem(,snackOrder.getSnackOrderId(),productId);
-//            }
-//        }
-//        catch (Exception e)
-//        {
-//            return "error_view";
-//        }
-//        return "success";
-//    }
+    @PostMapping("/pay")
+    private String pay(@RequestParam(name = "productId")List<Long> productIds, @RequestParam(name = "pty") String pty){
+
+
+        try {
+            SnackOrder snackOrder = new SnackOrder();
+            snackOrderService.addSnackOrder(snackOrder);
+            for (Long productId : productIds) {
+                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO(productId,pty);
+                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),productId);
+            }
+        }
+        catch (Exception e)
+        {
+            return "error_view";
+        }
+        return "success";
+    }
 }

@@ -2,6 +2,7 @@ package com.example.cinemachainmanagement.service;
 
 import com.example.cinemachainmanagement.DTO.ProductCategoryDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
+import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.Mapper.ProductCategoryMapper;
 import com.example.cinemachainmanagement.Mapper.ProductMapper;
 import com.example.cinemachainmanagement.entities.Product;
@@ -26,7 +27,6 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public void addProduct(ProductDTO productDTO) {
-
         Product product = ProductMapper.toEntity(productDTO);
         ProductCategory productCategory = productCategoryRepository.findById(productDTO.getProductCategoryId()).orElse(null);
         if (productCategory != null) {

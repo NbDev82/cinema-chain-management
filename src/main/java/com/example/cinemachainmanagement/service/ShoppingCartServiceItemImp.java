@@ -1,6 +1,6 @@
 package com.example.cinemachainmanagement.service;
-
-import com.example.cinemachainmanagement.Mapper.ProductMapper;
+import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
+import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.repositories.ProductRepository;
 import com.example.cinemachainmanagement.repositories.ShoppingCartItemRepository;
@@ -18,8 +18,10 @@ public class ShoppingCartServiceItemImp implements ShoppingCartItemService  {
     ProductRepository productRepository;
 
     @Override
-    public void addShoppingCartItem(ShoppingCartItem shoppingCartItem, Long snackOrderId, Long productId) {
+    public void addShoppingCartItem(ShoppingCartItemDTO shoppingCartItemDTO, Long snackOrderId, Long productId) {
         try {
+            ShoppingCartItem shoppingCartItem = Mappers.convertToEntity(shoppingCartItemDTO, ShoppingCartItem.class);
+
             SnackOrder snackOrder = snackOrderRepository.findById(snackOrderId).orElse(null);
             Product product = productRepository.findById(productId).orElse(null);
             if (snackOrder != null && product!=null) {

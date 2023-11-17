@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Component
 public class ShoppingCartItemDTO {
-    private Long id;
-    private String qty;
+    private Long shoppingCartItemId;
+    private String shoppingCartItemQuantity;
 }
