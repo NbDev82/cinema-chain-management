@@ -13,10 +13,11 @@ public class ProductMapper {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getProductId());
         productDTO.setName(product.getProductName());
-        productDTO.setPrice(product.getProductPrice());
-        productDTO.setImage(product.getProductImage());
+        productDTO.setPrice((int) product.getProductPrice());
+        productDTO.setImage(product.getProductImage() );
         productDTO.setQuantity(product.getProductQuantity());
         productDTO.setDescription(product.getProductDescription());
+        productDTO.setProductCategoryId(product.getProduct_category().getProductCategoryID());
 
         // Sao chép các thuộc tính khác từ Entity sang DTO
         return productDTO;

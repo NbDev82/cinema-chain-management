@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -15,17 +16,24 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String description;
-    private double price;
+    private int price;
     private String image;
     private int quantity;
+    private Long productCategoryId;
 
-    public ProductDTO(String name, String description, double price, String image, int quantity) {
+    public ProductDTO(Long id, String name, int price, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public ProductDTO(String name, String description, int price, String image, int quantity, Long productCategoryId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
         this.quantity = quantity;
+        this.productCategoryId = productCategoryId;
     }
-
-
 }

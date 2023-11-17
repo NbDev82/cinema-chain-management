@@ -61,6 +61,11 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.4</version> <!-- Bạn có thể sử dụng phiên bản mới nhất tương thích với project của bạn -->
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -9,9 +9,16 @@ import java.util.List;
 
 @Service
 public interface ProductService {
-    void addProduct(ProductDTO request_product, Long id);
+    void addProduct(ProductDTO request_product);
     List<ProductDTO> getListProduct();
 
     List<ProductCategoryDTO> getListCategory();
+
+    String editProduct(ProductDTO request_product);
+
+    ProductDTO getProductById(String id);
+
+    void deleteProduct(String product_id);
+
 
 }

@@ -25,10 +25,10 @@ public class ProductServiceImp implements ProductService {
     ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public void addProduct(ProductDTO productDTO, Long productCategoryID) {
+    public void addProduct(ProductDTO productDTO) {
 
         Product product = ProductMapper.toEntity(productDTO);
-        ProductCategory productCategory = productCategoryRepository.findById(productCategoryID).orElse(null);
+        ProductCategory productCategory = productCategoryRepository.findById(productDTO.getProductCategoryId()).orElse(null);
         if (productCategory != null) {
             product.setProduct_category(productCategory);
             productRepository.save(product);
@@ -46,8 +46,46 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ProductCategoryDTO> getListCategory() {
-        List<ProductCategory> listproductcategory = productCategoryRepository.findAll();
-        return ProductCategoryMapper.toDTOList(listproductcategory);
+        List<ProductCategory> list_product_category = productCategoryRepository.findAll();
+        return ProductCategoryMapper.toDTOList(list_product_category);
+    }
+
+    @Override
+    public String editProduct(ProductDTO productDTO) {
+        Product product = ProductMapper.toEntity(productDTO);
+        Product existingProduct = productRepository.findById(productDTO.getId()).orElse(null);
+
+        if (existingProduct != null){
+            existingProduct.setProductName(productDTO.getName());
+            existingProduct.setProductQuantity(productDTO.getQuantity());
+            existingProduct.setProductPrice(productDTO.getPrice());
+            productRepository.save(existingProduct);
+            return "success";
+        }
+
+        System.out.println("Error");
+        return "error-view";
+    }
+
+
+    @Override
+    public ProductDTO getProductById(String product_id) {
+        Product product = productRepository.findById(Long.valueOf(product_id)).orElse(null);
+        if(product !=null){
+            return ProductMapper.toDTO(product);
+
+        }
+        return null;
+    }
+
+    public void deleteProduct(String product_id) {
+        try {
+            Long id = Long.parseLong(product_id);
+            productRepository.deleteById(id);
+        } catch (NumberFormatException e) {
+            // Xử lý lỗi khi không thể chuyển đổi thành Long
+            System.out.println("Invalid product_id format");
+        }
     }
 }
 
