@@ -103,6 +103,9 @@ public class BuyProductController {
             // lấy customer qua session
             Long customer_id = (Long) session.getAttribute("customer_id");
             CustomerDTO customerDTO = customerService.getCustomerById(customer_id);
+            if (customerDTO==null){
+                return "login";
+            }
             //lưu snackOrder
             SnackOrder snackOrder = new SnackOrder();
             snackOrderService.addSnackOrder(snackOrder,total_price,customerDTO);

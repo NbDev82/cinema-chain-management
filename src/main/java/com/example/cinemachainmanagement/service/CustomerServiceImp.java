@@ -49,7 +49,6 @@ public class CustomerServiceImp implements CustomerService {
         Customer customer = customerRepository.findById(customerDTO_id).orElse(null);
         if(customer!=null){
             return Mappers.convertToDto(customer, CustomerDTO.class);
-
         }
         return null;
 
