@@ -13,5 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShoppingCartItemDTO {
     private Long shoppingCartItemId;
-    private String shoppingCartItemQuantity;
+    private int shoppingCartItemQuantity;
+
+    public ShoppingCartItemDTO(int shoppingCartItemQuantity) {
+        this.shoppingCartItemQuantity = shoppingCartItemQuantity;
+    }
 }

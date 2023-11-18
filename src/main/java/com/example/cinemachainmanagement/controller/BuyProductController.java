@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.controller;
 
+import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
 import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
@@ -9,14 +10,14 @@ import com.example.cinemachainmanagement.entities.ShoppingCartItem;
 import com.example.cinemachainmanagement.entities.SnackOrder;
 import com.example.cinemachainmanagement.model.CartItem;
 import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
-import com.example.cinemachainmanagement.service.CartService;
-import com.example.cinemachainmanagement.service.ShoppingCartItemService;
-import com.example.cinemachainmanagement.service.SnackOrderService;
+import com.example.cinemachainmanagement.service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
-import com.example.cinemachainmanagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,8 @@ public class BuyProductController {
     private SnackOrderService snackOrderService;
     @Autowired
     private ShoppingCartItemService shoppingCartItemService;
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping("/get_list_product")
     public String getListProduct(Model model) {
@@ -57,7 +60,7 @@ public class BuyProductController {
                 cartItem.setName(productDTO.getName());
                 cartItem.setPrice(productDTO.getPrice());
                 cartItem.setImg_url(productDTO.getImage());
-                cartItem.setPty(quantity);
+                cartItem.setQty(quantity);
                 cartService.add(cartItem);
 
                 return "redirect:/customer/view-cart";
@@ -88,16 +91,24 @@ public class BuyProductController {
         return "redirect:/customer/view-cart";
     }
 
+    @GetMapping("/clear")
+    private String clear(){
+        cartService.clear();
+        return "redirect:/customer/view-cart";
+    }
+
     @PostMapping("/pay")
-    private String pay(@RequestParam(name = "productId")List<Long> productIds, @RequestParam(name = "pty") String pty){
-
-
+    private String pay(@RequestParam(name = "TOTAL_PRICE") int total_price, HttpSession session){
         try {
+            // lấy customer qua session
+            Long customer_id = (Long) session.getAttribute("customer_id");
+            CustomerDTO customerDTO = customerService.getCustomerById(customer_id);
+            //lưu snackOrder
             SnackOrder snackOrder = new SnackOrder();
-            snackOrderService.addSnackOrder(snackOrder);
-            for (Long productId : productIds) {
-                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO(productId,pty);
-                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),productId);
+            snackOrderService.addSnackOrder(snackOrder,total_price,customerDTO);
+            for (CartItem cartItem : cartService.getAllItem()) {
+                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO(cartItem.getQty());
+                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
             }
         }
         catch (Exception e)
@@ -106,4 +117,7 @@ public class BuyProductController {
         }
         return "success";
     }
+
+
+
 }

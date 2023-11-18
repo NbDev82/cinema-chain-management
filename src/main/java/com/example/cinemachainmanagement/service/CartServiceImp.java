@@ -29,7 +29,7 @@ public class CartServiceImp implements CartService {
         if (cartItem == null) {
             maps.put(item.getProductId(), item);
         } else {
-            cartItem.setPty(cartItem.getPty()+item.getPty());
+            cartItem.setQty(cartItem.getQty()+item.getQty());
         }
     }
 
@@ -43,7 +43,7 @@ public class CartServiceImp implements CartService {
 
         CartItem cartItem = maps.get(proID);
 
-        cartItem.setPty(qty);
+        cartItem.setQty(qty);
 
         return cartItem;
     }
@@ -63,7 +63,7 @@ public class CartServiceImp implements CartService {
     {
         int total_price = 0;
         for(CartItem cart_item : listCart ){
-            total_price += cart_item.getPty()*cart_item.getPrice();
+            total_price += cart_item.getQty()*cart_item.getPrice();
         }
         return total_price;
     }

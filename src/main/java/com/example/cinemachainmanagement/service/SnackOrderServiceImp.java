@@ -1,5 +1,7 @@
 package com.example.cinemachainmanagement.service;
 
+import com.example.cinemachainmanagement.DTO.CustomerDTO;
+import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.entities.SnackOrder;
 import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
@@ -12,10 +14,10 @@ public class SnackOrderServiceImp implements SnackOrderService {
     SnackOrderRepository snackOrderRepository;
 
     @Override
-    public void addSnackOrder(SnackOrder snackOrder){
+    public void addSnackOrder(SnackOrder snackOrder, int total_price, CustomerDTO customerDTO){
         try {
-            // gán tạm ID của customer để test là 10. merge code rồi mới xử lý thêm
-            Customer customer = new Customer(10L, "John", "Doe", "john@example.com", "1234567890", 500, "passwordHash", null, null, null, null);
+            Customer customer = Mappers.convertToEntity(customerDTO, Customer.class);
+            snackOrder.setTotal_prices(total_price);
             snackOrder.setCustomer(customer);
             snackOrderRepository.save(snackOrder);
         }
