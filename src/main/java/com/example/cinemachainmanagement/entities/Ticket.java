@@ -12,24 +12,28 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_id")
     private Long ticketId;
 
-    @Column(name = "seat_number")
-    private String seatNumber;
-
     @Column(name = "purchase_time")
     private Date purchaseTime;
 
     @Column(name = "ticket_status")
-    private String ticketStatus;
+    private boolean ticketStatus;
+
+    private int price;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
     @ManyToOne
     @JoinColumn(name = "showtime_id")
-    Showtime showTime;
+    private Showtime showTime;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
