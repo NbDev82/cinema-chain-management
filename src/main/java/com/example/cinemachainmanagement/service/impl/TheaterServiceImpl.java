@@ -2,8 +2,11 @@ package com.example.cinemachainmanagement.service.impl;
 
 
 import com.example.cinemachainmanagement.controller.BookTicketController;
+import com.example.cinemachainmanagement.entities.Seat;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.TheaterRoom;
+import com.example.cinemachainmanagement.repositories.SeatRepository;
+import com.example.cinemachainmanagement.repositories.TheaterRoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.cinemachainmanagement.entities.Theater;
@@ -16,9 +19,14 @@ import java.util.*;
 public class TheaterServiceImpl implements TheaterService {
     private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
     private final TheaterRepository theaterRepo;
+    private final TheaterRoomRepository theaterRoomRepo;
+    private final SeatRepository seatRepository;
 
-    public TheaterServiceImpl(TheaterRepository theaterRepo) {
+
+    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepo, SeatRepository seatRepository) {
         this.theaterRepo = theaterRepo;
+        this.theaterRoomRepo = theaterRoomRepo;
+        this.seatRepository = seatRepository;
     }
 
     @Override
@@ -46,5 +54,15 @@ public class TheaterServiceImpl implements TheaterService {
         if(theaters.isEmpty())
             theaters = new ArrayList<>();
         return theaters;
+    }
+
+    @Override
+    public Optional<TheaterRoom> getTheaterRoomById(Long theaterId) {
+        return theaterRoomRepo.findById(theaterId);
+    }
+
+    @Override
+    public Optional<Seat> getSeatById(Long seatId) {
+        return seatRepository.findById(seatId);
     }
 }

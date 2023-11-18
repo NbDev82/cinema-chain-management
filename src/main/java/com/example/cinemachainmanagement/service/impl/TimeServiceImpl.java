@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TimeServiceImpl implements TimeService {
@@ -27,6 +28,11 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public List<Showtime> findByMovie(Movie movie) {
         return ShowtimeRepo.findByMovie(movie);
+    }
+
+    @Override
+    public Optional<Showtime> findById(Long timeId) {
+        return ShowtimeRepo.findById(timeId);
     }
 
     @Override
