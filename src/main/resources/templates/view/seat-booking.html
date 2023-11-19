@@ -120,7 +120,7 @@
                                     <button class="btn w-65px h-10 py-2 bg-transparent text-primary text-sm rounded-md"><span>Quay lại</span></button>
                                     <form id="seatForm" method="post" th:action="submit-seats">
                                         <input type="hidden" id="selectedSeats" name="selectedSeats" th:value="${selectedSeats}" />
-                                        <button type="submit" class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px">
+                                        <button type="submit" class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px" onclick="checkSeat()">
                                             <span>Tiếp tục</span>
                                         </button>
                                     </form>

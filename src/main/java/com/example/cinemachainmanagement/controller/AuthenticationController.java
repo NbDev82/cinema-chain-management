@@ -26,10 +26,15 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String checkLogin(@RequestParam(name = "email") String email, @RequestParam(name = "password")String password, Model model, HttpSession session) {
+        String url = (String)session.getAttribute("url");
+        if(url == null || url.isEmpty()){
+            url = "redirect:/customer/get_list_product";
+            session.setAttribute("url","redirect:/customer/get_list_product");
+        }
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){
-            session.setAttribute("customer_id",customer.getCustomerId());
-            return "success";
+            session.setAttribute("customer",customer);
+            return url;
         } else {
             model.addAttribute("error", "Email hoặc mật khẩu không chính xác");
             return "error_view";
@@ -49,7 +54,7 @@ public class AuthenticationController {
     public String checkRegister(@ModelAttribute CustomerDTO customerDTO, Model model) {
         try {
             if(customerService.registerCustomer(customerDTO)){
-                return "success";
+                return "login";
             }
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng kí: " + e.getMessage());
@@ -60,8 +65,8 @@ public class AuthenticationController {
 
     @GetMapping("/logout")
     private String logout(HttpSession session){
-        session.setAttribute("customer_id", null);
-        System.out.println(session.getAttribute("customer_id"));
+        session.setAttribute("customer", null);
+        System.out.println(session.getAttribute("customer"));
         return "redirect:/customer_authentication/login";
     }
 }
