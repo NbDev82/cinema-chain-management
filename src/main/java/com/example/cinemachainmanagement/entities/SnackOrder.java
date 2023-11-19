@@ -18,11 +18,11 @@ public class SnackOrder implements Serializable {
     @Column(name = "snack_order_id")
     private Long snackOrderId;
 
-    @Column(name = "order_time")
-    private Date orderTime;
+    @Column(name = "total_prices")
+    private double total_prices;
 
     @OneToMany(mappedBy = "snackOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    List<SnackItemSold> snackItems;
+    List<ShoppingCartItem> shoppingCartItems;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
