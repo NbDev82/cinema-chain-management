@@ -9,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "Showtimes")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Showtime implements Serializable {

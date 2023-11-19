@@ -1,0 +1,13 @@
+package com.example.cinemachainmanagement.service;
+
+import com.example.cinemachainmanagement.entities.Showtime;
+import com.example.cinemachainmanagement.entities.Ticket;
+import jakarta.transaction.SystemException;
+
+import java.util.List;
+
+public interface TicketService {
+    boolean persist(Ticket ticket);
+
+    List<Ticket> createTicketsBySeatListId(String[] selectedSeatListId, Showtime time) throws SystemException;
+}

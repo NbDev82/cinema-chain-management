@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "Seats")
@@ -25,4 +26,7 @@ public class Seat implements Serializable {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private TheaterRoom room;
+
+    @OneToMany(mappedBy = "seat")
+    private List<Ticket> tickets;
 }

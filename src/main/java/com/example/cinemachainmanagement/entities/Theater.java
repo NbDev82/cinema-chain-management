@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Theaters")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Theater implements Serializable {
@@ -37,4 +39,18 @@ public class Theater implements Serializable {
             joinColumns = @JoinColumn(name = "theater_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> movies;
+
+    public Theater(Theater considerTheater) {
+        this.theaterId = considerTheater.theaterId;
+
+        this.name = considerTheater.name;
+
+        this.location = considerTheater.location;
+
+        this.openingDate = considerTheater.openingDate;
+
+        this.totalSeatingCapacity = considerTheater.totalSeatingCapacity;
+
+        this.rooms = new ArrayList<>();
+    }
 }

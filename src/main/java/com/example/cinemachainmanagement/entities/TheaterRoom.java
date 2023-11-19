@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "TheaterRooms")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TheaterRoom implements Serializable {
@@ -35,4 +37,12 @@ public class TheaterRoom implements Serializable {
 
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<Showtime> showTimes;
+
+    public TheaterRoom(TheaterRoom room) {
+        this.roomId = room.roomId;
+        this.roomNumber = room.roomNumber;
+        this.seatingCapacity = room.seatingCapacity;
+        this.roomType = room.roomType;
+        this.showTimes = new ArrayList<>();
+    }
 }
