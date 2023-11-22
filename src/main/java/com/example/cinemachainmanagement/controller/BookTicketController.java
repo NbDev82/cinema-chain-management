@@ -83,6 +83,11 @@ public class BookTicketController{
                               @RequestParam String timeId,
                               Model model){
         String url = "view/seat-booking";
+        Customer customer = (Customer)session.getAttribute("customer");
+        if(customer == null){
+            session.setAttribute("url","redirect:/dat-ve/dat-cho?roomId="+roomId+"&timeId="+timeId);
+            return "redirect:/customer_authentication/login";
+        }
         Optional<TheaterRoom> optionalRoom = theaterService.getTheaterRoomById(Long.valueOf(roomId));
         if (optionalRoom.isPresent()) {
             Optional<Showtime> optionalTime = timeService.findById(Long.valueOf(timeId));
@@ -112,7 +117,7 @@ public class BookTicketController{
     public String submitSeats(@RequestParam("selectedSeats") String selectedSeats,
                               HttpSession session,
                               Model model) throws JsonProcessingException, SystemException {
-        AtomicReference<String> url = new AtomicReference<>("home");
+        AtomicReference<String> url = new AtomicReference<>("redirect:/customer/view-cart");
         Showtime time = (Showtime)session.getAttribute("time");
         ObjectMapper objectMapper = new ObjectMapper();
         String[] selectedSeatListId = objectMapper.readValue(selectedSeats, String[].class);

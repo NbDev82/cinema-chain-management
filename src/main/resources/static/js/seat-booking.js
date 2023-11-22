@@ -22,24 +22,16 @@ function orderSeat(button) {
     }
 }
 
-function submitSelectedSeats() {
-    let selectedSeats = $('.seat.selected').map(function () {
-        return $(this).attr('value');
-    }).get();
-    alert(selectedSeats)
-    document.getElementById('selectedSeats').value = JSON.stringify(selectedSeats);
-
-    // document.getElementById('seatForm').submit();
-    // Sử dụng Ajax để gửi danh sách ghế đã chọn đến controller Spring
-    // fetch('/seat/order-seat', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(selectedSeats)
-    // })
-    //     .catch(error => {
-    //         // Xử lý lỗi nếu có
-    //         alert('Error:', error);
-    //     });
+function checkSeat(){
+    event.preventDefault()
+    const selectedSeats = document.querySelectorAll(".selected");
+    const numberOfSelectedSeats = selectedSeats.length;
+    const condition = numberOfSelectedSeats > 0;
+    if (condition) {
+        const form = document.getElementById('seatForm');
+        alert("success")
+        form.submit(); // Gửi form
+    }else{
+        alert("Please click a available seat before continue!")
+    }
 }

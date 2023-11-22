@@ -1,7 +1,6 @@
 package com.example.cinemachainmanagement.controller;
 
 
-import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +15,6 @@ public class HomeController {
 
     public HomeController(CustomerService customerService) {
         this.customerService = customerService;
-    }
-
-    @GetMapping("/{id}")
-    public String hello(@PathVariable Long id, Model m) {
-        CustomerDTO customer = customerService.getCustomersById(id);
-        m.addAttribute("customer", customer);
-        return "home";
     }
 
     @GetMapping("/theater")
