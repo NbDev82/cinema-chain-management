@@ -1,9 +1,10 @@
-package com.example.cinemachainmanagement.service;
+package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.repositories.CustomerRepository;
+import com.example.cinemachainmanagement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

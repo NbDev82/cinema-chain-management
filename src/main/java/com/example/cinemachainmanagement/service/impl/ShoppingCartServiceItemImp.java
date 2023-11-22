@@ -1,15 +1,16 @@
-package com.example.cinemachainmanagement.service;
+package com.example.cinemachainmanagement.service.impl;
 import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.repositories.ProductRepository;
 import com.example.cinemachainmanagement.repositories.ShoppingCartItemRepository;
 import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
+import com.example.cinemachainmanagement.service.ShoppingCartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShoppingCartServiceItemImp implements ShoppingCartItemService  {
+public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
     @Autowired
     ShoppingCartItemRepository shoppingCartItemRepository;
     @Autowired

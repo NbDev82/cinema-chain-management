@@ -1,4 +1,4 @@
-package com.example.cinemachainmanagement.service;
+package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.DTO.ProductCategoryDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
@@ -9,6 +9,7 @@ import com.example.cinemachainmanagement.entities.Product;
 import com.example.cinemachainmanagement.entities.ProductCategory;
 import com.example.cinemachainmanagement.repositories.ProductCategoryRepository;
 import com.example.cinemachainmanagement.repositories.ProductRepository;
+import com.example.cinemachainmanagement.service.ProductService;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

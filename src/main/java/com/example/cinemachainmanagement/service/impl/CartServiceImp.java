@@ -1,7 +1,8 @@
-package com.example.cinemachainmanagement.service;
+package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.model.CartItem;
 import com.example.cinemachainmanagement.repositories.ProductCategoryRepository;
+import com.example.cinemachainmanagement.service.CartService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
