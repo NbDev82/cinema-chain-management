@@ -1,0 +1,38 @@
+
+/*.container-fluid {*/
+/*    background-color: #212529; !* Background color for the header *!*/
+/*    color: white; !* Text color for the header *!*/
+/*    padding: 15px 0; !* Add padding to space content inside the header *!*/
+/*}*/
+
+/*.nav-link {*/
+/*    color: white; !* Text color for the links *!*/
+/*    text-decoration: none; !* Remove underlines from links *!*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*!* Style for the navbar *!*/
+/*.navbar {*/
+/*    background-color: #343a40; !* Background color for the navbar *!*/
+/*}*/
+
+/*!* Style for the navbar links *!*/
+/*.navbar-brand {*/
+/*    color: white; !* Text color for the links *!*/
+/*    text-decoration: none; !* Remove underlines from links *!*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*!* Style for the dropdown menus *!*/
+/*.dropdown-item {*/
+/*    color: black; !* Text color for dropdown items *!*/
+/*    background-color: #343a40; !* Background color for dropdown items *!*/
+/*    text-decoration: none; !* Remove underlines from dropdown items *!*/
+/*}*/
+
+/*!* Style for the active link *!*/
+/*.nav-item.active .navbar-brand {*/
+/*    font-weight: bold; !* Add bold font for active link *!*/
+/*}*/
