@@ -67,9 +67,6 @@ public class BookTicketController{
             if(theatersHasMovie == null)
                 theatersHasMovie = new ArrayList<>();
             List<TheaterDTO> theaters = mapper.mapperEntityToDto(theatersHasMovie,TheaterDTO.class);
-//            for(TheaterDTO theater: theaters){
-//                logger.info(theater.getName());
-//            }
             List<MovieDTO> movieIsShowing = mapper.mapperEntityToDto(movieService.findShowingMovie(), MovieDTO.class);
             model.addAttribute("movieIsShowing",movieIsShowing);
             model.addAttribute("movie",movie);
