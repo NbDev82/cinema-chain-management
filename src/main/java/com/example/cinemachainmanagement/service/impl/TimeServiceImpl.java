@@ -1,5 +1,8 @@
 package com.example.cinemachainmanagement.service.impl;
 
+import com.example.cinemachainmanagement.entities.TheaterRoom;
+import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
 import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.Movie;
 import com.example.cinemachainmanagement.entities.Showtime;
@@ -10,18 +13,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class TimeServiceImpl implements TimeService {
-    private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
-
+    private final Logger logger = LoggerFactory.getLogger(TimeServiceImpl.class);
+    private final Mapper mapper;
     private final ShowtimeRepository ShowtimeRepo;
 
-    public TimeServiceImpl(ShowtimeRepository showtimeRepo) {
+    public TimeServiceImpl(Mapper mapper, ShowtimeRepository showtimeRepo) {
+        this.mapper = mapper;
         this.ShowtimeRepo = showtimeRepo;
     }
 
@@ -53,5 +58,59 @@ public class TimeServiceImpl implements TimeService {
             return new ArrayList<>();
         }
         return filteredShowTimes;
+    }
+
+    @Override
+    public Boolean scheduleShowTime(Theater theater) {
+
+        List<Movie> movies = theater.getMovies();
+        List<TheaterRoom> rooms = theater.getRooms();
+        if (movies == null || movies.isEmpty() || rooms == null || rooms.isEmpty()) {
+            return false;
+        }
+        List<Showtime> showTimes = new ArrayList<>();
+        LocalDateTime date = LocalDateTime.now();
+        for(TheaterRoom room: rooms){
+            if(checkShowtimesTodayForTheaterRoom(room))
+                continue;
+            LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 0));
+            while (540<=startTime.getHour()*60+startTime.getMinute() &&startTime.getHour()*60+startTime.getMinute() < 1260){
+                for(Movie movie : movies){
+                    LocalDateTime endTime = startTime.plusMinutes(movie.getDuration());
+                    Showtime s = new Showtime(Date.from(date.atZone(ZoneId.systemDefault()).toInstant()),
+                            Date.from(startTime.atZone(ZoneId.systemDefault()).toInstant()),
+                            Date.from(endTime.atZone(ZoneId.systemDefault()).toInstant()),
+                            room,
+                            movie);
+                    showTimes.add(s);
+                    startTime =endTime.plusMinutes(10);
+                    if (!startTime.toLocalDate().isEqual(LocalDate.now())) {
+                        break; // Nếu đã qua ngày mới, dừng vòng lặp
+                    }
+                }
+            }
+        }
+        try{
+            showTimes = ShowtimeRepo.saveAll(showTimes);
+            return !showTimes.isEmpty();
+        }catch (Exception e){
+            logger.warn(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean checkShowtimesTodayForTheaterRoom(TheaterRoom room) {
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        Date startDate = java.sql.Timestamp.valueOf(startOfDay);
+        Date endDate = java.sql.Timestamp.valueOf(endOfDay);
+        List<Showtime> theaterShowtimesToday = ShowtimeRepo.findByTheaterRoomAndDateBetween(room, startDate, endDate);
+        return !theaterShowtimesToday.isEmpty();
+    }
+
+    @Override
+    public List<ShowtimeDTO> getShowTimeByTheater(Theater theater) {
+        List<Showtime> showTimes = ShowtimeRepo.findByRoom_Theater(theater);
+        return mapper.mapperEntityToDto(showTimes,ShowtimeDTO.class);
     }
 }
