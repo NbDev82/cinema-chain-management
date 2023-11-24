@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.*;
 import com.example.cinemachainmanagement.entities.Movie;
 import com.example.cinemachainmanagement.service.MovieService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Controller
 @RequestMapping("/dat-ve")
 public class BookTicketController{
+    private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
     private final Mapper mapper;
     private final MovieService movieService;
     private final TimeService timeService;
@@ -64,6 +67,9 @@ public class BookTicketController{
             if(theatersHasMovie == null)
                 theatersHasMovie = new ArrayList<>();
             List<TheaterDTO> theaters = mapper.mapperEntityToDto(theatersHasMovie,TheaterDTO.class);
+//            for(TheaterDTO theater: theaters){
+//                logger.info(theater.getName());
+//            }
             List<MovieDTO> movieIsShowing = mapper.mapperEntityToDto(movieService.findShowingMovie(), MovieDTO.class);
             model.addAttribute("movieIsShowing",movieIsShowing);
             model.addAttribute("movie",movie);

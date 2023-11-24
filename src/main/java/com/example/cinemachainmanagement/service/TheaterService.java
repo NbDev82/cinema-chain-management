@@ -15,4 +15,5 @@ public interface TheaterService {
     Optional<TheaterRoom> getTheaterRoomById(Long theaterId);
 
     Optional<Seat> getSeatById(Long seatId);
+    Optional<Theater> getTheaterByTheaterName(String theaterName);
 }
