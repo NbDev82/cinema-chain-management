@@ -12,6 +12,8 @@ import com.example.cinemachainmanagement.service.MovieService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,11 +34,14 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> findShowingMovie() {
-        Date currentTime = new Date();
+        LocalDateTime currentTime = LocalDateTime.now();
         List<Movie> allMovies = movieRepository.findAll();
         return allMovies.stream()
                 .filter(movie -> movie.getShowTimes().stream()
-                        .anyMatch(showtime -> showtime.getDate().after(currentTime)))
+                        .anyMatch(showtime -> {
+                            LocalDateTime showtimeDate = showtime.getEndTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                            return !showtimeDate.isBefore(currentTime); // Lọc các Showtime từ thời điểm hiện tại trở đi
+                        }))
                 .toList();
     }
 

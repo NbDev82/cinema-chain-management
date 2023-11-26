@@ -37,4 +37,12 @@ public class Showtime implements Serializable {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    public Showtime(Date date, Date startTime, Date endTime, TheaterRoom room, Movie movie) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.room = room;
+        this.movie = movie;
+    }
 }

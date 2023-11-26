@@ -39,24 +39,33 @@ public class TheaterServiceImpl implements TheaterService {
 
     @Override
     public List<Theater> filterTheatersByRoom(List<Showtime> showtimes) {
-        Set<Theater> theaterSet = new HashSet<>();
-        TheaterRoom room = new TheaterRoom();
-        room.setRoomId(0L);
-        for(Showtime time : showtimes){
-            Theater considerTheater =time.getRoom().getTheater();
-            Theater ansTheater = new Theater(considerTheater);
-            if(!room.getRoomId().equals(time.getRoom().getRoomId())){
-                room = new TheaterRoom(time.getRoom());
-            }
-            room.getShowTimes().add(time);
-            ansTheater.getRooms().add(room);
-            theaterSet.add(ansTheater);
+        Map<Theater, Map<TheaterRoom, List<Showtime>>> theaterRoomShowtimeMap = new HashMap<>();
+
+        for (Showtime time : showtimes) {
+            Theater theater = time.getRoom().getTheater();
+            TheaterRoom room = time.getRoom();
+
+            theaterRoomShowtimeMap
+                    .computeIfAbsent(theater, k -> new HashMap<>())
+                    .computeIfAbsent(room, k -> new ArrayList<>())
+                    .add(time);
         }
-        List<Theater> theaters = new ArrayList<>(theaterSet);
-        if(theaters.isEmpty())
-            theaters = new ArrayList<>();
+
+        // Tạo danh sách Theater với thông tin Showtime được nhóm lại theo Room
+        List<Theater> theaters = new ArrayList<>();
+        theaterRoomShowtimeMap.forEach((theater, roomShowtimeMap) -> {
+            Theater newTheater = new Theater(theater);
+            roomShowtimeMap.forEach((room, showtimeList) -> {
+                TheaterRoom newRoom = new TheaterRoom(room);
+                newRoom.setShowTimes(showtimeList);
+                newTheater.getRooms().add(newRoom);
+            });
+            theaters.add(newTheater);
+        });
+
         return theaters;
     }
+
 
     @Override
     public Optional<TheaterRoom> getTheaterRoomById(Long theaterId) {
