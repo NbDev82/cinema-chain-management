@@ -830,6 +830,31 @@
                                 <td>2011/01/25</td>
                                 <td>$112,000</td>
                             </tr>
+
+                            <div th:each="movie : ${movie_manager}">
+                                <tr>
+                                    <td><p th:text="${movie.title}"></p></td>
+                                    <td><p th:text="${movie.duration}"></p></td>
+                                    <td><p th:text="${movie.releaseDate}"></p></td>
+
+<!--                                    <td><p th:text="${movie.description}"></p></td>-->
+<!--                                    <td><p th:text="${movie.duration}"></p></td>-->
+<!--                                    <td><p th:text="${movie.genre}"></p></td>-->
+                                    <!--                                <td><p th:text="${movie.rating}"></p></td>-->
+
+                                    <td><div>
+                                        <div>
+                                            <a>
+                                                <button class="btn btn-primary add-to-cart"
+                                                        data-product-id="${product.id}">
+                                                    <i class="fas fa-cart-plus"></i> Delete Movie
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div></td>
+                                </tr>
+                            </div>
+
                             </tbody>
                         </table>
                     </div>
