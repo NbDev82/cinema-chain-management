@@ -1,15 +1,15 @@
 package com.example.cinemachainmanagement.service.impl;
 
 
+import com.example.cinemachainmanagement.DTO.MovieDTO;
+import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.controller.BookTicketController;
-import com.example.cinemachainmanagement.entities.Seat;
-import com.example.cinemachainmanagement.entities.Showtime;
-import com.example.cinemachainmanagement.entities.TheaterRoom;
+import com.example.cinemachainmanagement.entities.*;
+import com.example.cinemachainmanagement.repositories.MovieRepository;
 import com.example.cinemachainmanagement.repositories.SeatRepository;
 import com.example.cinemachainmanagement.repositories.TheaterRoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.example.cinemachainmanagement.entities.Theater;
 import com.example.cinemachainmanagement.repositories.TheaterRepository;
 import com.example.cinemachainmanagement.service.TheaterService;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,14 @@ public class TheaterServiceImpl implements TheaterService {
     private final TheaterRepository theaterRepo;
     private final TheaterRoomRepository theaterRoomRepo;
     private final SeatRepository seatRepository;
+    private final MovieRepository movieRepository;
 
 
-    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepo, SeatRepository seatRepository) {
+    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepo, SeatRepository seatRepository,MovieRepository movieRepository) {
         this.theaterRepo = theaterRepo;
         this.theaterRoomRepo = theaterRoomRepo;
         this.seatRepository = seatRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
@@ -78,5 +80,18 @@ public class TheaterServiceImpl implements TheaterService {
     @Override
     public Optional<Theater> getTheaterByTheaterName(String theaterName) {
         return theaterRepo.findByName(theaterName);
+    }
+
+    @Override
+    public void addMovieToTheater(MovieDTO movieDTO, Theater theater){
+        Movie movie = Mappers.convertToEntity(movieDTO, Movie.class);
+        movie = movieRepository.save(movie);
+
+        List<Movie> movies = theater.getMovies();
+        movies.add(movie);
+
+        theater.setMovies(movies);
+        theaterRepo.save(theater);
+
     }
 }
