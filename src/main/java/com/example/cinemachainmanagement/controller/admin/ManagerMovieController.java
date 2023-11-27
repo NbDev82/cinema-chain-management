@@ -76,10 +76,20 @@ public class ManagerMovieController {
         }
     }
 
-    @GetMapping(value = "/delete_movie")
-    public String deleteMovie(@RequestParam(name = "movieId")String movieId){
-        System.out.println(movieId);
-        //movieService.deleteMovie(id);
+    @PostMapping(value = "/delete_movie-{theaterName}")
+    public String deleteMovie(@PathVariable String theaterName,
+                                @RequestParam(name = "movie_id")String movieId){
+        MovieDTO movie = movieService.findByMovieId(movieId);
+        System.out.println(movie.getMovieId());
+
+        Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
+        if(theaterOptional.isPresent()){
+            Theater theater = theaterOptional.get();
+            theaterService.deleteMovie(movie, theater);
+        }else
+            return "error_view";
+
+
         return "success";
     }
 }

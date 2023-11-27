@@ -3,6 +3,7 @@ package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
+import com.example.cinemachainmanagement.Mapper.ProductMapper;
 import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.repositories.MovieRepository;
@@ -93,5 +94,24 @@ public class TheaterServiceImpl implements TheaterService {
         theater.setMovies(movies);
         theaterRepo.save(theater);
 
+        for (Movie m: movies){
+            System.out.println(m.getDescription());
+        }
+
     }
+
+    @Override
+    public void deleteMovie(MovieDTO movieDTO, Theater theater){
+        List<Movie> movies = theater.getMovies();
+        Movie movie = Mappers.convertToEntity(movieDTO, Movie.class);
+
+        movies.removeIf(m -> m.getMovieId().equals(movie.getMovieId()));
+
+        theater.setMovies(movies);
+        theaterRepo.save(theater);
+
+        // Xóa đối tượng movie khỏi cơ sở dữ liệu
+        movieRepository.delete(movie);
+    }
+
 }
