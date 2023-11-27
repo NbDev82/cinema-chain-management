@@ -10,7 +10,13 @@ import com.example.cinemachainmanagement.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +39,8 @@ public class ManagerMovieController {
                            @RequestParam("releaseDate")String releaseDate,
                            @RequestParam("duration")int duration,
                            @RequestParam("genre")String genre,
-                           @RequestParam("rating")String rating){
+                           @RequestParam("rating")String rating,
+                           @RequestParam(name = "image_multipart") MultipartFile image_multipart){
 
         Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
         if(theaterOptional.isPresent()){
@@ -44,18 +51,31 @@ public class ManagerMovieController {
             Date parsedDate = null;
             try {
                 parsedDate = dateFormat.parse(releaseDate);
+
+
             } catch (ParseException e) {
                 e.printStackTrace(); // Xử lý exception nếu cần thiết
                 return "error_view";
             }
-            MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating);
-            theaterService.addMovieToTheater(movieDTO, theater);
+            try {
+
+                // Lưu hình ảnh vào thư mục
+                Path path = Paths.get("src/main/resources/static/");
+                InputStream inputStream = image_multipart.getInputStream();
+                Files.copy(inputStream, path.resolve(image_multipart.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+
+                MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating,image_multipart.getOriginalFilename());
+                theaterService.addMovieToTheater(movieDTO, theater);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "error_view";
+            }
         }
         else {
             return "error_view";
         }
         return "success";
-
     }
 
     @GetMapping(value = "/add_movie")
