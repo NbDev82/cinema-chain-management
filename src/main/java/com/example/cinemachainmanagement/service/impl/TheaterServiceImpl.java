@@ -6,30 +6,32 @@ import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.Mapper.ProductMapper;
 import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.*;
-import com.example.cinemachainmanagement.repositories.MovieRepository;
-import com.example.cinemachainmanagement.repositories.SeatRepository;
-import com.example.cinemachainmanagement.repositories.TheaterRoomRepository;
+import com.example.cinemachainmanagement.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.example.cinemachainmanagement.repositories.TheaterRepository;
 import com.example.cinemachainmanagement.service.TheaterService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 @Service
+@Transactional
 public class TheaterServiceImpl implements TheaterService {
     private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
     private final TheaterRepository theaterRepo;
     private final TheaterRoomRepository theaterRoomRepo;
     private final SeatRepository seatRepository;
     private final MovieRepository movieRepository;
+    private final ShowtimeRepository ShowtimeRepo;
 
 
-    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepo, SeatRepository seatRepository,MovieRepository movieRepository) {
+    public TheaterServiceImpl(TheaterRepository theaterRepo, TheaterRoomRepository theaterRoomRepo, SeatRepository seatRepository,MovieRepository movieRepository, ShowtimeRepository ShowtimeRepo) {
         this.theaterRepo = theaterRepo;
         this.theaterRoomRepo = theaterRoomRepo;
         this.seatRepository = seatRepository;
         this.movieRepository = movieRepository;
+        this.ShowtimeRepo = ShowtimeRepo;
     }
 
     @Override
@@ -110,7 +112,17 @@ public class TheaterServiceImpl implements TheaterService {
         theater.setMovies(movies);
         theaterRepo.save(theater);
 
-        // Xóa đối tượng movie khỏi cơ sở dữ liệu
+
+
+        List<Showtime> showtimes =  ShowtimeRepo.findByMovie(movie);
+
+        if(!showtimes.isEmpty()){
+            ShowtimeRepo.deleteAll();
+            for (Showtime showtime : showtimes) {
+                ShowtimeRepo.deleteByMovieId(showtime.getMovie().getMovieId());
+                System.out.println(showtime.getMovie().getMovieId());
+            }
+        }
         movieRepository.delete(movie);
     }
 

@@ -34,7 +34,7 @@ public class Movie implements Serializable {
 
     private ERating rating;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Showtime> showTimes;
 
     @ManyToMany(mappedBy = "movies")
