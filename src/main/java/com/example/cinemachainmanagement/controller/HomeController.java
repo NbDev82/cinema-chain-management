@@ -48,14 +48,26 @@ public class HomeController {
     }
 
 
-    @GetMapping("")
+    @GetMapping("list_movie")
     public String getListMovie(Model model) {
         try {
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
             return "home";
         } catch (Exception e) {
-            model.addAttribute("error", "Lỗi khi load sản phẩm: " + e.getMessage());
+            model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
+            return "error_view";
+        }
+    }
+
+    @GetMapping("list_show_time")
+    public String getListShowTime(Model model) {
+        try {
+            List<MovieDTO> movie_manager = movieService.getListMovie();
+            model.addAttribute("movie_manager", movie_manager);
+            return "home";
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
             return "error_view";
         }
     }
