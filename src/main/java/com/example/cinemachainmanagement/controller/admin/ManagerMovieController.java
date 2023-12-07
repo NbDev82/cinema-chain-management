@@ -75,26 +75,10 @@ public class ManagerMovieController {
         else {
             return "error_view";
         }
-        return "success";
-    }
-
-    @GetMapping(value = "/add_movie")
-    public String get_form(){
-        return "/add_movie";
+        return "redirect:/admin/dashboard-"+theaterName;
     }
 
 
-    @GetMapping("/get_list_movie")
-    public String getListMovie(Model model) {
-        try {
-            List<MovieDTO> movie_manager = movieService.getListMovie();
-            model.addAttribute("movie_manager", movie_manager);
-            return "admin";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi khi load sản phẩm: " + e.getMessage());
-            return "error_view";
-        }
-    }
 
     @PostMapping(value = "/delete_movie-{theaterName}")
     public String deleteMovie(@PathVariable String theaterName,
@@ -110,7 +94,7 @@ public class ManagerMovieController {
             return "error_view";
 
 
-        return "success";
+        return "redirect:/admin/dashboard-"+theaterName;
     }
 }
 

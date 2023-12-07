@@ -35,20 +35,20 @@ public class HomeController {
     }
     @GetMapping("/header")
     public  String main(){
-        return "views/header";
+        return "header";
     }
     @GetMapping("/login")
     public String login(){
-        return "views/login";
+        return "login";
     }
 
     @GetMapping("/signup")
     public String signup(){
-        return "views/signup";
+        return "signup";
     }
 
 
-    @GetMapping("list_movie")
+    @GetMapping()
     public String getListMovie(Model model) {
         try {
             List<MovieDTO> movie_manager = movieService.getListMovie();
