@@ -77,6 +77,8 @@
     <link rel='shortlink' href='https://ananas.vn/' />
     <link rel="alternate" type="application/json+oembed" href="https://ananas.vn/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fananas.vn%2F" />
     <link rel="alternate" type="text/xml+oembed" href="https://ananas.vn/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fananas.vn%2F&#038;format=xml" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}" />
     <meta name="onesignal" content="wordpress-plugin"/>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>    <script>
 
@@ -161,188 +163,14 @@
 
 <body>
 
+<header class="header container-fluid hidden-xs hidden-sm">
+    <div th:replace="~{header :: header}"></div>
+</header>
 
-<div class="header container-fluid hidden-xs hidden-sm">
+<!--<div class="header container-fluid hidden-xs hidden-sm">-->
 
-    <!-- <div class="row">
-        <div class="navbar center ">
 
-            <div class="navbar-header">
-                <div class="navbar-brand"><a href="https://ananas.vn"><img src="/wp-content/themes/ananas/fe-assets/images/svg/Logo_Ananas_Header.svg"></a></div>
-            </div>
-
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                                                        <li class="dropdown">
-                                        <a href="https://ananas.vn/product-list/" class="dropdown-toggle">SẢN PHẨM <span class="caret"></span></a>
-                                            <ul class="dropdown-menu style1">
-            <li><a href="/product-list/?gender=men"><img src="/wp-content/uploads/Menu_Nam.jpg"></a><a class="style1-title" href="/product-list/?gender=men">CHO NAM</a></li>
-                <li><a href="/product-list/?gender=women"><img src="https://ananas.vn/wp-content/uploads/Menu_Nu.jpg"></a><a class="style1-title" href="/product-list/?gender=women">CHO NỮ</a></li>
-                <li><a href="/promotion/clearance-sale/"><img src="/wp-content/uploads/Menu_Sale-off.jpg"></a><a class="style1-title" href="/promotion/clearance-sale/">OUTLET SALE</a></li>
-                <li><a href="/product-list?gender=men,women&category=top,bottom,accessories&attribute="><img src="/wp-content/uploads/Menu_Phu-kien.jpg"></a><a class="style1-title" href="/product-list?gender=men,women&category=top,bottom,accessories&attribute=">THỜI TRANG & PHỤ KIỆN</a></li>
-                <div class="style1-des"><a href="/coming-soon/">MỌI NGƯỜI THƯỜNG GỌI CHÚNG TÔI LÀ <span class="highlight">DỨA</span> !</a></div>
-    </ul>
-
-                                    </li>
-
-                                                                <li class="line"></li>
-                                                                <li class="dropdown">
-                                        <a href="https://ananas.vn/product-list/?gender=men" class="dropdown-toggle">NAM <span class="caret"></span></a>
-                                        <ul class="dropdown-menu style2">
-        <li>
-        <a href="#" class="title">NỔI BẬT</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href=""></a>
-                <a href="/product-list?gender=men&category=&attribute=best-seller">Best Seller</a>
-                 <a href="/product-list?gender=men&category=&attribute=new-arrival">New Arrival</a>
-                 <a href="/product-list?gender=men&category=&attribute=sale-off">Sale off</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Bộ sản phẩm</a>
-                <a href="https://ananas.vn/product-list?gender=&category=&attribute=living-journey">Pattas Living Journey</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=polka-dots">Pattas Polka Dots</a>
-                 <a href="https://ananas.vn/product-list/?gender=&category=&attribute=evergreen-pack">Basas Evergreen</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=ruler">Urbas Ruler</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=track-6-class-e">Track 6 Class E</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Collaboration</a>
-                <a class="blank">&nbsp;</a>
-            </li>
-        <li class="style2-divider"></li>
-        <li>
-        <a href="#" class="title">GIÀY</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Dòng sản phẩm</a>
-                <a href="/product-list?gender=men&category=&attribute=basas">Basas</a>
-                 <a href="/product-list?gender=men&category=&attribute=vintas">Vintas</a>
-                 <a href="/product-list?gender=men&category=&attribute=urbas">Urbas</a>
-                 <a href="/product-list?gender=men&category=&attribute=pattas">Pattas</a>
-                 <a href="/product-list?gender=men&category=&attribute=creas">Creas</a>
-                 <a href="/product-list?gender=men&category=&attribute=track-6">Track 6</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Style</a>
-                <a href="/product-list?gender=men&category=&attribute=high-top?gender=men&category=&attribute=high-top">High Top</a>
-                 <a href="/product-list">Low Top</a>
-                 <a href="/product-list?gender=men&category=&attribute=slip-on">Slip-on</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="/product-list?gender=men&category=shoes&attribute=">Tất cả giày</a>
-                <a class="blank">&nbsp;</a>
-            </li>
-        <li>
-        <a href="/product-list?gender=men&category=top,bottom,accessories&attribute=" class="title">THỜI TRANG & PHỤ KIỆN</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Nửa trên</a>
-                <a href="/product-list?gender=men&category=&attribute=basic-tee-tron">Basic Tee</a>
-                 <a href="/product-list/?gender=&category=&attribute=graphic-tee">Graphic tee</a>
-                 <a href="/product-list?gender=&category=&attribute=sweatshirt">Sweatshirt</a>
-                 <a href="/product-list?gender=&category=&attribute=hoodie">Hoodie</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Phụ kiện</a>
-                <a href="/product-list?gender=men&category=&attribute=hat">Nón</a>
-                 <a href="/product-list?gender=men&category=&attribute=shoelaces">Dây giày</a>
-                 <a href="/product-list?gender=men&category=&attribute=socks">Vớ</a>
-                 <a href="/product-list?gender=men&category=&attribute=tote-bag">Túi Tote</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="/product-list?gender=men&category=top,bottom,accessories&attribute=">Xem tất cả</a>
-                <a class="blank">&nbsp;</a>
-            </li>
-        <div class="style2-des"><a href="/coming-soon/">MỌI NGƯỜI THƯỜNG GỌI CHÚNG TÔI LÀ <span class="highlight">DỨA</span> !</a></div>
-</ul>
-                                    </li>
-
-                                                                <li class="line"></li>
-                                                                <li class="dropdown">
-                                        <a href="https://ananas.vn/product-list/?gender=women" class="dropdown-toggle">NỮ <span class="caret"></span></a>
-                                        <ul class="dropdown-menu style2">
-        <li>
-        <a href="" class="title">NỔI BẬT</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href=""></a>
-                <a href="/product-list?gender=women&category=&attribute=best-seller">Best Seller</a>
-                 <a href="/product-list?gender=women&category=&attribute=new-arrival">New Arrival</a>
-                 <a href="/product-list?gender=women&category=&attribute=sale-off">Sale-off</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Bộ sản phẩm</a>
-                <a href="https://ananas.vn/product-list?gender=&category=&attribute=living-journey">Pattas Living Journey</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=polka-dots">Pattas Polka Dots</a>
-                 <a href="https://ananas.vn/product-list/?gender=&category=&attribute=evergreen-pack">Basas Evergreen</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=ruler">Urbas Ruler</a>
-                 <a href="https://ananas.vn/product-list?gender=&category=&attribute=track-6-class-e">Track 6 Class E</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Collaboration</a>
-                <a class="blank">&nbsp;</a>
-            </li>
-        <li class="style2-divider"></li>
-        <li>
-        <a href="" class="title">GIÀY</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Dòng sản phẩm</a>
-                <a href="/product-list?gender=women&category=&attribute=basas">Basas</a>
-                 <a href="/product-list?gender=women&category=&attribute=vintas">Vintas</a>
-                 <a href="/product-list?gender=women&category=&attribute=urbas">Urbas</a>
-                 <a href="/product-list?gender=women&category=&attribute=pattas">Pattas</a>
-                 <a href="/product-list?gender=women&category=&attribute=creas">Creas</a>
-                 <a href="/product-list?gender=women&category=&attribute=track-6">Track 6</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Style</a>
-                <a href="/product-list?gender=men&category=&attribute=high-top?gender=women&category=&attribute=high-top">High Top</a>
-                 <a href="/product-list?gender=men&category=&attribute=high-top?gender=women&category=&attribute=low-top">Low Top</a>
-                 <a href="/product-list?gender=men&category=&attribute=high-top?gender=women&category=&attribute=slip-on">Slip-on</a>
-                 <a class="blank">&nbsp;</a>
-            </li>
-        <li>
-        <a href="/product-list?gender=women&category=top,bottom,accessories&attribute=" class="title">THỜI TRANG & PHỤ KIỆN</a>
-
-        <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Nửa trên</a>
-                <a href="/product-list?gender=women&category=&attribute=basic-tee-tron">Basic Tee</a>
-                 <a href="/product-list/?gender=&category=&attribute=graphic-tee">Graphic Tee</a>
-                 <a href="/product-list?gender=&category=&attribute=sweatshirt">Sweatshirt</a>
-                 <a href="/product-list?gender=&category=&attribute=hoodie">Hoodie</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="#">Phụ kiện</a>
-                <a href="/product-list?gender=women&category=&attribute=hat">Nón</a>
-                 <a href="/product-list?gender=women&category=&attribute=shoelaces">Dây giày</a>
-                 <a href="/product-list?gender=men&category=&attribute=socks">Vớ</a>
-                 <a href="https:/product-list?gender=women&category=&attribute=tote-bag">Túi Tote</a>
-                 <a class="blank">&nbsp;</a>
-                <a class="title1" href="/product-list?gender=women&category=top,bottom,accessories&attribute=">Xem tất cả</a>
-                <a class="blank">&nbsp;</a>
-            </li>
-        <div class="style2-des"><a href="/coming-soon/">MỌI NGƯỜI THƯỜNG GỌI CHÚNG TÔI LÀ <span class="highlight">DỨA</span> !</a></div>
-</ul>
-                                    </li>
-
-                                                                <li class="line"></li>
-                                                                <li><a href="https://ananas.vn/promotion/clearance-sale/">SALE OFF</a></li>
-                                                                <li class="line"></li>
-                                                <li><a href="https://ananas.vn/discoveryou"><img
-                                    src="/wp-content/themes/ananas/fe-assets/images/svg/DiscoverYOU.svg"></a></li>
-                </ul>
-                                <form action="https://ananas.vn/search-results/?" class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <img class="icon-search" src="/wp-content/themes/ananas/fe-assets/images/svg/icon_tim_kiem.svg" >
-                        <input type="text" name="key" class="form-control" value="" placeholder="Tìm kiếm">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="hot-news-cont">
-            <div class="hot-news-slide">
-                                <div class="cont-item"><a href="https://ananas.vn/faqs/">FREE SHIPPING VỚI HOÁ ĐƠN TỪ 900K !</a></div>
-                                <div class="cont-item"><a href="https://ananas.vn/policy/">HÀNG 2 TUẦN NHẬN ĐỔI - GIÀY NỬA NĂM BẢO HÀNH</a></div>
-                                <div class="cont-item"><a href="https://ananas.vn/faqs">BUY MORE PAY LESS - ÁP DỤNG KHI MUA PHỤ KIỆN</a></div>
-                                <div class="cont-item"><a href="https://ananas.vn/faqs">BUY 2 GET 10% OFF - ÁP DỤNG VỚI TẤT CẢ BASIC TEE</a></div>
-                            </div>
-        </div>
-    </div> -->
-</div>
+<!--</div>-->
 <div class="home-banner container-fluid">
     <!-- PC banner1 -->
     <div class="slide-banner hidden-xs hidden-sm">
@@ -356,7 +184,7 @@
 
 </div>
 
-<div class="home-collection container-fluid">
+<div class="home-collection container">
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 left">
             <div class="slide-collection">
@@ -394,7 +222,7 @@
     </div>
 </div>
 <!-- PC: Home-buy -->
-<div class="home-buy container-fluid hidden-xs hidden-sm">
+<div class="home-buy container hidden-xs hidden-sm">
     <div class="row title">DANH SÁCH PHIM</div>
     <div class="row">
         <div class="col-lg-3 col-md-6 mb-4" th:each="movie : ${movie_manager}">
@@ -404,8 +232,8 @@
                      alt="Not found image">
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
-                        <a href="#" class="btn btn-primary mb-2 btn-block">
-                            <i class="fas fa-shopping-cart"></i> Mua
+                        <a th:href="@{'/dat-ve/' + ${movie.title}}" class="btn btn-primary mb-2 btn-block">
+                            <i class="fas fa-shopping-cart"></i>Đặt vé
                         </a>
                         <a href="#" class="btn btn-primary btn-block">
                             <i class="fas fa-play-circle"></i> Trailer
@@ -426,7 +254,7 @@
 </div>
 
 
-<div class="home-instagram container-fluid">
+<div class="home-instagram container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 left">
             <div class="row title">INSTAGRAM</div>
@@ -543,7 +371,9 @@
 
 
 </div><!-- CART & SOCIAL GROUP-->
-
+<footer>
+    <div th:replace="~{footer :: footer}"></div>
+</footer>
 <script>
     const ajaxUrl = 'https://ananas.vn/wp-admin/admin-ajax.php';
 </script>
