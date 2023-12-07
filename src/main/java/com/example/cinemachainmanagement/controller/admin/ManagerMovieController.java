@@ -40,7 +40,7 @@ public class ManagerMovieController {
                            @RequestParam("duration")int duration,
                            @RequestParam("genre")String genre,
                            @RequestParam("rating")String rating,
-                           @RequestParam(name = "image_multipart") MultipartFile image_multipart){
+                           @RequestParam("image")String productImage){
 
         Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
         if(theaterOptional.isPresent()){
@@ -58,21 +58,21 @@ public class ManagerMovieController {
                 return "error_view";
             }
             try {
-
                 // Lưu hình ảnh vào thư mục
-                Path path = Paths.get("src/main/resources/static/");
-                InputStream inputStream = image_multipart.getInputStream();
-                Files.copy(inputStream, path.resolve(image_multipart.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                //Path path = Paths.get("src/main/resources/static/");
+                //InputStream inputStream = image_multipart.getInputStream();
+                //Files.copy(inputStream, path.resolve(image_multipart.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 
-                MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating,image_multipart.getOriginalFilename());
+                MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating,productImage);
                 theaterService.addMovieToTheater(movieDTO, theater);
-
             } catch (Exception e) {
                 e.printStackTrace();
+                System.out.println("loix");
                 return "error_view";
             }
         }
         else {
+            System.out.println("khong ton tai");
             return "error_view";
         }
         return "redirect:/admin/dashboard-"+theaterName;
@@ -93,8 +93,8 @@ public class ManagerMovieController {
         }else
             return "error_view";
 
-
-        return "redirect:/admin/dashboard-"+theaterName;
+        return "redirect:/admin/dashboard-"+theaterName +"/get_list_movie";
+        // "redirect:/admin/dashboard-"+theaterName;
     }
 }
 
