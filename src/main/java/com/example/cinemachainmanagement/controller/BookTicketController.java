@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.cinemachainmanagement.DTO.*;
 import com.example.cinemachainmanagement.entities.*;
-import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.Mapper.Mapper;
 import com.example.cinemachainmanagement.service.TheaterService;
 import com.example.cinemachainmanagement.service.TicketService;
 import com.example.cinemachainmanagement.service.TimeService;
@@ -97,24 +97,25 @@ public class BookTicketController{
             Showtime time =null;
             if(optionalTime.isPresent()){
                 time = optionalTime.get();
+                Ticket ticket = Ticket.builder()
+                        .ticketStatus(false)
+                        .showTime(time)
+                        .build();
+                List<Ticket> tickets = new ArrayList<>();
+
+                TheaterRoom theaterRoom = optionalRoom.get();
+                TheaterRoomDTO roomDTO = ticketService.getOrderSeatsByRoomAndTime(theaterRoom, time.getStartTime());
+
+                Collections.sort(roomDTO.getSeats());
+                TicketDTO ticketDTO = mapper.mapEntityToCustomDto(ticket);
+
+                session.setAttribute("tickets", tickets);
+                session.setAttribute("time", time);
+
+                model.addAttribute("room", roomDTO);
+                model.addAttribute("ticket", ticketDTO);
             }
-            Ticket ticket = Ticket.builder()
-                    .ticketStatus(false)
-                    .showTime(time)
-                    .build();
-            List<Ticket> tickets = new ArrayList<>();
 
-            TheaterRoom theaterRoom = optionalRoom.get();
-            TheaterRoomDTO roomDTO = ticketService.getOrderSeatsByRoom(theaterRoom);
-
-            Collections.sort(roomDTO.getSeats());
-            TicketDTO ticketDTO = mapper.mapEntityToCustomDto(ticket);
-
-            session.setAttribute("tickets", tickets);
-            session.setAttribute("time", time);
-
-            model.addAttribute("room", roomDTO);
-            model.addAttribute("ticket", ticketDTO);
         }
         return url;
     }

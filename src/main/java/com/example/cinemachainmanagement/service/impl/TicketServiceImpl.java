@@ -1,7 +1,7 @@
 package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
-import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.Mapper.Mapper;
 import com.example.cinemachainmanagement.entities.Seat;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.TheaterRoom;
@@ -16,6 +16,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
@@ -57,7 +58,7 @@ public class TicketServiceImpl implements TicketService {
             for (String seatId : selectedSeatListId) {
                 logger.info(seatId);
                 Optional<Seat> seatOptional = theaterService.getSeatById(Long.valueOf(seatId));
-                if (seatOptional.isPresent() && !seatOptional.get().isReserved()) {
+                if (seatOptional.isPresent()) {
                     Seat seat = seatOptional.orElse(null);
                     Ticket ticket = Ticket.builder()
                             .ticketStatus(false)
@@ -69,7 +70,6 @@ public class TicketServiceImpl implements TicketService {
                     if (!persist(ticket)) {
                         break;
                     }
-                    seat.setReserved(true);
                 } else{
                     tickets.clear();
                     break;
@@ -82,14 +82,17 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TheaterRoomDTO getOrderSeatsByRoom(TheaterRoom room) {
+    public TheaterRoomDTO getOrderSeatsByRoomAndTime(TheaterRoom room, Date time) {
         List<Ticket> tickets = crudTicketRepo.findBySeatRoom(room);
         List<String> seatNumbers = new ArrayList<>();
-        tickets.forEach( t-> seatNumbers.add(t.getSeat().getSeatNumber()));
-        room.getSeats()
+        tickets .stream()
+                .filter( t -> t.getShowTime().getStartTime().equals(time))
+                .forEach( t-> seatNumbers.add(t.getSeat().getSeatNumber()));
+        TheaterRoomDTO roomDTO = mapper.mapperEntityToDto(room, TheaterRoomDTO.class);
+        roomDTO.getSeats()
                 .forEach(s -> {
                     s.setReserved(seatNumbers.contains(s.getSeatNumber()));
                 });
-        return mapper.mapperEntityToDto(room, TheaterRoomDTO.class);
+        return roomDTO;
     }
 }

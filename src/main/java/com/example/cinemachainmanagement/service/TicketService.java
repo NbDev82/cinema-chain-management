@@ -6,6 +6,7 @@ import com.example.cinemachainmanagement.entities.TheaterRoom;
 import com.example.cinemachainmanagement.entities.Ticket;
 import jakarta.transaction.SystemException;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TicketService {
@@ -13,5 +14,6 @@ public interface TicketService {
 
     List<Ticket> createTicketsBySeatListId(String[] selectedSeatListId, Showtime time) throws SystemException;
 
-    TheaterRoomDTO getOrderSeatsByRoom(TheaterRoom room);
+
+    TheaterRoomDTO getOrderSeatsByRoomAndTime(TheaterRoom theaterRoom, Date startTime);
 }
