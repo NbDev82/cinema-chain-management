@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.cinemachainmanagement.DTO.*;
 import com.example.cinemachainmanagement.entities.*;
-import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.Mapper.Mapper;
 import com.example.cinemachainmanagement.service.TheaterService;
 import com.example.cinemachainmanagement.service.TicketService;
 import com.example.cinemachainmanagement.service.TimeService;
@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.*;
 import com.example.cinemachainmanagement.entities.Movie;
 import com.example.cinemachainmanagement.service.MovieService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Controller
 @RequestMapping("/dat-ve")
 public class BookTicketController{
+    private final Logger logger = LoggerFactory.getLogger(BookTicketController.class);
     private final Mapper mapper;
     private final MovieService movieService;
     private final TimeService timeService;
@@ -94,21 +97,25 @@ public class BookTicketController{
             Showtime time =null;
             if(optionalTime.isPresent()){
                 time = optionalTime.get();
-            }
-            Ticket ticket = Ticket.builder()
-                    .ticketStatus(false)
-                    .showTime(time)
-                    .build();
-            List<Ticket> tickets = new ArrayList<>();
+                Ticket ticket = Ticket.builder()
+                        .ticketStatus(false)
+                        .showTime(time)
+                        .build();
+                List<Ticket> tickets = new ArrayList<>();
 
-            session.setAttribute("tickets", tickets);
-            session.setAttribute("time", time);
-            TheaterRoom theaterRoom = optionalRoom.get();
-            TheaterRoomDTO roomDTO = mapper.mapEntityToDto(theaterRoom, TheaterRoomDTO.class);
-            Collections.sort(roomDTO.getSeats());
-            TicketDTO ticketDTO = mapper.mapEntityToCustomDto(ticket);
-            model.addAttribute("room", roomDTO);
-            model.addAttribute("ticket", ticketDTO);
+                TheaterRoom theaterRoom = optionalRoom.get();
+                TheaterRoomDTO roomDTO = ticketService.getOrderSeatsByRoomAndTime(theaterRoom, time.getStartTime());
+
+                Collections.sort(roomDTO.getSeats());
+                TicketDTO ticketDTO = mapper.mapEntityToCustomDto(ticket);
+
+                session.setAttribute("tickets", tickets);
+                session.setAttribute("time", time);
+
+                model.addAttribute("room", roomDTO);
+                model.addAttribute("ticket", ticketDTO);
+            }
+
         }
         return url;
     }
@@ -129,6 +136,7 @@ public class BookTicketController{
         model.addAttribute("tickets", ticketDTOs);
         return url.get();
     }
+
 }
 
 

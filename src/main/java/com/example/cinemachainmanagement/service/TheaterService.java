@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.service;
 
+import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.entities.*;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface TheaterService {
     Optional<TheaterRoom> getTheaterRoomById(Long theaterId);
 
     Optional<Seat> getSeatById(Long seatId);
+    Optional<Theater> getTheaterByTheaterName(String theaterName);
+
+    void addMovieToTheater(MovieDTO movieDTO, Theater theater);
+    void deleteMovie(MovieDTO movieDTO, Theater theater);
 }

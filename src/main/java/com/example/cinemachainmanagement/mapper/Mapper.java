@@ -1,11 +1,13 @@
-package com.example.cinemachainmanagement.mapper;
+package com.example.cinemachainmanagement.Mapper;
 
+import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
 import com.example.cinemachainmanagement.DTO.TicketDTO;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.Ticket;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +25,12 @@ public class Mapper {
                 .collect(Collectors.toList());
     }
 
-    public <S, D> D mapEntityToDto(S source, Class<D> destinationType) {
+    public <S, D> D mapperEntityToDto(S source, Class<D> destinationType) {
         return mapper.map(source, destinationType);
     }
 
     public TicketDTO mapEntityToCustomDto(Ticket ticket) {
-        TicketDTO ticketDTO = mapEntityToDto(ticket,TicketDTO.class);
+        TicketDTO ticketDTO = mapperEntityToDto(ticket,TicketDTO.class);
         Showtime time = ticket.getShowTime();
 
         ticketDTO.setDuration(time.getMovie().getDuration());
@@ -39,5 +41,8 @@ public class Mapper {
         ticketDTO.setStartTime(time.getStartTime());
         ticketDTO.setDate(time.getDate());
         return ticketDTO;
+    }
+    public List<ShowtimeDTO> mapEntityToCustomDto(List<Showtime> showtimes){
+        return mapperEntityToDto(showtimes,ShowtimeDTO.class);
     }
 }
