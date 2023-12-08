@@ -1,9 +1,8 @@
 package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.entities.TheaterRoom;
-import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.Mapper.Mapper;
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
-import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.Movie;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.Theater;

@@ -1,4 +1,4 @@
-package com.example.cinemachainmanagement.mapper;
+package com.example.cinemachainmanagement.Mapper;
 
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
 import com.example.cinemachainmanagement.DTO.TicketDTO;
