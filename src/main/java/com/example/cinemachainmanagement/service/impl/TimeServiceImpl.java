@@ -1,9 +1,8 @@
 package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.entities.TheaterRoom;
-import com.example.cinemachainmanagement.mapper.Mapper;
+import com.example.cinemachainmanagement.Mapper.Mapper;
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
-import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.Movie;
 import com.example.cinemachainmanagement.entities.Showtime;
 import com.example.cinemachainmanagement.entities.Theater;
@@ -18,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeServiceImpl implements TimeService {
@@ -48,8 +48,10 @@ public class TimeServiceImpl implements TimeService {
             calendar.setTime(time.getDate());
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1; // Month is zero-based
+            String monthString = month<10? "0"+month: String.valueOf(month);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            String date = year+"-"+month+"-"+day;
+            String dayString = day<10? "0"+day: String.valueOf(day);
+            String date = year+"-"+monthString+"-"+dayString;
             if(date.equals(selectedMovieTime)) {
                 filteredShowTimes.add(time);
             }
@@ -73,6 +75,7 @@ public class TimeServiceImpl implements TimeService {
         for(TheaterRoom room: rooms){
             if(checkShowtimesTodayForTheaterRoom(room))
                 continue;
+            deletePastShowtimes();
             LocalDateTime startTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 0));
             while (540<=startTime.getHour()*60+startTime.getMinute() &&startTime.getHour()*60+startTime.getMinute() < 1260){
                 for(Movie movie : movies){
@@ -112,5 +115,19 @@ public class TimeServiceImpl implements TimeService {
     public List<ShowtimeDTO> getShowTimeByTheater(Theater theater) {
         List<Showtime> showTimes = ShowtimeRepo.findByRoom_Theater(theater);
         return mapper.mapperEntityToDto(showTimes,ShowtimeDTO.class);
+    }
+    public void deletePastShowtimes() {
+        List<Showtime> allShowtimes = ShowtimeRepo.findAll();
+
+        // Filter showtimes that have ended before the current date
+        List<Showtime> outdatedShowtimes = allShowtimes.stream()
+                .filter(showtime -> {
+                    LocalDateTime showtimeEndTime = showtime.getEndTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    return showtimeEndTime.toLocalDate().isBefore(LocalDate.now());
+                })
+                .collect(Collectors.toList());
+        logger.info(String.valueOf(outdatedShowtimes.size()));
+        // Delete outdated showtimes from the repository
+        ShowtimeRepo.deleteAll(outdatedShowtimes);
     }
 }

@@ -112,12 +112,10 @@ public class TheaterServiceImpl implements TheaterService {
         theater.setMovies(movies);
         theaterRepo.save(theater);
 
-
-
         List<Showtime> showtimes =  ShowtimeRepo.findByMovie(movie);
 
         if(!showtimes.isEmpty()){
-            ShowtimeRepo.deleteAll();
+            //ShowtimeRepo.deleteAll();
             for (Showtime showtime : showtimes) {
                 ShowtimeRepo.deleteByMovieId(showtime.getMovie().getMovieId());
                 System.out.println(showtime.getMovie().getMovieId());

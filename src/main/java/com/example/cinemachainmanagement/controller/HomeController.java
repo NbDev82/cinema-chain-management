@@ -35,28 +35,40 @@ public class HomeController {
     }
     @GetMapping("/header")
     public  String main(){
-        return "views/header";
+        return "header";
     }
     @GetMapping("/login")
     public String login(){
-        return "views/login";
+        return "login";
     }
 
     @GetMapping("/signup")
     public String signup(){
-        return "views/signup";
+        return "signup";
     }
 
 
-    @GetMapping("")
+    @GetMapping()
     public String getListMovie(Model model) {
         try {
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
             return "home";
         } catch (Exception e) {
-            model.addAttribute("error", "Lỗi khi load sản phẩm: " + e.getMessage());
+            model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
             return "error_view";
         }
     }
+
+//    @GetMapping("list_show_time")
+//    public String getListShowTime(Model model) {
+//        try {
+//            List<MovieDTO> movie_manager = movieService.getListMovie();
+//            model.addAttribute("movie_manager", movie_manager);
+//            return "home";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
+//            return "error_view";
+//        }
+//    }
 }
