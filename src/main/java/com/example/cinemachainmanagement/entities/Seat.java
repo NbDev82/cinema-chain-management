@@ -20,9 +20,6 @@ public class Seat implements Serializable {
     @Column(name = "seat_number")
     private String seatNumber;
 
-    @Column(name = "is_reserved")
-    private boolean isReserved;
-
     @ManyToOne
     @JoinColumn(name = "room_id")
     private TheaterRoom room;
