@@ -10,7 +10,13 @@ import com.example.cinemachainmanagement.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +39,8 @@ public class ManagerMovieController {
                            @RequestParam("releaseDate")String releaseDate,
                            @RequestParam("duration")int duration,
                            @RequestParam("genre")String genre,
-                           @RequestParam("rating")String rating){
+                           @RequestParam("rating")String rating,
+                           @RequestParam("image")String productImage){
 
         Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
         if(theaterOptional.isPresent()){
@@ -44,43 +51,50 @@ public class ManagerMovieController {
             Date parsedDate = null;
             try {
                 parsedDate = dateFormat.parse(releaseDate);
+
+
             } catch (ParseException e) {
                 e.printStackTrace(); // Xử lý exception nếu cần thiết
                 return "error_view";
             }
-            MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating);
-            theaterService.addMovieToTheater(movieDTO, theater);
+            try {
+                // Lưu hình ảnh vào thư mục
+                //Path path = Paths.get("src/main/resources/static/");
+                //InputStream inputStream = image_multipart.getInputStream();
+                //Files.copy(inputStream, path.resolve(image_multipart.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+
+                MovieDTO movieDTO = new MovieDTO(title, description, parsedDate, duration, genre, selectedRating,productImage);
+                theaterService.addMovieToTheater(movieDTO, theater);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("loix");
+                return "error_view";
+            }
         }
         else {
+            System.out.println("khong ton tai");
             return "error_view";
         }
-        return "success";
-
-    }
-
-    @GetMapping(value = "/add_movie")
-    public String get_form(){
-        return "/add_movie";
+        return "redirect:/admin/dashboard-"+theaterName;
     }
 
 
-    @GetMapping("/get_list_movie")
-    public String getListMovie(Model model) {
-        try {
-            List<MovieDTO> movie_manager = movieService.getListMovie();
-            model.addAttribute("movie_manager", movie_manager);
-            return "admin";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi khi load sản phẩm: " + e.getMessage());
+
+    @PostMapping(value = "/delete_movie-{theaterName}")
+    public String deleteMovie(@PathVariable String theaterName,
+                                @RequestParam(name = "movie_id")String movieId){
+        MovieDTO movie = movieService.findByMovieId(movieId);
+        System.out.println(movie.getMovieId());
+
+        Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
+        if(theaterOptional.isPresent()){
+            Theater theater = theaterOptional.get();
+            theaterService.deleteMovie(movie, theater);
+        }else
             return "error_view";
-        }
-    }
 
-    @GetMapping(value = "/delete_movie")
-    public String deleteMovie(@RequestParam(name = "movieId")String movieId){
-        System.out.println(movieId);
-        //movieService.deleteMovie(id);
-        return "success";
+        return "redirect:/admin/dashboard-"+theaterName +"/get_list_movie";
+        // "redirect:/admin/dashboard-"+theaterName;
     }
 }
 

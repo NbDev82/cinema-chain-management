@@ -1,15 +1,15 @@
 package com.example.cinemachainmanagement.controller.admin;
 
+import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
-import com.example.cinemachainmanagement.controller.BookTicketController;
 import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.entities.Theater;
+import com.example.cinemachainmanagement.service.MovieService;
 import com.example.cinemachainmanagement.service.TheaterService;
 import com.example.cinemachainmanagement.service.TimeService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +19,16 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class CalendarController {
-    private final Logger logger = LoggerFactory.getLogger(CalendarController.class);
+public class HomeAdminController {
+    private final Logger logger = LoggerFactory.getLogger(HomeAdminController.class);
     private final TheaterService theaterService;
     private final TimeService timeService;
+    private final MovieService movieService;
 
-    public CalendarController(TheaterService theaterService, TimeService timeService) {
+    public HomeAdminController(TheaterService theaterService, TimeService timeService, MovieService movieService) {
         this.theaterService = theaterService;
         this.timeService = timeService;
+        this.movieService = movieService;
     }
 
     @GetMapping("/dashboard-{theaterName}")
@@ -72,7 +74,25 @@ public class CalendarController {
                 model.addAttribute("messageSchedule", "Schedule failed!");
             }
         }
+        session.setAttribute("theaterName", theaterName);
         return url;
+    }
+
+    @GetMapping("/dashboard-{theaterName}/get_list_movie")
+    public String getListMovie(Model model, @PathVariable String theaterName) {
+        try {
+            List<MovieDTO> movie_manager = movieService.getListMovie();
+            model.addAttribute("movie_manager", movie_manager);
+            return "admin";
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi load sản phẩm: " + e.getMessage());
+            return "error_view";
+        }
+    }
+
+    @GetMapping(value = "/dashboard-{theaterName}/add_movie")
+    public String get_form(@PathVariable String theaterName){
+        return "/add_movie";
     }
 
     private boolean Schedule(String theaterName) {

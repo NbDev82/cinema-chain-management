@@ -28,8 +28,8 @@ public class AuthenticationController {
     public String checkLogin(@RequestParam(name = "email") String email, @RequestParam(name = "password")String password, Model model, HttpSession session) {
         String url = (String)session.getAttribute("url");
         if(url == null || url.isEmpty()){
-            url = "redirect:/customer/get_list_product";
-            session.setAttribute("url","redirect:/customer/get_list_product");
+            url = "redirect:/home";
+            session.setAttribute("url",url);
         }
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){

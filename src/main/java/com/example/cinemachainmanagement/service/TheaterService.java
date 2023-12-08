@@ -19,4 +19,5 @@ public interface TheaterService {
     Optional<Theater> getTheaterByTheaterName(String theaterName);
 
     void addMovieToTheater(MovieDTO movieDTO, Theater theater);
+    void deleteMovie(MovieDTO movieDTO, Theater theater);
 }

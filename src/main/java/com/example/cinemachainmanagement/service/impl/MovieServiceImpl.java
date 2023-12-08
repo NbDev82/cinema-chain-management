@@ -50,4 +50,10 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> listmovie = movieRepository.findAll();
         return Mappers.mapperEntityToDto(listmovie,MovieDTO.class);
     }
+
+    @Override
+    public MovieDTO findByMovieId(String movie_id){
+        Movie movie =  movieRepository.findByMovieId(movie_id);
+        return Mappers.convertToDto(movie,MovieDTO.class);
+    }
 }

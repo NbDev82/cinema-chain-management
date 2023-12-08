@@ -34,7 +34,10 @@ public class Movie implements Serializable {
 
     private ERating rating;
 
-    @OneToMany(mappedBy = "movie")
+    @Column(name = "product_image")
+    private String productImage;  // Đây có thể là URL hoặc đường dẫn tới hình ảnh
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Showtime> showTimes;
 
     @ManyToMany(mappedBy = "movies")
