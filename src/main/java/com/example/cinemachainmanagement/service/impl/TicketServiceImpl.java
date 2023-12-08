@@ -1,7 +1,10 @@
 package com.example.cinemachainmanagement.service.impl;
 
+import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
+import com.example.cinemachainmanagement.mapper.Mapper;
 import com.example.cinemachainmanagement.entities.Seat;
 import com.example.cinemachainmanagement.entities.Showtime;
+import com.example.cinemachainmanagement.entities.TheaterRoom;
 import com.example.cinemachainmanagement.entities.Ticket;
 import com.example.cinemachainmanagement.repositories.TicketCrudRepository;
 import com.example.cinemachainmanagement.service.TheaterService;
@@ -24,12 +27,13 @@ public class TicketServiceImpl implements TicketService {
     private final Lock lock = new ReentrantLock();;
     private final TicketCrudRepository crudTicketRepo;
     private final TheaterService theaterService;
+    private final Mapper mapper;
 
 
-    public TicketServiceImpl(TicketCrudRepository crudTicketRepo, TheaterService theaterService) {
+    public TicketServiceImpl(TicketCrudRepository crudTicketRepo, TheaterService theaterService, Mapper mapper) {
         this.crudTicketRepo = crudTicketRepo;
         this.theaterService = theaterService;
-//        this.lock = lock;
+        this.mapper = mapper;
     }
 
     @Override
@@ -75,5 +79,17 @@ public class TicketServiceImpl implements TicketService {
             lock.unlock();
         }
         return tickets;
+    }
+
+    @Override
+    public TheaterRoomDTO getOrderSeatsByRoom(TheaterRoom room) {
+        List<Ticket> tickets = crudTicketRepo.findBySeatRoom(room);
+        List<String> seatNumbers = new ArrayList<>();
+        tickets.forEach( t-> seatNumbers.add(t.getSeat().getSeatNumber()));
+        room.getSeats()
+                .forEach(s -> {
+                    s.setReserved(seatNumbers.contains(s.getSeatNumber()));
+                });
+        return mapper.mapperEntityToDto(room, TheaterRoomDTO.class);
     }
 }

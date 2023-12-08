@@ -104,12 +104,15 @@ public class BookTicketController{
                     .build();
             List<Ticket> tickets = new ArrayList<>();
 
-            session.setAttribute("tickets", tickets);
-            session.setAttribute("time", time);
             TheaterRoom theaterRoom = optionalRoom.get();
-            TheaterRoomDTO roomDTO = mapper.mapEntityToDto(theaterRoom, TheaterRoomDTO.class);
+            TheaterRoomDTO roomDTO = ticketService.getOrderSeatsByRoom(theaterRoom);
+
             Collections.sort(roomDTO.getSeats());
             TicketDTO ticketDTO = mapper.mapEntityToCustomDto(ticket);
+
+            session.setAttribute("tickets", tickets);
+            session.setAttribute("time", time);
+
             model.addAttribute("room", roomDTO);
             model.addAttribute("ticket", ticketDTO);
         }
@@ -132,6 +135,7 @@ public class BookTicketController{
         model.addAttribute("tickets", ticketDTOs);
         return url.get();
     }
+
 }
 
 
