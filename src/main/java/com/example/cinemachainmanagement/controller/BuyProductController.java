@@ -103,10 +103,10 @@ public class BuyProductController {
                 return "login";
             }
             //lưu snackOrder
-            SnackOrder snackOrder = new SnackOrder();
+            //SnackOrder snackOrder = new SnackOrder();
 //                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
 //                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
-            snackOrderService.addSnackOrder(snackOrder, total_price, customerDTO);
+            //snackOrderService.addSnackOrder(snackOrder, total_price, customerDTO);
         } catch (Exception e) {
             return "error_view";
         }

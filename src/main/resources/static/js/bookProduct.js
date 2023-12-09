@@ -40,4 +40,9 @@ function updateQuantityAndTotalPrice(button, isAddition) {
     quantityInput.value = currentQuantity;
     currentPriceTag.innerText = currentPrice.toString();
     document.getElementById('selectPrice').value = currentPriceTag.innerText;
+
+
+
+
+
 }
