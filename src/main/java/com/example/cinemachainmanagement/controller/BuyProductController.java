@@ -102,6 +102,10 @@ public class BuyProductController {
             if (customerDTO == null) {
                 return "login";
             }
+            // set lại Ticker(totalPrice)
+            // câp nhật lại tiền trên Ticker sau khi mua bắp nước
+
+
             //lưu snackOrder
             //SnackOrder snackOrder = new SnackOrder();
 //                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
@@ -110,7 +114,7 @@ public class BuyProductController {
         } catch (Exception e) {
             return "error_view";
         }
-        return "success";
+        return "payment";
     }
 
 
