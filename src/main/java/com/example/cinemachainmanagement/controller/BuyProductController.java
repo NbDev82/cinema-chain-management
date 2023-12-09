@@ -51,13 +51,11 @@ public class BuyProductController {
         }
     }
 
-
     @GetMapping("/addtocart/{id}")
     private String addToCart(@PathVariable(name = "id") Long productId, @RequestParam(name = "quantity") Integer quantity) {
         try {
             ProductDTO productDTO = productService.getProductById(String.valueOf(productId));
-            if(productDTO != null)
-            {
+            if (productDTO != null) {
                 CartItem cartItem = new CartItem();
                 cartItem.setProductId(productDTO.getId());
                 cartItem.setName(productDTO.getName());
@@ -67,22 +65,17 @@ public class BuyProductController {
                 cartService.add(cartItem);
 
                 return "redirect:/customer/view-cart";
-            }
-            else
+            } else
                 return "error_view";
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return "error_view";
         }
 
     }
 
-
-
-
     @GetMapping("/view-cart")
-    private String viewCart (Model model){
+    private String viewCart(Model model) {
         model.addAttribute("CART_ITEMS", cartService.getAllItem());
         model.addAttribute("TOTAL_PRICE", cartService.totalPrice(cartService.getAllItem()));
         return "customer_cart";
@@ -95,35 +88,30 @@ public class BuyProductController {
     }
 
     @GetMapping("/clear")
-    private String clear(){
+    private String clear() {
         cartService.clear();
         return "redirect:/customer/view-cart";
     }
 
-    @PostMapping("/pay")
-    private String pay(@RequestParam(name = "TOTAL_PRICE") int total_price, HttpSession session){
+    @PostMapping("/pay_product")
+    private String pay(@RequestParam(name = "selectPrice") int total_price, HttpSession session) {
         try {
             // lấy customer qua session
-            Long customer_id = (Long) session.getAttribute("customer_id");
-            CustomerDTO customerDTO = customerService.getCustomerById(customer_id);
-            if (customerDTO==null){
+            Customer customer = (Customer) session.getAttribute("customer");
+            CustomerDTO customerDTO = customerService.getCustomerById(customer.getCustomerId());
+            if (customerDTO == null) {
                 return "login";
             }
             //lưu snackOrder
             SnackOrder snackOrder = new SnackOrder();
-            snackOrderService.addSnackOrder(snackOrder,total_price,customerDTO);
-            for (CartItem cartItem : cartService.getAllItem()) {
-                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO(cartItem.getQty());
-                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
-            }
-        }
-        catch (Exception e)
-        {
+//                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
+//                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
+            snackOrderService.addSnackOrder(snackOrder, total_price, customerDTO);
+        } catch (Exception e) {
             return "error_view";
         }
         return "success";
     }
-
 
 
 }
