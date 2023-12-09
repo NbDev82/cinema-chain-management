@@ -37,10 +37,13 @@ public class BuyProductController {
     private CustomerService customerService;
 
     @GetMapping("/get_list_product")
-    public String getListProduct(Model model) {
+    public String getListProduct(Model model, HttpSession session) {
         try {
+            String price = (String) session.getAttribute("price");
+
             List<ProductDTO> productsmanager = productService.getListProduct();
             model.addAttribute("productsmanager", productsmanager);
+            model.addAttribute("price", price);
             return "customer_product_list";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi khi đặt hàng: " + e.getMessage());

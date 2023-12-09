@@ -19,6 +19,8 @@ function orderSeat(button) {
             return $(this).attr('value');
         }).get();
         document.getElementById('selectedSeats').value = JSON.stringify(selectedSeats);
+        document.getElementById('price1').value = currentPriceTag.innerText;
+
     }
 }
 
