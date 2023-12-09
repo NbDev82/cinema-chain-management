@@ -3,29 +3,35 @@ package com.example.cinemachainmanagement.service.impl;
 import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.Customer;
+import com.example.cinemachainmanagement.enums.EMessage;
 import com.example.cinemachainmanagement.repositories.CustomerRepository;
+import com.example.cinemachainmanagement.service.AccountService;
 import com.example.cinemachainmanagement.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
+    private final Logger logger = LoggerFactory.getLogger(CustomerServiceImp.class);
+
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public Customer authenticateCustomer(String email, String password) {
-        // Lấy thông tin khách hàng từ cơ sở dữ liệu dựa trên email
         Customer customer = customerRepository.findByEmail(email).orElse(null);
-
-        // Kiểm tra xem khách hàng có tồn tại không
         if (customer != null) {
-            // So sánh mật khẩu đã nhập với mật khẩu trong cơ sở dữ liệu
-            if (password.equals(customer.getPassHash())) {
-                return customer; // Trả về thông tin khách hàng nếu mật khẩu trùng khớp
+            String passHash = accountService.hashPassword(password);
+            if (passHash.equals(customer.getPassHash())) {
+                return customer;
             }
         }
-        return null; // Trả về null nếu không tìm thấy hoặc mật khẩu không đúng
+        return null;
     }
 
     @Override
@@ -33,6 +39,8 @@ public class CustomerServiceImp implements CustomerService {
         try {
             Customer customer_exist = customerRepository.findByEmail(customerDTO.getEmail()).orElse(null);
             if(customer_exist==null){
+                String passHash = accountService.hashPassword(customerDTO.getPassHash());
+                customerDTO.setPassHash(passHash);
                 customerDTO.setAccountBalance(0);
                 Customer customer = Mappers.convertToEntity(customerDTO, Customer.class);
                 customerRepository.save(customer);
@@ -53,5 +61,25 @@ public class CustomerServiceImp implements CustomerService {
         }
         return null;
 
+    }
+
+    @Override
+    public EMessage changePassword(String email, String oldPassword, String newPassword) {
+        try{
+            String oldPasswordHash = accountService.hashPassword(oldPassword);
+            String newPasswordHash = accountService.hashPassword(newPassword);
+            Customer customer = customerRepository.findByEmail(email).orElse(null);
+            if(customer == null)
+                return EMessage.CUSTOMER_NOT_EXIST;
+            if(customer.getPassHash().equals(oldPasswordHash)){
+                customer.setPassHash(newPasswordHash);
+                customerRepository.save(customer);
+                return EMessage.CHANGE_PASS_WORD_SUCCESS;
+            }
+            return EMessage.OLD_PASS_NOT_MATCH;
+        }catch(Exception e){
+            logger.error("Lỗi khi đổi mật khẩu cho khách hàng: " + email + ". Lỗi: " + e.getMessage());
+            return EMessage.CHANGE_PASS_WORD_NOT_SUCCESS;
+        }
     }
 }
