@@ -44,5 +44,4 @@ function updateQuantityAndTotalPrice(button, isAddition) {
 
 
 
-
 }

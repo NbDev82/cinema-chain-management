@@ -94,11 +94,12 @@ public class BuyProductController {
     }
 
     @PostMapping("/pay_product")
-    private String pay(@RequestParam(name = "selectPrice") int total_price, HttpSession session) {
+    private String pay(@RequestParam(name = "selectPrice") String price, HttpSession session, Model  model) {
         try {
             // lấy customer qua session
             Customer customer = (Customer) session.getAttribute("customer");
             CustomerDTO customerDTO = customerService.getCustomerById(customer.getCustomerId());
+            model.addAttribute("total_price",price);
             if (customerDTO == null) {
                 return "login";
             }
