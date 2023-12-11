@@ -41,7 +41,11 @@ function updateQuantityAndTotalPrice(button, isAddition) {
     currentPriceTag.innerText = currentPrice.toString();
     document.getElementById('selectPrice').value = currentPriceTag.innerText;
 
-
-
-
 }
+function submitForm() {
+    let currentPriceTag = document.getElementById('price');
+    let currentPrice = parseInt(currentPriceTag.innerText);
+
+    document.getElementById('selectPrice').value = currentPrice;
+}
+

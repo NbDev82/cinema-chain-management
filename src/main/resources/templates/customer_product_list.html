@@ -166,10 +166,9 @@
                                 <button class="btn w-65px h-10 py-2 bg-transparent text-primary text-sm rounded-md">
                                     <span>Quay lại</span></button>
                                 <form id="seatForm" method="post" th:action="pay_product">
-                                    <input type="hidden" id="selectPrice" name="selectPrice" />
-                                    <input type="hidden"  name="price" th:value="${price}" />
-                                    <button type="submit"
-                                            class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px">
+
+                                    <button type="submit" onclick="submitForm()" class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px">
+                                        <input type="hidden" id="selectPrice" name="selectPrice" />
                                         <span>Tiếp tục</span>
                                     </button>
                                 </form>
