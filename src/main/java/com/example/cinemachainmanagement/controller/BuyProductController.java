@@ -4,10 +4,7 @@ import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
 import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
 import com.example.cinemachainmanagement.Mapper.Mappers;
-import com.example.cinemachainmanagement.entities.Customer;
-import com.example.cinemachainmanagement.entities.Product;
-import com.example.cinemachainmanagement.entities.ShoppingCartItem;
-import com.example.cinemachainmanagement.entities.SnackOrder;
+import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.model.CartItem;
 import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
 import com.example.cinemachainmanagement.service.*;
@@ -94,20 +91,24 @@ public class BuyProductController {
     }
 
     @PostMapping("/pay_product")
-    private String pay(@RequestParam(name = "selectPrice") String price, HttpSession session, Model  model) {
+    private String pay(@RequestParam(name = "selectPrice") String price,
+                       @RequestParam(name = "selectPriceProduct")String selectPriceProduct,
+                       HttpSession session,
+                       Model  model) {
         try {
-            // lấy customer qua session
-            Customer customer = (Customer) session.getAttribute("customer");
-            CustomerDTO customerDTO = customerService.getCustomerById(customer.getCustomerId());
-            model.addAttribute("total_price",price);
-            if (customerDTO == null) {
-                return "login";
+            // lấy tickets qua session
+            List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
+            if(tickets == null || tickets.isEmpty()){
+                return "redirect:/customer_authentication/login";
             }
-            // set lại Ticker(totalPrice)
-            // câp nhật lại tiền trên Ticker sau khi mua bắp nước
+            model.addAttribute("total_price",price);
+
+            SnackOrder snackOrder = new SnackOrder();
+            snackOrderService.addSnackOrder(snackOrder, Integer.parseInt(selectPriceProduct),tickets);
 
 
-            //lưu snackOrder
+
+
             //SnackOrder snackOrder = new SnackOrder();
 //                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
 //                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
