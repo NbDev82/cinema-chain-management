@@ -38,5 +38,8 @@ public class Ticket implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "snack_order_id")
+    private SnackOrder snackOrder;
 }

@@ -19,7 +19,7 @@ public class SnackOrderServiceImp implements SnackOrderService {
         try {
             Customer customer = Mappers.convertToEntity(customerDTO, Customer.class);
             snackOrder.setTotal_prices(total_price);
-            snackOrder.setCustomer(customer);
+//            snackOrder.setCustomer(customer);
             snackOrderRepository.save(snackOrder);
         }
         catch (Exception e){

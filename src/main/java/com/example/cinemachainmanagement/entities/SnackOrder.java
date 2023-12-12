@@ -24,7 +24,6 @@ public class SnackOrder implements Serializable {
     @OneToMany(mappedBy = "snackOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<ShoppingCartItem> shoppingCartItems;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @OneToMany(mappedBy = "snackOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Ticket> tickets;
 }
