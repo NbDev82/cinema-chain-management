@@ -128,15 +128,15 @@ public class BookTicketController{
 
         AtomicReference<String> url = new AtomicReference<>("redirect:/customer/get_list_product");
 
-//        Showtime time = (Showtime)session.getAttribute("time");
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String[] selectedSeatListId = objectMapper.readValue(selectedSeats, String[].class);
-//        List<Ticket> tickets = ticketService.createTicketsBySeatListId(selectedSeatListId, time);
-//        if(tickets.isEmpty())
-//            url.set("error");
-//        List<TicketDTO> ticketDTOs = mapper.mapperEntityToDto(tickets, TicketDTO.class);
-//        session.setAttribute("tickets",tickets);
-//        model.addAttribute("tickets", ticketDTOs);
+        Showtime time = (Showtime)session.getAttribute("time");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String[] selectedSeatListId = objectMapper.readValue(selectedSeats, String[].class);
+        List<Ticket> tickets = ticketService.createTicketsBySeatListId(selectedSeatListId, time);
+        if(tickets.isEmpty())
+            url.set("error");
+        List<TicketDTO> ticketDTOs = mapper.mapperEntityToDto(tickets, TicketDTO.class);
+        session.setAttribute("tickets",tickets);
+        model.addAttribute("tickets", ticketDTOs);
 
         session.setAttribute("price",price);
         return url.get();

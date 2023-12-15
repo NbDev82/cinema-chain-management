@@ -79,6 +79,15 @@ public class ProductServiceImp implements ProductService {
         return null;
     }
 
+    @Override
+    public Product getProductByIdEntity(String product_id) {
+        Product product = productRepository.findById(Long.valueOf(product_id)).orElse(null);
+        if(product !=null){
+            return product;
+        }
+        return null;
+    }
+
     public void deleteProduct(String product_id) {
         try {
             Long id = Long.parseLong(product_id);

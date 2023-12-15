@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.controller;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
 import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
@@ -93,18 +94,22 @@ public class BuyProductController {
     @PostMapping("/pay_product")
     private String pay(@RequestParam(name = "selectPrice") String price,
                        @RequestParam(name = "selectPriceProduct")String selectPriceProduct,
+                       @RequestParam("listProductBuy") String listProductBuy,
                        HttpSession session,
                        Model  model) {
         try {
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<ProductDTO> dataListProductBuy = objectMapper.readValue(listProductBuy, new TypeReference<List<ProductDTO>>() {});
             // lấy tickets qua session
             List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
-            if(tickets == null || tickets.isEmpty()){
-                return "redirect:/customer_authentication/login";
-            }
-            model.addAttribute("total_price",price);
+//            if(tickets == null || tickets.isEmpty()){
+//                return "redirect:/customer_authentication/login";
+//            }
+           // model.addAttribute("total_price",price);
 
             SnackOrder snackOrder = new SnackOrder();
-            snackOrderService.addSnackOrder(snackOrder, Integer.parseInt(selectPriceProduct),tickets);
+            snackOrderService.addSnackOrder(snackOrder, Integer.parseInt(selectPriceProduct),tickets, dataListProductBuy);
 
 
 

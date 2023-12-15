@@ -19,6 +19,7 @@
 // }
 
 let currentPriceIncrease = 0;
+
 function updateQuantityAndTotalPrice(button, isAddition) {
     let quantityInput = button.parentNode.querySelector('input[type="number"]');
     let currentQuantity = parseInt(quantityInput.value);
@@ -46,29 +47,31 @@ function updateQuantityAndTotalPrice(button, isAddition) {
     currentPriceTag.innerText = currentPrice.toString();
 
 }
+
 function submitForm() {
+    event.preventDefault();
     let currentPriceTag = document.getElementById('price');
     let currentPrice = parseInt(currentPriceTag.innerText);
     document.getElementById('selectPrice').value = currentPrice;
     document.getElementById('selectPriceProduct').value = currentPriceIncrease.toString();
 
-    // Lấy tất cả các input có class là 'form-control' trong form
-    var quantityInputs = document.querySelectorAll('form input.form-control');
+    const productForms = document.querySelectorAll('form[action^="/customer/addtocart/"]');
+    let listID = [];
 
-    var data = {};
+    productForms.forEach(form => {
+        let quantityInput = form.querySelector('.form-control.form-control-sm');
+        let quantity = parseInt(quantityInput.value);
 
-    // Duyệt qua từng input để lấy thông tin sản phẩm với số lượng khác 0
-    quantityInputs.forEach(function(input) {
-        var productId = input.name.replace('quantity', '');
-        var quantity = parseInt(input.value);
+        if (quantity > 0) {
+            let productId = form.getAttribute('action').split('/').pop();
+            listID.push({ id: productId, quantity: quantity });
 
-        if (quantity !== 0) {
-            data[productId] = quantity; // Lưu thông tin sản phẩm và số lượng vào object data
         }
     });
 
-    // Gán dữ liệu vào input hidden để gửi đi trong form
-    document.getElementById('selectPriceProduct').value = JSON.stringify(data);
+    document.getElementById('listProductBuy').value = JSON.stringify(listID);
 
+    console.log(listID);
+    document.getElementById('product_form').submit();
 }
 

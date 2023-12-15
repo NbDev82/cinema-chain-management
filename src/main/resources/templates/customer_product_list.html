@@ -165,11 +165,12 @@
                             <div>
                                 <button class="btn w-65px h-10 py-2 bg-transparent text-primary text-sm rounded-md">
                                     <span>Quay lại</span></button>
-                                <form id="seatForm" method="post" th:action="pay_product">
+                                <form id="product_form" method="post" th:action="pay_product">
 
                                     <button type="submit" onclick="submitForm()" class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px">
                                         <input type="hidden" id="selectPrice" name="selectPrice" />
                                         <input type="hidden" id="selectPriceProduct" name="selectPriceProduct" />
+                                        <input type="hidden" id="listProductBuy" name="listProductBuy" />
                                         <span>Tiếp tục</span>
                                     </button>
                                 </form>

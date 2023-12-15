@@ -37,7 +37,3 @@ function checkSeat(){
         alert("Please click a available seat before continue!")
     }
 }
-
-function showAlert() {
-    alert('Thông báo: Bạn đã nhấn vào nút.');
-}
