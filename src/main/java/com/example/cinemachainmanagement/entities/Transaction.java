@@ -26,9 +26,6 @@ public class Transaction implements Serializable {
 
     private Timestamp created;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_method_id", nullable = false)
-    private PaymentMethod paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

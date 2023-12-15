@@ -36,15 +36,12 @@ public class Customer implements Serializable {
     private String passHash;
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<Ticket> tickets;
-
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Transaction> transactions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "customer_paymentmethod",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "payment_method_id"))
-    private List<PaymentMethod> paymentMethods;
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Orders> orders;
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Ticket> tickets;
+
 }

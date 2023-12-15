@@ -23,7 +23,7 @@ public class ShoppingCartItem implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "snack_order_id")
-    private SnackOrder snackOrder;
+    private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

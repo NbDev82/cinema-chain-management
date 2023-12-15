@@ -23,9 +23,10 @@ public class TransactionHistoryController {
     TicketService ticketService;
     @GetMapping("")
     public String getHistory(Model model, HttpSession session){
-        Customer customer= (Customer) session.getAttribute("customer");
-        List<Ticket> history = ticketService.findAllByCustomer(customer);
-        model.addAttribute("history",history);
-        return "transactionHistory";
+//        Customer customer= (Customer) session.getAttribute("customer");
+//        List<Ticket> history = ticketService.findAllByCustomer(customer);
+//        model.addAttribute("history",history);
+//        return "transactionHistory";
+        return null;
     }
 }

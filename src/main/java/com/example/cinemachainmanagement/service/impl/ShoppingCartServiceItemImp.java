@@ -23,10 +23,10 @@ public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
         try {
             ShoppingCartItem shoppingCartItem = Mappers.convertToEntity(shoppingCartItemDTO, ShoppingCartItem.class);
 
-            SnackOrder snackOrder = snackOrderRepository.findById(snackOrderId).orElse(null);
+            Orders orders = snackOrderRepository.findById(snackOrderId).orElse(null);
             Product product = productRepository.findById(productId).orElse(null);
-            if (snackOrder != null && product!=null) {
-                shoppingCartItem.setSnackOrder(snackOrder);
+            if (orders != null && product!=null) {
+                shoppingCartItem.setOrders(orders);
                 shoppingCartItem.setProduct(product);
                 shoppingCartItemRepository.save(shoppingCartItem);
             } else {

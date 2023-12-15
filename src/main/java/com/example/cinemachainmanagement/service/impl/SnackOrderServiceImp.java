@@ -1,8 +1,6 @@
 package com.example.cinemachainmanagement.service.impl;
 
-import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
-import com.example.cinemachainmanagement.Mapper.Mappers;
 import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.repositories.ProductRepository;
 import com.example.cinemachainmanagement.repositories.ShoppingCartItemRepository;
@@ -30,24 +28,24 @@ public class SnackOrderServiceImp implements SnackOrderService {
     private ProductService productService;
 
     @Override
-    public void addSnackOrder(SnackOrder snackOrder, int selectPriceProduct, List<Ticket> tickets, List<ProductDTO> dataListProductBuy) {
+    public void addSnackOrder(Orders orders, int selectPriceProduct, List<Ticket> tickets, List<ProductDTO> dataListProductBuy) {
         try {
             //chuyển thanh list các ShoppingCartItem
             List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
             for (ProductDTO productDTO : dataListProductBuy) {
                 ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
                 shoppingCartItem.setShoppingCartItemQuantity(String.valueOf(productDTO.getQuantity()));
-                shoppingCartItem.setSnackOrder(snackOrder);
+                shoppingCartItem.setOrders(orders);
 
                 Product productDTO1 = productService.getProductByIdEntity(String.valueOf(productDTO.getId()));
                 shoppingCartItem.setProduct(productDTO1);
                 shoppingCartItems.add(shoppingCartItem);
             }
 
-            snackOrder.setTotal_prices(selectPriceProduct);
-            snackOrder.setShoppingCartItems(shoppingCartItems);
-            snackOrder.setTickets(null);
-            snackOrderRepository.save(snackOrder);
+            orders.setTotal_prices(selectPriceProduct);
+            orders.setShoppingCartItems(shoppingCartItems);
+            orders.setTickets(null);
+            snackOrderRepository.save(orders);
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("Erro r");
