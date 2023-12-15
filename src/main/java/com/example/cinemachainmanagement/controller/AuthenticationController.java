@@ -3,6 +3,7 @@ package com.example.cinemachainmanagement.controller;
 import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.enums.EMessage;
+import com.example.cinemachainmanagement.enums.ERole;
 import com.example.cinemachainmanagement.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class AuthenticationController {
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){
             session.setAttribute("customer",customer);
+            if(customer.getRole() == ERole.ADMIN){
+                session.setAttribute("isAdmin", true);
+            } else {
+                session.setAttribute("isAdmin", false);
+            }
             return url;
         } else {
             model.addAttribute("error", "Email hoặc mật khẩu không chính xác");

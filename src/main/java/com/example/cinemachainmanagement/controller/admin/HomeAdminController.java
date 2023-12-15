@@ -1,9 +1,11 @@
 package com.example.cinemachainmanagement.controller.admin;
 
+import org.springframework.security.access.AccessDeniedException;;
 import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
 import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.entities.Theater;
+import com.example.cinemachainmanagement.enums.ERole;
 import com.example.cinemachainmanagement.service.MovieService;
 import com.example.cinemachainmanagement.service.TheaterService;
 import com.example.cinemachainmanagement.service.TimeService;
@@ -36,6 +38,11 @@ public class HomeAdminController {
                         HttpSession session,
                         Model model) {
         String url = "admin";
+        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+
+        if (isAdmin == null || !isAdmin) {
+            return "403";
+        }
         model.addAttribute("theaterName", theaterName);
         model.addAttribute("showShowtime", false);
         return url;
@@ -47,6 +54,11 @@ public class HomeAdminController {
                       HttpSession session,
                       Model model) {
         String url = "404";
+        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+
+        if (isAdmin == null || !isAdmin) {
+            return "403";
+        }
         if (action.equals("get-list-showtime")) {
             url = "admin";
             Customer customer = (Customer) session.getAttribute("customer");
@@ -79,7 +91,14 @@ public class HomeAdminController {
     }
 
     @GetMapping("/dashboard-{theaterName}/get_list_movie")
-    public String getListMovie(Model model, @PathVariable String theaterName) {
+    public String getListMovie(Model model,
+                               @PathVariable String theaterName,
+                               HttpSession session) {
+        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+
+        if (isAdmin == null || !isAdmin) {
+            return "403";
+        }
         try {
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
@@ -91,7 +110,13 @@ public class HomeAdminController {
     }
 
     @GetMapping(value = "/dashboard-{theaterName}/add_movie")
-    public String get_form(@PathVariable String theaterName){
+    public String get_form(@PathVariable String theaterName,
+                           HttpSession session){
+        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+
+        if (isAdmin == null || !isAdmin) {
+            return "403";
+        }
         return "/add_movie";
     }
 
