@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Design by foolishdeveloper.com -->
-    <title>Login</title>
+    <title>Forgot Password</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
@@ -15,28 +15,17 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form action="/customer_authentication/login" method="post">
-    <h3>Login</h3>
+<form action="/customer_authentication/otp" method="get">
+    <h3>Your Email</h3>
 
     <h3><a href="/home"><i id="homeIcon" class="fa-solid fa-house "></i></a></h3>
 
     <label for="email">Email</label>
-    <input type="text" placeholder="Email" name="email" id="email">
-
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" name="password" id="password">
+    <input type="email" placeholder="Email" name="email" id="email">
 
     <label th:text="${result}"></label>
 
-    <button type="submit">Login</button>
-    <p><a href="/customer_authentication/changePassword">Change password</a></p>
-    <p><a href="/customer_authentication/forgot-pass">Forgot password?</a></p>
-    <p>Don't have an account? <a href="/customer_authentication/register">Register here</a></p>
-
-    <div class="social">
-        <div class="go"><i class="fab fa-google"></i>  Google</div>
-        <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-    </div>
+    <button type="submit">Send OTP</button>
 </form>
 <script>
     var homeIcon = document.getElementById("homeIcon")
