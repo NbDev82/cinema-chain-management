@@ -26,6 +26,9 @@ public class Orders implements Serializable {
     @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Ticket> tickets;
 
+    @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Transaction> transactions ;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

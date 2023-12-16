@@ -44,4 +44,6 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Ticket> tickets;
 
+
+
 }

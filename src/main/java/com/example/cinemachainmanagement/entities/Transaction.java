@@ -30,4 +30,8 @@ public class Transaction implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "snack_order_id", nullable = false)
+    private Orders orders;
 }
