@@ -7,18 +7,21 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "SnackOrders")
+@Table(name = "Orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Orders implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "snack_order_id")
-    private Long snackOrderId;
+    @Column(name = "order_id")
+    private Long orderId;
 
     @Column(name = "total_prices")
     private double total_prices;
+
+    @Column(name = "order_status")
+    private boolean orderStatus;
 
     @OneToMany(mappedBy = "orders", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<ShoppingCartItem> shoppingCartItems;

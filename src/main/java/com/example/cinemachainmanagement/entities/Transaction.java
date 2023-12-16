@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.entities;
 
+import com.example.cinemachainmanagement.enums.EMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Transaction implements Serializable {
 
     private String status;
 
+    @Column(name = "method_type")
+    @Enumerated(EnumType.STRING)
+    private EMethod methodType;
+
     @Column(name = "total_amount", nullable = false)
     private int totalAmount;
 
@@ -32,6 +37,6 @@ public class Transaction implements Serializable {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "snack_order_id", nullable = false)
+    @JoinColumn(name = "snack_order_id")
     private Orders orders;
 }

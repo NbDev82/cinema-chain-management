@@ -35,7 +35,7 @@ public class Ticket implements Serializable {
     private Showtime showTime;
 
     @ManyToOne
-    @JoinColumn(name = "snack_order_id")
+    @JoinColumn(name = "order_id")
     private Orders orders;
 
     @ManyToOne

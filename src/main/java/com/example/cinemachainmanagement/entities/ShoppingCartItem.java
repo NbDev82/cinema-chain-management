@@ -22,7 +22,7 @@ public class ShoppingCartItem implements Serializable {
     private String shoppingCartItemQuantity;
 
     @ManyToOne
-    @JoinColumn(name = "snack_order_id")
+    @JoinColumn(name = "order_id")
     private Orders orders;
 
     @ManyToOne
