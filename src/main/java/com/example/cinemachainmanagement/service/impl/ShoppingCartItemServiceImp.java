@@ -9,8 +9,10 @@ import com.example.cinemachainmanagement.service.ShoppingCartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
+public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
     @Autowired
     ShoppingCartItemRepository shoppingCartItemRepository;
     @Autowired
@@ -38,4 +40,10 @@ public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
             System.out.println("Error");
         }
     }
+
+    @Override
+    public List<ShoppingCartItem> findByOrders(Orders orders){
+        return shoppingCartItemRepository.findByOrders(orders);
+    }
+
 }

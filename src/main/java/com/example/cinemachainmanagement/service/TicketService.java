@@ -1,10 +1,7 @@
 package com.example.cinemachainmanagement.service;
 
 import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
-import com.example.cinemachainmanagement.entities.Customer;
-import com.example.cinemachainmanagement.entities.Showtime;
-import com.example.cinemachainmanagement.entities.TheaterRoom;
-import com.example.cinemachainmanagement.entities.Ticket;
+import com.example.cinemachainmanagement.entities.*;
 import jakarta.transaction.SystemException;
 
 import java.util.Date;
@@ -19,4 +16,5 @@ public interface TicketService {
     List<Ticket> findAllByCustomer(Customer customer);
     TheaterRoomDTO getOrderSeatsByRoomAndTime(TheaterRoom theaterRoom, Date startTime);
     Optional<Ticket> findTicketById(Long ticketId);
+    List<Ticket> findTicketsByOrders(Orders orders);
 }

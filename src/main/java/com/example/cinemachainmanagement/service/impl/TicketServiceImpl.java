@@ -100,4 +100,9 @@ public class TicketServiceImpl implements TicketService {
     public Optional<Ticket> findTicketById(Long ticketId) {
         return crudTicketRepo.findById(ticketId);
     }
+
+    @Override
+    public List<Ticket> findTicketsByOrders(Orders orders) {
+        return crudTicketRepo.findByOrders(orders);
+    }
 }
