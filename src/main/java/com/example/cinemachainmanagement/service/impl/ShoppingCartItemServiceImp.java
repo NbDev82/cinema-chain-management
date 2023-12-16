@@ -9,8 +9,10 @@ import com.example.cinemachainmanagement.service.ShoppingCartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
+public class ShoppingCartItemServiceImp implements ShoppingCartItemService {
     @Autowired
     ShoppingCartItemRepository shoppingCartItemRepository;
     @Autowired
@@ -23,10 +25,10 @@ public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
         try {
             ShoppingCartItem shoppingCartItem = Mappers.convertToEntity(shoppingCartItemDTO, ShoppingCartItem.class);
 
-            SnackOrder snackOrder = snackOrderRepository.findById(snackOrderId).orElse(null);
+            Orders orders = snackOrderRepository.findById(snackOrderId).orElse(null);
             Product product = productRepository.findById(productId).orElse(null);
-            if (snackOrder != null && product!=null) {
-                shoppingCartItem.setSnackOrder(snackOrder);
+            if (orders != null && product!=null) {
+                shoppingCartItem.setOrders(orders);
                 shoppingCartItem.setProduct(product);
                 shoppingCartItemRepository.save(shoppingCartItem);
             } else {
@@ -38,4 +40,10 @@ public class ShoppingCartServiceItemImp implements ShoppingCartItemService {
             System.out.println("Error");
         }
     }
+
+    @Override
+    public List<ShoppingCartItem> findByOrders(Orders orders){
+        return shoppingCartItemRepository.findByOrders(orders);
+    }
+
 }

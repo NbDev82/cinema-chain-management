@@ -8,7 +8,8 @@ public enum EMethod {
     MASTER_CARD(2),
     VTC(3),
     CREDIT_CARD(4),
-    BANKING(5);
+    BANKING(5),
+    AtTheCounter(6);
 
     private final int value;
 

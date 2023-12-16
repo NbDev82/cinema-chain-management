@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "Tickets")
@@ -34,6 +33,10 @@ public class Ticket implements Serializable {
     @ManyToOne
     @JoinColumn(name = "showtime_id")
     private Showtime showTime;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

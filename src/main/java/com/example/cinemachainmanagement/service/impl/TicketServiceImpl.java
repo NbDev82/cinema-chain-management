@@ -2,10 +2,7 @@ package com.example.cinemachainmanagement.service.impl;
 
 import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
 import com.example.cinemachainmanagement.Mapper.Mapper;
-import com.example.cinemachainmanagement.entities.Seat;
-import com.example.cinemachainmanagement.entities.Showtime;
-import com.example.cinemachainmanagement.entities.TheaterRoom;
-import com.example.cinemachainmanagement.entities.Ticket;
+import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.repositories.TicketCrudRepository;
 import com.example.cinemachainmanagement.service.TheaterService;
 import com.example.cinemachainmanagement.service.TicketService;
@@ -94,5 +91,18 @@ public class TicketServiceImpl implements TicketService {
                     s.setReserved(seatNumbers.contains(s.getSeatNumber()));
                 });
         return roomDTO;
+    }
+    public List<Ticket> findAllByCustomer(Customer customer){
+        return crudTicketRepo.findAllByCustomer(customer);
+    }
+
+    @Override
+    public Optional<Ticket> findTicketById(Long ticketId) {
+        return crudTicketRepo.findById(ticketId);
+    }
+
+    @Override
+    public List<Ticket> findTicketsByOrders(Orders orders) {
+        return crudTicketRepo.findByOrders(orders);
     }
 }

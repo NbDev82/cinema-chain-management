@@ -19,6 +19,7 @@ public interface ProductService {
     ProductDTO getProductById(String id);
 
     void deleteProduct(String product_id);
+    Product getProductByIdEntity(String product_id);
 
 
 }

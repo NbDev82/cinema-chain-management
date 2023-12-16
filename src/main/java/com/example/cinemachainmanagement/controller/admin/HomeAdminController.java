@@ -42,9 +42,15 @@ public class HomeAdminController {
         if (isAdmin == null || !isAdmin) {
             return "403";
         }
-        model.addAttribute("theaterName", theaterName);
-        model.addAttribute("showShowtime", false);
+        Optional<Theater> theater = theaterService.getTheaterByTheaterName(theaterName);
+        if(theater.isPresent()){
+            model.addAttribute("theaterName", theaterName);
+            model.addAttribute("showShowtime", false);
+        }else{
+            url="404";
+        }
         return url;
+
     }
 
     @PostMapping("/dashboard-{theaterName}")

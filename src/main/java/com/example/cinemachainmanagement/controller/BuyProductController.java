@@ -1,15 +1,12 @@
 package com.example.cinemachainmanagement.controller;
 
-import com.example.cinemachainmanagement.DTO.CustomerDTO;
+import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
+import com.example.cinemachainmanagement.DTO.TicketDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
-import com.example.cinemachainmanagement.DTO.ShoppingCartItemDTO;
-import com.example.cinemachainmanagement.Mapper.Mappers;
-import com.example.cinemachainmanagement.entities.Customer;
-import com.example.cinemachainmanagement.entities.Product;
-import com.example.cinemachainmanagement.entities.ShoppingCartItem;
-import com.example.cinemachainmanagement.entities.SnackOrder;
+import com.example.cinemachainmanagement.entities.*;
 import com.example.cinemachainmanagement.model.CartItem;
-import com.example.cinemachainmanagement.repositories.SnackOrderRepository;
 import com.example.cinemachainmanagement.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
@@ -17,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -35,12 +33,22 @@ public class BuyProductController {
     private ShoppingCartItemService shoppingCartItemService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private TicketService ticketService;
 
     @GetMapping("/get_list_product")
-    public String getListProduct(Model model) {
+    public String getListProduct(Model model, HttpSession session) {
         try {
+            TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
+            TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
+
+            model.addAttribute("room", room);
+            model.addAttribute("ticket", ticket);
+//
+            String price = (String) session.getAttribute("price");
             List<ProductDTO> productsmanager = productService.getListProduct();
             model.addAttribute("productsmanager", productsmanager);
+            model.addAttribute("price", price);
             return "customer_product_list";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi khi đặt hàng: " + e.getMessage());
@@ -48,13 +56,11 @@ public class BuyProductController {
         }
     }
 
-
     @GetMapping("/addtocart/{id}")
     private String addToCart(@PathVariable(name = "id") Long productId, @RequestParam(name = "quantity") Integer quantity) {
         try {
             ProductDTO productDTO = productService.getProductById(String.valueOf(productId));
-            if(productDTO != null)
-            {
+            if (productDTO != null) {
                 CartItem cartItem = new CartItem();
                 cartItem.setProductId(productDTO.getId());
                 cartItem.setName(productDTO.getName());
@@ -64,22 +70,17 @@ public class BuyProductController {
                 cartService.add(cartItem);
 
                 return "redirect:/customer/view-cart";
-            }
-            else
+            } else
                 return "error_view";
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return "error_view";
         }
 
     }
 
-
-
-
     @GetMapping("/view-cart")
-    private String viewCart (Model model){
+    private String viewCart(Model model) {
         model.addAttribute("CART_ITEMS", cartService.getAllItem());
         model.addAttribute("TOTAL_PRICE", cartService.totalPrice(cartService.getAllItem()));
         return "customer_cart";
@@ -92,35 +93,49 @@ public class BuyProductController {
     }
 
     @GetMapping("/clear")
-    private String clear(){
+    private String clear() {
         cartService.clear();
         return "redirect:/customer/view-cart";
     }
 
-    @PostMapping("/pay")
-    private String pay(@RequestParam(name = "TOTAL_PRICE") int total_price, HttpSession session){
+    @PostMapping("/pay_product")
+    private String pay(@RequestParam(name = "selectPrice") String price,
+//                       @RequestParam(name = "selectPriceProduct")String selectPriceProduct,
+                       @RequestParam("listProductBuy") String listProductBuy,
+                       HttpSession session,
+                       Model model) {
         try {
-            // lấy customer qua session
-            Long customer_id = (Long) session.getAttribute("customer_id");
-            CustomerDTO customerDTO = customerService.getCustomerById(customer_id);
-            if (customerDTO==null){
-                return "login";
+            //model.addAttribute("total_price",price);
+            Customer customer = (Customer) session.getAttribute("customer");
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<ProductDTO> dataListProductBuy = objectMapper.readValue(listProductBuy, new TypeReference<List<ProductDTO>>() {
+            });
+            // lấy tickets qua session
+            List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
+            if (tickets == null || tickets.isEmpty()) {
+                return "redirect:/customer_authentication/login";
             }
-            //lưu snackOrder
-            SnackOrder snackOrder = new SnackOrder();
-            snackOrderService.addSnackOrder(snackOrder,total_price,customerDTO);
-            for (CartItem cartItem : cartService.getAllItem()) {
-                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO(cartItem.getQty());
-                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
+            //lấy Ticker vào de quản lý bởi persistence context của Hibernate
+            List<Ticket> ticketList = new ArrayList<>();
+            for (Ticket t : tickets) {
+                Optional<Ticket> ticket = ticketService.findTicketById(t.getTicketId());
+                if (ticket != null) {
+                    ticketList.add(ticket.get());
+                }
             }
-        }
-        catch (Exception e)
-        {
+            Orders orders = new Orders();
+            snackOrderService.addSnackOrder(orders, Integer.parseInt(price), ticketList, dataListProductBuy, customer);
+            session.setAttribute("orders", orders);
+
+        } catch (Exception e) {
             return "error_view";
         }
-        return "success";
+        TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
+        TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
+
+        model.addAttribute("room", room);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("total_price",price);
+        return "payment";
     }
-
-
-
 }

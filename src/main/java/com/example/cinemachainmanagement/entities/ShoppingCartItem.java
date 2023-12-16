@@ -22,8 +22,8 @@ public class ShoppingCartItem implements Serializable {
     private String shoppingCartItemQuantity;
 
     @ManyToOne
-    @JoinColumn(name = "snack_order_id")
-    private SnackOrder snackOrder;
+    @JoinColumn(name = "order_id")
+    private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
