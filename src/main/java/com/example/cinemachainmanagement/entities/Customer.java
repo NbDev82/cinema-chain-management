@@ -1,5 +1,6 @@
 package com.example.cinemachainmanagement.entities;
 
+import com.example.cinemachainmanagement.enums.ERole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,9 @@ public class Customer implements Serializable {
 
     @Column(name="password_hash")
     private String passHash;
+
+    @Enumerated(EnumType.STRING)
+    private ERole role;
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Transaction> transactions;

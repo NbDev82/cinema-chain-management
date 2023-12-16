@@ -2,6 +2,8 @@ package com.example.cinemachainmanagement.controller;
 
 import com.example.cinemachainmanagement.DTO.CustomerDTO;
 import com.example.cinemachainmanagement.entities.Customer;
+import com.example.cinemachainmanagement.enums.EMessage;
+import com.example.cinemachainmanagement.enums.ERole;
 import com.example.cinemachainmanagement.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,11 @@ public class AuthenticationController {
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){
             session.setAttribute("customer",customer);
+            if(customer.getRole() == ERole.ADMIN){
+                session.setAttribute("isAdmin", true);
+            } else {
+                session.setAttribute("isAdmin", false);
+            }
             return url;
         } else {
             model.addAttribute("error", "Email hoặc mật khẩu không chính xác");
@@ -54,7 +61,7 @@ public class AuthenticationController {
     public String checkRegister(@ModelAttribute CustomerDTO customerDTO, Model model) {
         try {
             if(customerService.registerCustomer(customerDTO)){
-                return "login";
+                return "redirect:/customer_authentication/login";
             }
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng kí: " + e.getMessage());
@@ -68,5 +75,21 @@ public class AuthenticationController {
         session.setAttribute("customer", null);
         System.out.println(session.getAttribute("customer"));
         return "redirect:/customer_authentication/login";
+    }
+
+    @GetMapping("/changePassword")
+    public String changePassword(Model model){
+        try{
+            return "passwordResult";
+        } catch(Exception e){
+            model.addAttribute("error", "Lỗi đổi mật khẩu: " + e.getMessage());
+            return "error_view";
+        }
+    }
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam String email, @RequestParam String oldPassword, @RequestParam String newPassword, Model model) {
+        EMessage result = customerService.changePassword(email, oldPassword, newPassword);
+        model.addAttribute("result", result.getValue());
+        return "passwordResult";
     }
 }
