@@ -1,6 +1,5 @@
 package com.example.cinemachainmanagement.controller.admin;
 
-import org.springframework.security.access.AccessDeniedException;;
 import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.DTO.ShowtimeDTO;
 import com.example.cinemachainmanagement.entities.Customer;

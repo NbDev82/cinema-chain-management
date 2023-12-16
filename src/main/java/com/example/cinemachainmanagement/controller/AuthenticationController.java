@@ -61,7 +61,7 @@ public class AuthenticationController {
     public String checkRegister(@ModelAttribute CustomerDTO customerDTO, Model model) {
         try {
             if(customerService.registerCustomer(customerDTO)){
-                return "login";
+                return "redirect:/customer_authentication/login";
             }
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng kí: " + e.getMessage());
