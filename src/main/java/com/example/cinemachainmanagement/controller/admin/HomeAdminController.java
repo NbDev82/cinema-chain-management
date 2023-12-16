@@ -36,9 +36,15 @@ public class HomeAdminController {
                         HttpSession session,
                         Model model) {
         String url = "admin";
-        model.addAttribute("theaterName", theaterName);
-        model.addAttribute("showShowtime", false);
+        Optional<Theater> theater = theaterService.getTheaterByTheaterName(theaterName);
+        if(theater.isPresent()){
+            model.addAttribute("theaterName", theaterName);
+            model.addAttribute("showShowtime", false);
+        }else{
+            url="404";
+        }
         return url;
+
     }
 
     @PostMapping("/dashboard-{theaterName}")
