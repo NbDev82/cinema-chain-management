@@ -9,6 +9,7 @@ import jakarta.transaction.SystemException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface TicketService {
     boolean persist(Ticket ticket);
@@ -17,4 +18,5 @@ public interface TicketService {
 
     List<Ticket> findAllByCustomer(Customer customer);
     TheaterRoomDTO getOrderSeatsByRoomAndTime(TheaterRoom theaterRoom, Date startTime);
+    Optional<Ticket> findTicketById(Long ticketId);
 }

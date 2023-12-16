@@ -189,7 +189,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title-1">PHƯƠNG THỨC THANH TOÁN</div>
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 form-group">
                         <div class="ck1">
-                            <input type="radio" id="cb5" name="paymentType" class="paymentType" value="VISA"
+                            <input type="radio" id="cb5" name="paymentType" class="paymentType" value="AtTheCounter"
                                    checked=""/>
                             <label for="cb5"></label>
                             Thanh toán trực tiếp tại quầy &nbsp; &nbsp; <img class="tooltip_attach"
@@ -200,7 +200,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <div class="ck1">
-                            <input type="radio" id="cb7" name="paymentType" class="paymentType" value="VISA"/>
+                            <input type="radio" id="cb7" name="paymentType" class="paymentType" value="AtTheCounter"/>
                             <label for="cb7"></label>
                             Thanh toán bằng VN Pay &nbsp; &nbsp; <img
                                 class="tooltip_attach"
@@ -211,7 +211,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 form-group">
                         <div class="ck1">
-                            <input type="radio" id="cb8" name="paymentType" class="paymentType" value="VISA"/>
+                            <input type="radio" id="cb8" name="paymentType" class="paymentType" value="AtTheCounter"/>
                             <label for="cb8"></label>
                             Thanh toán bằng tài khoản galaxy của bạn &nbsp; &nbsp; <img class="tooltip_attach"
                                                                                         src="https://ananas.vn/wp-content/themes/ananas/fe-assets/images/svg/icon_cham_hoi.svg">
@@ -229,39 +229,38 @@
                     <div class="h-6 bg-primary rounded-t-lg"></div>
                     <div class="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">
                         <div class="row-span-2 md:row-span-1 xl:row-span-2 block md:hidden xl:block">
-                            <img alt="" loading="lazy" width="100" height="150" decoding="async"
-                                 class="w-100 h-150 rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0"
-                                 src="/#" style="color: transparent;">
+                            <img alt="" loading="lazy" width="100" height="150" decoding="async" class="w-100 h-150 rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0" src="/#" style="color: transparent;">
                         </div>
                         <div class="flex-1 col-span-2 md:col-span-1 row-span-1 xl:col-span-2">
-                            <!--                        <h3 class="text-sm xl:text-base font-bold xl:mb-2" th:text="${ticket.title}"></h3>-->
-                            <!--                        <p class="text-sm xl:block inline-block" th:text="${ticket.genre}"></p>-->
-                            <div class="xl:mt-2 ml-2 xl:ml-0 xl:block inline-block">
-                                <!--                            <span class="inline-flex items-center justify-center w-38 h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic" th:text="${ticket.duration}"></span>-->
+                            <h3 class="text-sm xl:text-base font-bold xl:mb-2" th:text="${ticket.title}"></h3>
+                            <p class="text-sm xl:block inline-block" th:text="${ticket.genre}"></p>
+                            <div class ="xl:mt-2 ml-2 xl:ml-0 xl:block inline-block">
+                                <span class="inline-flex items-center justify-center w-38 h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic" th:text="${ticket.duration}"></span>
                             </div>
                         </div>
                         <div class="col-span-2 md:col-span-1 xl:col-span-3">
                             <div>
-                                <!--                            <div class="xl:mt-4 text-sm xl:text-base"><strong th:text="${ticket.theaterName}"></strong> - <span>Phòng: </span><span class="text-sm xl:text-base" th:text="${ticket.roomNumber}"></span></div>-->
+                                <div class="xl:mt-4 text-sm xl:text-base"><strong th:text="${ticket.theaterName}"></strong> - <span>Phòng: </span><span class="text-sm xl:text-base" th:text="${ticket.roomNumber}"></span></div>
                                 <div class="xl:mt-2 text-sm xl:text-base">
                                     <span>Suất: </span>
-                                    <!--                                <strong th:with="ticket=${ticket}">-->
-                                    <!--                                    <time th:datetime="${#dates.format(ticket.startTime, 'HH:mm:ss')}"-->
-                                    <!--                                          th:text="${#dates.format(ticket.startTime, 'HH:mm:ss')}"></time>-->
-                                    <!--                                </strong>-->
+                                    <strong th:with="ticket=${ticket}">
+                                        <time th:datetime="${#dates.format(ticket.startTime, 'HH:mm:ss')}"
+                                              th:text="${#dates.format(ticket.startTime, 'HH:mm:ss')}"></time>
+                                    </strong>
                                     <span> - </span>
-                                    <!--                                <span class="capitalize text-sm">-->
-                                    <!--                                        <strong th:with="ticket=${ticket}">-->
-                                    <!--                                            <time th:datetime="${#dates.format(ticket.date, 'dd/MM/yyyy')}"-->
-                                    <!--                                                  th:text="${#dates.format(ticket.date, 'dd/MM/yyyy')}"></time>-->
-                                    <!--                                        </strong>-->
-                                    <!--                                    </span>-->
+                                    <span class="capitalize text-sm">
+                                        <strong th:with="ticket=${ticket}">
+                                            <time th:datetime="${#dates.format(ticket.date, 'dd/MM/yyyy')}"
+                                                  th:text="${#dates.format(ticket.date, 'dd/MM/yyyy')}"></time>
+                                        </strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="fixed bottom-0 left-0 w-full z-100 bg-white xl:hidden transition-all duration-500 ease-in-out overflow-hidden max-h-90vh h-max min-h-max pb-12 pt-2 border border-#DFDFDF rounded-t-xl opacity-100">
                     <div class="rounded opacity-100 w-full">
                         <img alt="Icon show" loading="lazy" width="45" height="20" decoding="async"

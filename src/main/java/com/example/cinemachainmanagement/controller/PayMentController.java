@@ -1,30 +1,63 @@
 package com.example.cinemachainmanagement.controller;
 
+import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
+import com.example.cinemachainmanagement.DTO.TicketDTO;
+import com.example.cinemachainmanagement.entities.*;
+import com.example.cinemachainmanagement.enums.EMethod;
+import com.example.cinemachainmanagement.service.TheaterService;
+import com.example.cinemachainmanagement.service.TicketService;
+import com.example.cinemachainmanagement.service.TimeService;
+import com.example.cinemachainmanagement.service.TransactionService;
+import com.mysql.cj.Session;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/customer")
 public class PayMentController {
+    @Autowired
+    TransactionService transactionService;
+    @Autowired
+    TheaterService theaterService;
+    @Autowired
+    TimeService timeService;
+    @Autowired
+    TicketService ticketService;
 
     @PostMapping("payment")
     public String payMent(@RequestParam("paymentType") String paymentType,
                           @RequestParam("total_price") String total_price, HttpSession session) {
         try {
 
+            Transaction getTransaction = new Transaction();
 
-//            PaymentMethod paymentMethod = new PaymentMethod();
-//            EMethod methodType = EMethod.valueOf(paymentType);
-//            paymentMethod.setMethodType(methodType);
-//
-//            Customer customer = (Customer)session.getAttribute("customer");
-//            paymentMenthodService.payment(paymentMethod, customer);
-
-
+            Customer customer = (Customer) session.getAttribute("customer");
+            Orders orders = (Orders) session.getAttribute("orders");
+            Transaction transaction = new Transaction();
+            switch (paymentType) {
+                case "AtTheCounter":
+                    getTransaction = transactionService.addTransaction(transaction, customer, orders, paymentType, total_price);
+                    break;
+                default:
+                    if (customer.getAccountBalance() > Integer.parseInt(total_price)) {
+                        getTransaction = transactionService.addTransaction(transaction, customer, orders, paymentType, total_price);
+                    } else {
+                        //form nạp tiền..........
+                        return "redirect:/customer_authentication/login";
+                    }
+                    break;
+            }
 
 
         } catch (Exception e) {
@@ -32,6 +65,7 @@ public class PayMentController {
             System.out.println(e);
             return "error_view";
         }
-        return "success";
+        return "bill";
     }
+
 }

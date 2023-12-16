@@ -1,4 +1,7 @@
 package com.example.cinemachainmanagement.controller;
+
+import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
+import com.example.cinemachainmanagement.DTO.TicketDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.cinemachainmanagement.DTO.ProductDTO;
@@ -11,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -28,12 +33,19 @@ public class BuyProductController {
     private ShoppingCartItemService shoppingCartItemService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private TicketService ticketService;
 
     @GetMapping("/get_list_product")
     public String getListProduct(Model model, HttpSession session) {
         try {
-            String price = (String) session.getAttribute("price");
+            TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
+            TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
 
+            model.addAttribute("room", room);
+            model.addAttribute("ticket", ticket);
+//
+            String price = (String) session.getAttribute("price");
             List<ProductDTO> productsmanager = productService.getListProduct();
             model.addAttribute("productsmanager", productsmanager);
             model.addAttribute("price", price);
@@ -88,36 +100,42 @@ public class BuyProductController {
 
     @PostMapping("/pay_product")
     private String pay(@RequestParam(name = "selectPrice") String price,
-                       @RequestParam(name = "selectPriceProduct")String selectPriceProduct,
+//                       @RequestParam(name = "selectPriceProduct")String selectPriceProduct,
                        @RequestParam("listProductBuy") String listProductBuy,
                        HttpSession session,
-                       Model  model) {
+                       Model model) {
         try {
-
+            //model.addAttribute("total_price",price);
+            Customer customer = (Customer) session.getAttribute("customer");
             ObjectMapper objectMapper = new ObjectMapper();
-            List<ProductDTO> dataListProductBuy = objectMapper.readValue(listProductBuy, new TypeReference<List<ProductDTO>>() {});
+            List<ProductDTO> dataListProductBuy = objectMapper.readValue(listProductBuy, new TypeReference<List<ProductDTO>>() {
+            });
             // lấy tickets qua session
             List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
-//            if(tickets == null || tickets.isEmpty()){
-//                return "redirect:/customer_authentication/login";
-//            }
-           // model.addAttribute("total_price",price);
-
+            if (tickets == null || tickets.isEmpty()) {
+                return "redirect:/customer_authentication/login";
+            }
+            //lấy Ticker vào de quản lý bởi persistence context của Hibernate
+            List<Ticket> ticketList = new ArrayList<>();
+            for (Ticket t : tickets) {
+                Optional<Ticket> ticket = ticketService.findTicketById(t.getTicketId());
+                if (ticket != null) {
+                    ticketList.add(ticket.get());
+                }
+            }
             Orders orders = new Orders();
-            snackOrderService.addSnackOrder(orders, Integer.parseInt(selectPriceProduct),tickets, dataListProductBuy);
+            snackOrderService.addSnackOrder(orders, Integer.parseInt(price), ticketList, dataListProductBuy, customer);
+            session.setAttribute("orders", orders);
 
-
-
-
-            //SnackOrder snackOrder = new SnackOrder();
-//                ShoppingCartItemDTO shoppingCartItemDTO = new ShoppingCartItemDTO();
-//                shoppingCartItemService.addShoppingCartItem(shoppingCartItemDTO,snackOrder.getSnackOrderId(),cartItem.getProductId());
-            //snackOrderService.addSnackOrder(snackOrder, total_price, customerDTO);
         } catch (Exception e) {
             return "error_view";
         }
+        TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
+        TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
+
+        model.addAttribute("room", room);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("total_price",price);
         return "payment";
     }
-
-
 }

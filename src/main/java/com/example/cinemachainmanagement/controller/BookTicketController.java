@@ -114,6 +114,9 @@ public class BookTicketController{
 
                 model.addAttribute("room", roomDTO);
                 model.addAttribute("ticket", ticketDTO);
+
+                session.setAttribute("room", roomDTO);
+                session.setAttribute("ticket", ticketDTO);
             }
 
         }
@@ -129,6 +132,7 @@ public class BookTicketController{
         AtomicReference<String> url = new AtomicReference<>("redirect:/customer/get_list_product");
 
         Showtime time = (Showtime)session.getAttribute("time");
+
         ObjectMapper objectMapper = new ObjectMapper();
         String[] selectedSeatListId = objectMapper.readValue(selectedSeats, String[].class);
         List<Ticket> tickets = ticketService.createTicketsBySeatListId(selectedSeatListId, time);
@@ -141,6 +145,8 @@ public class BookTicketController{
         session.setAttribute("price",price);
         return url.get();
     }
+
+
 }
 
 

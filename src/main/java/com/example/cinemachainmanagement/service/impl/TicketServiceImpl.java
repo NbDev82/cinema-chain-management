@@ -95,4 +95,9 @@ public class TicketServiceImpl implements TicketService {
     public List<Ticket> findAllByCustomer(Customer customer){
         return crudTicketRepo.findAllByCustomer(customer);
     }
+
+    @Override
+    public Optional<Ticket> findTicketById(Long ticketId) {
+        return crudTicketRepo.findById(ticketId);
+    }
 }

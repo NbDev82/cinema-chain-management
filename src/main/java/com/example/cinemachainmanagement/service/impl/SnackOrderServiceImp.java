@@ -28,7 +28,7 @@ public class SnackOrderServiceImp implements SnackOrderService {
     private ProductService productService;
 
     @Override
-    public void addSnackOrder(Orders orders, int selectPriceProduct, List<Ticket> tickets, List<ProductDTO> dataListProductBuy) {
+    public void addSnackOrder(Orders orders, int price, List<Ticket> ticketList, List<ProductDTO> dataListProductBuy, Customer  customer) {
         try {
             //chuyển thanh list các ShoppingCartItem
             List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
@@ -42,16 +42,22 @@ public class SnackOrderServiceImp implements SnackOrderService {
                 shoppingCartItems.add(shoppingCartItem);
             }
 
-            orders.setTotal_prices(selectPriceProduct);
+            //Cap nhật lại vé đó thuộc order nao
+            List<Ticket> tickets  = new ArrayList<>();
+            for (Ticket ticket : ticketList) {
+               ticket.setOrders(orders);
+                tickets.add(ticket);
+            }
+
+            orders.setTotal_prices(price);
+            orders.setOrderStatus(false);
             orders.setShoppingCartItems(shoppingCartItems);
-            orders.setTickets(null);
+            orders.setTickets(tickets);
+            orders.setCustomer(customer);
             snackOrderRepository.save(orders);
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("Erro r");
+            System.out.println("Error");
         }
-
     }
-
-
 }
