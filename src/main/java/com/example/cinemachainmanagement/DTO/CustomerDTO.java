@@ -1,19 +1,18 @@
 package com.example.cinemachainmanagement.DTO;
 
+import com.example.cinemachainmanagement.enums.ERole;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Component
 public class CustomerDTO {
 
@@ -30,6 +29,7 @@ public class CustomerDTO {
     private int accountBalance;
 
     private String passHash;
+    private ERole role;
 
     public CustomerDTO(String firstName, String lastName, String email, String phoneNumber, String passHash) {
         this.firstName = firstName;
