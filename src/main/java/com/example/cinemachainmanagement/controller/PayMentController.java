@@ -3,6 +3,7 @@ package com.example.cinemachainmanagement.controller;
 import com.example.cinemachainmanagement.DTO.TheaterRoomDTO;
 import com.example.cinemachainmanagement.DTO.TicketDTO;
 import com.example.cinemachainmanagement.entities.*;
+import com.example.cinemachainmanagement.enums.EMessage;
 import com.example.cinemachainmanagement.enums.EMethod;
 import com.example.cinemachainmanagement.service.*;
 import com.mysql.cj.Session;
@@ -33,15 +34,16 @@ public class PayMentController {
     TicketService ticketService;
     @Autowired
     ShoppingCartItemService shoppingCartItemService;
+    @Autowired
+    EmailService emailService;
 
     @PostMapping("payment")
     public String payMent(@RequestParam("paymentType") String paymentType,
                           @RequestParam("total_price") String total_price, HttpSession session,
                           Model model) {
         try {
-
+            String email = (String)session.getAttribute("email");
             Transaction getTransaction = new Transaction();
-
             Customer customer = (Customer) session.getAttribute("customer");
             Orders orders = (Orders) session.getAttribute("orders");
             Transaction transaction = new Transaction();
@@ -68,6 +70,8 @@ public class PayMentController {
                 System.out.println("List Ticket By Order:");
                 System.out.println(t.getSeat().getSeatNumber());
             }
+
+            emailService.sendInvoiceEmail(email, "Invoice",tickets, transaction,shoppingCartItems);
 
         } catch (Exception e) {
             System.out.println("Error");
