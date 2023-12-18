@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImp implements CustomerService {
     private final Logger logger = LoggerFactory.getLogger(CustomerServiceImp.class);
@@ -81,5 +83,22 @@ public class CustomerServiceImp implements CustomerService {
             logger.error("Lỗi khi đổi mật khẩu cho khách hàng: " + email + ". Lỗi: " + e.getMessage());
             return EMessage.CHANGE_PASS_WORD_NOT_SUCCESS;
         }
+    }
+
+    @Override
+    public EMessage changePassword(String email, String newPassword) {
+        Customer customer =  customerRepository.findByEmail(email).orElse(null);
+        if(customer == null)
+            return EMessage.CUSTOMER_NOT_EXIST;
+        customer.setPassHash(accountService.hashPassword(newPassword));
+        customerRepository.save(customer);
+        return EMessage.CHANGE_PASS_WORD_SUCCESS;
+    }
+
+
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        Optional<Customer> customer =  customerRepository.findByEmail(email);
+        return customer.orElse(null);
     }
 }

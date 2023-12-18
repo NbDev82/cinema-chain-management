@@ -9,4 +9,7 @@ public interface CustomerService {
     boolean registerCustomer(CustomerDTO customerDTO);
     CustomerDTO getCustomerById(Long customerDTO_id);
     EMessage changePassword(String email, String oldPassword, String newPassword);
+
+    EMessage changePassword(String email,String newPassword);
+    Customer getCustomerByEmail(String email);
 }
