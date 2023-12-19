@@ -2,9 +2,11 @@ package com.example.cinemachainmanagement.controller;
 
 
 import com.example.cinemachainmanagement.DTO.MovieDTO;
+import com.example.cinemachainmanagement.entities.Customer;
 import com.example.cinemachainmanagement.service.CustomerService;
 import com.example.cinemachainmanagement.service.MovieService;
 import com.example.cinemachainmanagement.service.TheaterService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,10 +51,13 @@ public class HomeController {
 
 
     @GetMapping()
-    public String getListMovie(Model model) {
+    public String getListMovie(Model model, HttpSession session) {
         try {
+            Customer customer = (Customer)session.getAttribute("customer") ;
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
+            model.addAttribute("customer", customer);
+
             return "home";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
