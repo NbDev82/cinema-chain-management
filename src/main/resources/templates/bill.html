@@ -39,23 +39,27 @@
                 <hr style="border: 2px solid black;">
 
                 <div class="row">
-                    <div class="col-xl-9">
+                    <div class="col-xl-10">
                         <p>Seat</p>
                     </div>
-                    <div class="col-xl-3">
-                        <div class="mb-3">
-                                <span th:each="ticket : ${tickets}" th:text="${ticket.getSeat().getSeatNumber() + ' '}"></span>
+                    <div class="col-xl-2">
+                        <div class="mb-2">
+                            <span th:each="ticket : ${tickets}"
+                                  th:text="${ticket.getSeat().getSeatNumber() + ' '}"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-9">
+                    <div class="col-xl-10">
                         <p>Food and drink</p>
                     </div>
-                    <div class="col-xl-3">
-                        <div class="mb-3">
-                            <span th:each="shoppingCartItem : ${shoppingCartItems}" th:text="${shoppingCartItem.getProduct().getProductName() + 'x'+shoppingCartItem.getShoppingCartItemQuantity()+','}"></span>
+                    <div class="col-xl-2">
+                        <div class="mb-2">
+            <span th:each="shoppingCartItem, iterStat : ${shoppingCartItems}">
+                <span th:text="${shoppingCartItem.getProduct().getProductName() + 'x' + shoppingCartItem.getShoppingCartItemQuantity()}"></span>
+                <span th:unless="${iterStat.last}">,</span> <!-- Kiểm tra xem có phải mục cuối cùng hay không -->
+            </span>
                         </div>
                     </div>
                 </div>
@@ -72,7 +76,6 @@
                     </div>
                     <hr style="border: 2px solid red;">
                 </div>
-                <!--                </div>-->
                 <hr>
             </div>
 

@@ -41,8 +41,9 @@ public class PayMentController {
     public String payMent(@RequestParam("paymentType") String paymentType,
                           @RequestParam("total_price") String total_price, HttpSession session,
                           Model model) {
+
+        String email = (String) session.getAttribute("email");
         try {
-            String email = (String)session.getAttribute("email");
             Transaction getTransaction = new Transaction();
             Customer customer = (Customer) session.getAttribute("customer");
             Orders orders = (Orders) session.getAttribute("orders");

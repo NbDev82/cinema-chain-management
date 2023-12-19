@@ -42,6 +42,7 @@ public class AuthenticationController {
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){
             session.setAttribute("customer",customer);
+            session.setAttribute("email",email);
             if(customer.getRole() == ERole.ADMIN){
                 session.setAttribute("isAdmin", true);
             } else {
