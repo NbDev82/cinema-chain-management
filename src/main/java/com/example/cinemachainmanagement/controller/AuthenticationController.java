@@ -178,4 +178,11 @@ public class AuthenticationController {
             return "404";
         }
     }
+    @PostMapping("/customer_profile")
+    public  String Profile(@RequestParam("customer_id") String customerID,Model model){
+        CustomerDTO customer = customerService.getCustomerById(Long.valueOf(customerID));
+        model.addAttribute("customer",customer);
+        return "customer_profile";
+    }
+
 }
