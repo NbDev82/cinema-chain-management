@@ -43,15 +43,15 @@
 
 
             <!-- Trong file HTML -->
-            <div class="col-md-2 d-flex align-items-center" th:if="${customer != null}">
+            <div class="col-md-2 d-flex align-items-center" th:if="${session.customer != null}">
                 <a class="nav-link text-left" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">
                     <div class="d-flex align-items-center">
                         <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO26atng_uVSqI91tajjsUmqNsTdF9ysPK4J1Svj6nzj0_Zl23zwXvXpWu4w&s" alt="User Avatar" style="width: 100%; height: auto;">
                         </div>
                         <div class="ms-2">
-                            <p th:text="${customer.firstName}"></p>
-                            <p th:text="${customer.accountBalance}"></p>
+                            <p th:text="${session.customer.firstName}"></p>
+                            <p th:text="${session.customer.accountBalance}"></p>
                         </div>
                     </div>
                 </a>
@@ -61,7 +61,7 @@
 
                     </form>
                     <form action="/customer_authentication/customer_profile" method="post">
-                        <input type="hidden" name="customer_id" th:value="${customer.customerId}">
+                        <input type="hidden" name="customer_id" th:value="${session.customer.customerId}">
                         <button class="btn btn-light mt-3" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">Thông tin tài khoản</button>
 
                     </form>
