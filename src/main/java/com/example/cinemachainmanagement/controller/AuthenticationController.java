@@ -42,6 +42,7 @@ public class AuthenticationController {
         Customer customer = customerService.authenticateCustomer(email,password);
         if(customer != null){
             session.setAttribute("customer",customer);
+            session.setAttribute("email",email);
             if(customer.getRole() == ERole.ADMIN){
                 session.setAttribute("isAdmin", true);
             } else {
@@ -79,6 +80,7 @@ public class AuthenticationController {
     @GetMapping("/logout")
     private String logout(HttpSession session){
         session.setAttribute("customer", null);
+        session.setAttribute("isAdmin", null);
         System.out.println(session.getAttribute("customer"));
         return "redirect:/customer_authentication/login";
     }
@@ -177,4 +179,11 @@ public class AuthenticationController {
             return "404";
         }
     }
+    @PostMapping("/customer_profile")
+    public  String Profile(@RequestParam("customer_id") String customerID,Model model){
+        CustomerDTO customer = customerService.getCustomerById(Long.valueOf(customerID));
+        model.addAttribute("customer",customer);
+        return "customer_profile";
+    }
+
 }
