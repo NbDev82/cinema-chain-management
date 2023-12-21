@@ -101,9 +101,9 @@ public class HomeAdminController {
                                HttpSession session) {
         Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
 
-        if (isAdmin == null || !isAdmin) {
-            return "403";
-        }
+//        if (isAdmin == null || !isAdmin) {
+//            return "403";
+//        }
         try {
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
@@ -117,11 +117,11 @@ public class HomeAdminController {
     @GetMapping(value = "/dashboard-{theaterName}/add_movie")
     public String get_form(@PathVariable String theaterName,
                            HttpSession session){
-        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
-
-        if (isAdmin == null || !isAdmin) {
-            return "403";
-        }
+//        Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+//
+//        if (isAdmin == null || !isAdmin) {
+//            return "403";
+//        }
         return "/add_movie";
     }
 

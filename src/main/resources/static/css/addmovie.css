@@ -1,0 +1,209 @@
+/* VARIABLES */
+:root {
+    --bg-color: white;
+    --hl-color: #2196F3;
+    --muted-color: mix(white, var(--bg-color), 70%);
+    --trans-time: 300ms;
+    --width: 320px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-color);
+}
+
+/* FORM */
+form {
+    width: var(--width);
+    margin: 45px auto;
+}
+
+form h1 {
+    font-size: 3em;
+    font-weight: 300;
+    text-align: center;
+    color: var(--hl-color);
+}
+
+form h5 {
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--muted-color);
+}
+
+form hr.sep {
+    background: var(--hl-color);
+    box-shadow: none;
+    border: none;
+    height: 2px;
+    width: 25%;
+    margin: 0 auto 45px auto;
+}
+
+form .emoji {
+    font-size: 1.2em;
+}
+
+.group {
+    position: relative;
+    margin: 45px 0;
+}
+
+/* INPUTS */
+textarea {
+    resize: none;
+}
+
+input,
+textarea {
+    background: none;
+    color: var(--muted-color);
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: var(--width);
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    top: -14px;
+    font-size: 12px;
+    color: var(--hl-color);
+}
+
+input:focus ~ .bar:before {
+    width: var(--width);
+}
+
+input[type="password"] {
+    letter-spacing: 0.3em;
+}
+
+label {
+    color: var(--muted-color);
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: var(--trans-time) ease all;
+}
+/* Chỉnh label nằm trên select */
+select.form-select + label {
+    position: absolute;
+    pointer-events: none;
+    top: -20px; /* Điều chỉnh vị trí top cho label */
+    left: 5px; /* Điều chỉnh vị trí left cho label */
+    color: var(--muted-color);
+    font-size: 16px;
+    transition: var(--trans-time) ease all;
+}
+
+input[type="date"] {
+    background: none;
+    color: var(--muted-color);
+    font-size: 18px;
+    padding: 22px 5px; /* Điều chỉnh padding cho phù hợp */
+    display: block;
+    width: calc(100% - 10px); /* Điều chỉnh độ rộng để fit với padding */
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--muted-color);
+    &:focus {
+        outline: none;
+    }
+    &:focus ~ label,
+    &:valid ~ label {
+        top: -14px;
+        font-size: 12px;
+        color: var(--hl-color);
+    }
+    &:focus ~ .bar:before {
+        width: calc(100% - 5px); /* Điều chỉnh chiều rộng cho phù hợp */
+    }
+}
+
+.bar {
+    position: relative;
+    display: block;
+    width: var(--width);
+}
+
+.bar:before {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background: var(--hl-color);
+    transition: var(--trans-time) ease all;
+    left: 0%;
+}
+
+/* BUTTONS */
+.btn {
+    background: #fff;
+    color: mix(black, var(--muted-color), 25%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.btn:hover {
+    color: mix(black, var(--muted-color), 30%);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
+}
+
+.btn.btn-link {
+    background: var(--hl-color);
+    color: mix(white, var(--hl-color), 80%);
+}
+
+.btn.btn-link:hover {
+    background: darken(var(--hl-color), 5%);
+    color: mix(white, var(--hl-color), 85%);
+}
+
+.btn.btn-submit {
+    background: var(--hl-color);
+    color: mix(white, var(--hl-color), 70%);
+}
+
+.btn.btn-submit:hover {
+    background: darken(var(--hl-color), 5%);
+    color: mix(white, var(--hl-color), 85%);
+}
+
+.btn.btn-cancel {
+    background: #eee;
+}
+
+.btn.btn-cancel:hover {
+    background: darken(#eee, 5%);
+    color: mix(black, var(--muted-color), 30%);
+}
+
+.btn-box {
+    text-align: center;
+    margin: 50px 0;
+}
