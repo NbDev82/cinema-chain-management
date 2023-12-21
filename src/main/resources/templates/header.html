@@ -29,21 +29,20 @@
                     </button>
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <a class="nav-link text-center" href="/home/login">
+            <div class="col-md-2 ms-auto" th:if="${session.customer == null}">
+                <a class="nav-link text-center" href="/customer_authentication/login">
                     <i class="fas fa-sign-in-alt"></i> Đăng nhập
                 </a>
             </div>
-            <div class="col-md-2 ">
-                <a class="nav-link text-left" href="/home/signup">
+            <div class="col-md-2 ms-auto" th:if="${session.customer == null}">
+                <a class="nav-link text-left" href="/customer_authentication/register">
                     <i class="fas fa-user"></i> Đăng kí
                 </a>
             </div>
 
 
             <!-- Trong file HTML -->
-            <div class="col-md-2 d-flex align-items-center" th:if="${session.customer != null}">
+            <div class="col-md-2 d-flex align-items-center ms-auto" th:if="${session.customer != null}">
                 <a class="nav-link text-left" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">
                     <div class="d-flex align-items-center">
                         <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">

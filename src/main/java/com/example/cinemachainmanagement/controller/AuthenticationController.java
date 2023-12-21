@@ -80,6 +80,7 @@ public class AuthenticationController {
     @GetMapping("/logout")
     private String logout(HttpSession session){
         session.setAttribute("customer", null);
+        session.setAttribute("isAdmin", null);
         System.out.println(session.getAttribute("customer"));
         return "redirect:/customer_authentication/login";
     }
