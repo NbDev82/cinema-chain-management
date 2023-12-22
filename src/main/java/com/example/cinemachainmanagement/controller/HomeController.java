@@ -53,10 +53,9 @@ public class HomeController {
     @GetMapping()
     public String getListMovie(Model model, HttpSession session) {
         try {
-            Customer customer = (Customer)session.getAttribute("customer") ;
+
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
-            model.addAttribute("customer", customer);
 
             return "home";
         } catch (Exception e) {

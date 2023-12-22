@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </a>
-                <div class="btn-group-vertical button-list-hidden" id="button-list" onmouseover="cancelHide()">
+                <div class="btn-group-vertical button-list-hidden " id="button-list" onmouseover="cancelHide()">
                     <form action="/customer_authentication/logout" method="get">
                         <button class="btn btn-light mt-3" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">Đăng xuất</button>
 
@@ -62,6 +62,11 @@
                     <form action="/customer_authentication/customer_profile" method="post">
                         <input type="hidden" name="customer_id" th:value="${session.customer.customerId}">
                         <button class="btn btn-light mt-3" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">Thông tin tài khoản</button>
+
+                    </form>
+                    <form action="/recharge/form" method="get">
+                        <input type="hidden" name="customer_id" th:value="${session.customer.customerId}">
+                        <button class="btn btn-light mt-3" onmouseenter="showButtonList()" onmouseleave="hideButtonList()">Nạp tiền</button>
 
                     </form>
                 </div>
@@ -93,10 +98,10 @@
                     position: relative;
                 }
 
-                #button-list {
+                .btn-group-vertical {
                     position: absolute;
                     top: 50px; /* Điều chỉnh vị trí xuất hiện của button-list */
-                    left: -10px; /* Điều chỉnh vị trí xuất hiện của button-list */
+                    right: 10px; /* Điều chỉnh vị trí xuất hiện của button-list */
                     background-color: white;
                     border: 1px solid #ccc;
                     padding: 10px;
