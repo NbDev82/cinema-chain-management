@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
      <link rel="stylesheet" type="text/css" th:href="@{/css/addmovie.css}" />
+    <script th:src="@{/js/addMovie.js}"></script>
+    <!-- Font Awesome Icon Library -->
 <!--    <link rel="stylesheet" href="home.css">-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
-<body>
-<div class="wrapper">
-    <form th:action="@{'/movie_management/add_movie-' + ${theaterName}}" method="post">
+<body  style="background: violet">
+<div style="position: absolute; margin-left: 500px; ">
+    <img style="height: 830px; width: 840px;" src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/300954145_5876391415718754_1391294826892973337_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGLdt6ulwoHy8mkwMvKyE0xoTGf_2EmtGehMZ__YSa0Z3OAm0WKseqTDyNFCO7JMC-BHj2a2jhl6RXIrqanRqZQ&_nc_ohc=c8vz31HYP_8AX_RCJdO&_nc_ht=scontent.fsgn5-15.fna&oh=00_AfC56SCs7oS6OSLbSViR3z957mkQZpDHv4tUEq4amWfTmQ&oe=6589D4BC" alt="NOOOOOO">
+</div>
+<div class="wrapper shape" >
+
+    <form style=" position: relative; margin-left: 100px;" th:action="@{'/movie_management/add_movie-' + ${theaterName}}" method="post">
         <div class="btn-box">
             <a class="btn btn-link" href="#">ADD MOVIE</a>
         </div>
@@ -61,7 +68,21 @@
                 <option th:each="rating : ${T(com.example.cinemachainmanagement.enums.ERating).values()}"
                         th:value="${rating.name}" th:text="${rating.value}"></option>
             </select>
-            <label>Release Date</label>
+             <label>Rating</label>
+
+<!--            <div class="stars">-->
+<!--                <p style="font-size: 18px;">Rating</p>-->
+<!--                <input class="star star-5" id="star-5" type="radio" name="star"/>-->
+<!--                <label class="star star-5" for="star-5"></label>-->
+<!--                <input class="star star-4" id="star-4" type="radio" name="star"/>-->
+<!--                <label class="star star-4" for="star-4"></label>-->
+<!--                <input class="star star-3" id="star-3" type="radio" name="star"/>-->
+<!--                <label class="star star-3" for="star-3"></label>-->
+<!--                <input class="star star-2" id="star-2" type="radio" name="star"/>-->
+<!--                <label class="star star-2" for="star-2"></label>-->
+<!--                <input class="star star-1" id="star-1" type="radio" name="star"/>-->
+<!--                <label class="star star-1" for="star-1"></label>-->
+<!--            </div>-->
 
         </div>
 
@@ -69,6 +90,24 @@
             <button class="btn btn-submit" type="submit">submit</button>
         </div>
     </form>
+<!--    <h2>Đánh giá của bạn</h2>-->
+<!--    <div class="stars">-->
+<!--        <form action="">-->
+<!--            <input class="star star-5" id="star-5" type="radio" name="star"/>-->
+<!--            <label class="star star-5" for="star-5"></label>-->
+<!--            <input class="star star-4" id="star-4" type="radio" name="star"/>-->
+<!--            <label class="star star-4" for="star-4"></label>-->
+<!--            <input class="star star-3" id="star-3" type="radio" name="star"/>-->
+<!--            <label class="star star-3" for="star-3"></label>-->
+<!--            <input class="star star-2" id="star-2" type="radio" name="star"/>-->
+<!--            <label class="star star-2" for="star-2"></label>-->
+<!--            <input class="star star-1" id="star-1" type="radio" name="star"/>-->
+<!--            <label class="star star-1" for="star-1"></label>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <h2>Đánh giá của bạn</h2>-->
+<!--    -->
+
 </div>
 
 </body>
