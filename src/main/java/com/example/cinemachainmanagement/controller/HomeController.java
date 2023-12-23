@@ -3,6 +3,7 @@ package com.example.cinemachainmanagement.controller;
 
 import com.example.cinemachainmanagement.DTO.MovieDTO;
 import com.example.cinemachainmanagement.entities.Customer;
+import com.example.cinemachainmanagement.entities.Theater;
 import com.example.cinemachainmanagement.service.CustomerService;
 import com.example.cinemachainmanagement.service.MovieService;
 import com.example.cinemachainmanagement.service.TheaterService;
@@ -53,7 +54,14 @@ public class HomeController {
     @GetMapping()
     public String getListMovie(Model model, HttpSession session) {
         try {
-
+            Boolean isAdmin = (Boolean)session.getAttribute("isAdmin");
+            if(isAdmin == null){
+                isAdmin = false;
+            }
+            if(isAdmin){
+                List<Theater> theaters = theaterService.getAllTheater();
+                model.addAttribute("theaters", theaters);
+            }
             List<MovieDTO> movie_manager = movieService.getListMovie();
             model.addAttribute("movie_manager", movie_manager);
 
@@ -63,16 +71,4 @@ public class HomeController {
             return "error_view";
         }
     }
-
-//    @GetMapping("list_show_time")
-//    public String getListShowTime(Model model) {
-//        try {
-//            List<MovieDTO> movie_manager = movieService.getListMovie();
-//            model.addAttribute("movie_manager", movie_manager);
-//            return "home";
-//        } catch (Exception e) {
-//            model.addAttribute("error", "Lỗi khi load phim" + e.getMessage());
-//            return "error_view";
-//        }
-//    }
 }

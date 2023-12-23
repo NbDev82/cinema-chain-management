@@ -124,4 +124,9 @@ public class TheaterServiceImpl implements TheaterService {
         movieRepository.delete(movie);
     }
 
+    @Override
+    public List<Theater> getAllTheater() {
+        return theaterRepo.findAll();
+    }
+
 }

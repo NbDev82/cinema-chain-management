@@ -20,4 +20,6 @@ public interface TheaterService {
 
     void addMovieToTheater(MovieDTO movieDTO, Theater theater);
     void deleteMovie(MovieDTO movieDTO, Theater theater);
+
+    List<Theater> getAllTheater();
 }
