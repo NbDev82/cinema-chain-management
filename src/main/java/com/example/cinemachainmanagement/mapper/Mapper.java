@@ -40,6 +40,7 @@ public class Mapper {
         ticketDTO.setTitle(time.getMovie().getTitle());
         ticketDTO.setStartTime(time.getStartTime());
         ticketDTO.setDate(time.getDate());
+        ticketDTO.setProductImage(time.getMovie().getProductImage());
         return ticketDTO;
     }
     public List<ShowtimeDTO> mapEntityToCustomDto(List<Showtime> showtimes){

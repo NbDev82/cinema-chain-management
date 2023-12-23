@@ -21,6 +21,9 @@
 let currentPriceIncrease = 0;
 
 function updateQuantityAndTotalPrice(button, isAddition) {
+
+
+
     let quantityInput = button.parentNode.querySelector('input[type="number"]');
     let currentQuantity = parseInt(quantityInput.value);
 
@@ -30,11 +33,11 @@ function updateQuantityAndTotalPrice(button, isAddition) {
     let currentPriceTag = document.getElementById('price');
     let currentPrice = parseInt(currentPriceTag.innerText);
 
-
     if (isAddition) {
         currentQuantity++;
         currentPrice += productPrice;
         currentPriceIncrease += productPrice
+
     } else {
         if (currentQuantity > 0) {
             currentQuantity--;
@@ -42,9 +45,34 @@ function updateQuantityAndTotalPrice(button, isAddition) {
             currentPriceIncrease -= productPrice;
         }
     }
-
     quantityInput.value = currentQuantity;
     currentPriceTag.innerText = currentPrice.toString();
+
+    /////
+
+    const productForms = document.querySelectorAll('form[action^="/customer/addtocart/"]');
+    let listID = [];
+    productForms.forEach(form => {
+        let quantityInput = form.querySelector('.form-control.form-control-sm');
+        let quantity = parseInt(quantityInput.value);
+
+        if (quantity > 0) {
+            let productNameElement = form.querySelector('h5'); // Lấy tên sản phẩm trong form hiện tại
+            let productName = productNameElement.querySelector('p').innerText;
+            listID.push({productName: productName, quantity: quantity });
+
+        }
+    });
+
+    const productListDiv = document.getElementById('productList');
+    productListDiv.innerHTML = '';
+    listID.forEach(item => {
+        const productInfo = document.createElement('p');
+        productInfo.textContent = `${item.productName} X  ${item.quantity}`;
+        productListDiv.appendChild(productInfo);
+    });
+
+
 
 }
 

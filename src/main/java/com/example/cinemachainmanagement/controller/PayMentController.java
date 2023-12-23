@@ -36,12 +36,26 @@ public class PayMentController {
     ShoppingCartItemService shoppingCartItemService;
     @Autowired
     EmailService emailService;
+    @Autowired
+    CustomerService customerService;
+
 
     @PostMapping("payment")
     public String payMent(@RequestParam("paymentType") String paymentType,
                           @RequestParam("total_price") String total_price, HttpSession session,
                           Model model) {
 
+        switch (paymentType){
+            case "1":
+                paymentType = "AtTheCounter";
+                break;
+            case "2":
+                paymentType = "CREDIT_CARD";
+                break;
+            default:
+                System.out.println("Lỗi");
+                break;
+        }
         String email = (String) session.getAttribute("email");
         try {
             Transaction getTransaction = new Transaction();
@@ -55,9 +69,11 @@ public class PayMentController {
                 default:
                     if (customer.getAccountBalance() > Integer.parseInt(total_price)) {
                         getTransaction = transactionService.addTransaction(transaction, customer, orders, paymentType, total_price);
+                        Customer cus  = customerService.deductMoney(customer.getCustomerId(),total_price);
+                        session.setAttribute("customer",cus);
                     } else {
                         //form nạp tiền..........
-                        return "redirect:/customer_authentication/login";
+                        return "recharge";
                     }
                     break;
             }
@@ -71,7 +87,6 @@ public class PayMentController {
                 System.out.println("List Ticket By Order:");
                 System.out.println(t.getSeat().getSeatNumber());
             }
-
             emailService.sendInvoiceEmail(email, "Invoice",tickets, transaction,shoppingCartItems);
 
         } catch (Exception e) {

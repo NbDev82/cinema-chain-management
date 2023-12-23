@@ -101,4 +101,30 @@ public class CustomerServiceImp implements CustomerService {
         Optional<Customer> customer =  customerRepository.findByEmail(email);
         return customer.orElse(null);
     }
+
+    @Override
+    public Customer recharge(Long cusId, String denominations){
+        Optional<Customer> customer =  customerRepository.findById(cusId);
+        if(customer!=null){
+            int tempBalance = Integer.parseInt(denominations) + customer.get().getAccountBalance();
+            customer.get().setAccountBalance(tempBalance);
+            customerRepository.save(customer.get());
+            return  customer.get();
+        }
+        else
+            return null;
+    }
+
+    @Override
+    public Customer deductMoney(Long cusId, String denominations){
+        Optional<Customer> customer =  customerRepository.findById(cusId);
+        if(customer.isPresent()){
+            int tempBalance =customer.get().getAccountBalance() - Integer.parseInt(denominations);
+            customer.get().setAccountBalance(tempBalance);
+            customerRepository.save(customer.get());
+            return  customer.get();
+        }
+        else
+            return null;
+    }
 }

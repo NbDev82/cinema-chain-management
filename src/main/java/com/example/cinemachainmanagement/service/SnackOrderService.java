@@ -8,5 +8,6 @@ import com.example.cinemachainmanagement.entities.Ticket;
 import java.util.List;
 
 public interface SnackOrderService {
+    List<ProductDTO> getListProductInCart(List<ProductDTO> productDTOS);
     void addSnackOrder(Orders orders, int price, List<Ticket> ticketList, List<ProductDTO> dataList, Customer customer);
 }

@@ -125,17 +125,22 @@ public class BuyProductController {
             }
             Orders orders = new Orders();
             snackOrderService.addSnackOrder(orders, Integer.parseInt(price), ticketList, dataListProductBuy, customer);
+
             session.setAttribute("orders", orders);
+
+            TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
+            TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
+
+            model.addAttribute("room", room);
+            model.addAttribute("ticket", ticket);
+            model.addAttribute("total_price",price);
+            model.addAttribute("listProduct",snackOrderService.getListProductInCart(dataListProductBuy));
 
         } catch (Exception e) {
             return "error_view";
         }
-        TheaterRoomDTO room = (TheaterRoomDTO) session.getAttribute("room");
-        TicketDTO ticket = (TicketDTO) session.getAttribute("ticket");
 
-        model.addAttribute("room", room);
-        model.addAttribute("ticket", ticket);
-        model.addAttribute("total_price",price);
+
         return "payment";
     }
 }
