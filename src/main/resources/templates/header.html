@@ -17,7 +17,7 @@
     <script th:src="@{/js/header.js}"></script>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <img src="https://www.galaxycine.vn/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2Fgalaxy-logo-mobile.074abeac.png&w=128&q=75" alt="Not Found" style="max-width: 80%; max-height: 100%;">
             </div>
 
@@ -41,8 +41,21 @@
             </div>
 
             <div class="col-md-2 d-flex align-items-center ms-auto" th:if="${session.isAdmin!= null and session.isAdmin}">
-<!--                LÀM Ở ĐÂY-->
+                <a class="nav-link text-left" onmouseenter="showButtonList1()" onmouseleave="hideButtonList1()">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLJL3ZNFn4yjj-bpO9jqb_cQV0YCFMmHcd1Q&usqp=CAU" alt="User Avatar" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                </a>
+                <div class="btn-group-vertical1 button-list-hidden " id="button-list1" onmouseover="cancelHide()">
+                    <form action="/customer_authentication/logout" method="get">
+                        <button class="btn btn-light mt-3" onmouseenter="showButtonList1()" onmouseleave="hideButtonList1()">Rap1</button>
+                    </form>
+
+                </div>
             </div>
+
 
             <!-- Trong file HTML -->
             <div class="col-md-2 d-flex align-items-center ms-auto" th:if="${session.customer != null}">
@@ -91,11 +104,25 @@
                     }, 100);
                 }
 
+                function showButtonList1() {
+                    clearTimeout(timeoutId);
+                    var buttonList = document.getElementById("button-list1");
+                    buttonList.classList.remove("button-list-hidden");
+                }
+
+                function hideButtonList1() {
+                    timeoutId = setTimeout(function() {
+                        var buttonList = document.getElementById("button-list1");
+                        buttonList.classList.add("button-list-hidden");
+                    }, 100);
+                }
+
             </script>
             <style>
                 .button-list-hidden {
                     display: none;
                 }
+
 
                 .avatar-container {
                     position: relative;
@@ -105,6 +132,15 @@
                     position: absolute;
                     top: 50px; /* Điều chỉnh vị trí xuất hiện của button-list */
                     right: 10px; /* Điều chỉnh vị trí xuất hiện của button-list */
+                    background-color: white;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    z-index: 999; /* Để đảm bảo nó hiển thị trên các phần tử khác */
+                }
+                .btn-group-vertical1 {
+                    position: absolute;
+                    top: 50px; /* Điều chỉnh vị trí xuất hiện của button-list */
+                    right: 500px; /* Điều chỉnh vị trí xuất hiện của button-list */
                     background-color: white;
                     border: 1px solid #ccc;
                     padding: 10px;
