@@ -42,6 +42,26 @@ public class ManagerMovieController {
                            @RequestParam("rating")String rating,
                            @RequestParam("image")String productImage){
 
+        switch (rating){
+            case "1":
+                rating = "LOW";
+                break;
+            case "2":
+                rating = "BELOW_AVERAGE";
+                break;
+            case "3":
+                rating = "AVERAGE";
+                break;
+            case "4":
+                rating = "ABOVE_AVERAGE";
+                break;
+            case "5":
+                rating = "HIGH";
+                break;
+            default:
+                System.out.println("Lỗi");
+                break;
+        }
         Optional<Theater> theaterOptional = theaterService.getTheaterByTheaterName(theaterName);
         if(theaterOptional.isPresent()){
             Theater theater = theaterOptional.get();

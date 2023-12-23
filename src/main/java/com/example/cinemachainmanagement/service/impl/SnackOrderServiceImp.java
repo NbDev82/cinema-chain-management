@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SnackOrderServiceImp implements SnackOrderService {
@@ -59,5 +60,17 @@ public class SnackOrderServiceImp implements SnackOrderService {
             System.out.println(e);
             System.out.println("Error");
         }
+    }
+    @Override
+    public List<ProductDTO> getListProductInCart(List<ProductDTO> productDTOS){
+        List<ProductDTO> productInCart = new ArrayList<>();
+        for(ProductDTO p : productDTOS){
+                Optional<Product> product =  productRepository.findById(p.getId());
+                if(product!=null){
+                    p.setName(product.get().getProductName());
+                    productInCart.add(p);
+                }
+            }
+        return productInCart;
     }
 }

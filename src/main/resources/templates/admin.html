@@ -453,7 +453,7 @@
                     <th></th>
                 </tr>
                 </tfoot>
-                <form th:action="@{'/movie_management/delete_movie-' +  ${theaterName}}" method="post">
+                <form th:action="@{'/movie_management/delete_movie-' +  ${theaterName} +'/get_list_movie'}" method="post">
                     <tbody>
                     <tr th:each="movie : ${movie_manager}">
                         <td><p th:text="${movie.title}"></p></td>

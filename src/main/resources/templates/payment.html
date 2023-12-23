@@ -102,6 +102,16 @@
                                                   th:text="${#dates.format(ticket.date, 'dd/MM/yyyy')}"></time>
                                         </strong>
                                     </span>
+                                    <div th:each="product : ${listProduct}">
+                                        <h5 style="position: relative;margin-top: 10px" class="mb-0">
+                                            <span
+                                                    th:text="${product.name}">
+
+                                            </span>
+                                            <span>x</span>
+                                            <span th:text="${product.quantity}"></span>
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                             <div class="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>

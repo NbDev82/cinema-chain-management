@@ -100,7 +100,7 @@ input[type="password"] {
     position: absolute;
     pointer-events: none;
     left: 5px;
-    top: 10px;
+    top: 4px;
     transition: var(--trans-time) ease all;
 }
 /* Chỉnh label nằm trên select */

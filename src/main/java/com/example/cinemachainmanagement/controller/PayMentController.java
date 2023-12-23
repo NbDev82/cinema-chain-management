@@ -37,6 +37,7 @@ public class PayMentController {
     @Autowired
     EmailService emailService;
 
+
     @PostMapping("payment")
     public String payMent(@RequestParam("paymentType") String paymentType,
                           @RequestParam("total_price") String total_price, HttpSession session,
