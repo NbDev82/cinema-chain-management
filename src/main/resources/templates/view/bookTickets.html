@@ -169,7 +169,7 @@
                 <ul class="movie-list">
                     <li th:each="movie : ${movieIsShowing}" class="movie-item">
                         <a th:href="@{/dat-ve/{movieTitle}(movieTitle=${movie.title})}">
-                            <img th:src="@{/img/film.png}" class="loading img-fluid img-480-320" data-was-processed="true" alt="Phim 1"><br>
+                            <img th:src="${movie.productImage}" class="loading img-fluid img-480-320" data-was-processed="true" alt="Phim 1"><br>
                             <span class="movie-title" th:text="${movie.title}"></span>
                         </a>
                     </li>
