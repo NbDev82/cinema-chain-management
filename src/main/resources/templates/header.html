@@ -49,9 +49,12 @@
                     </div>
                 </a>
                 <div class="btn-group-vertical1 button-list-hidden " id="button-list1" onmouseover="cancelHide()">
-                    <form action="/customer_authentication/logout" method="get">
-                        <button class="btn btn-light mt-3" onmouseenter="showButtonList1()" onmouseleave="hideButtonList1()">Rap1</button>
-                    </form>
+                    <div th:each="theater : ${theaters}">
+                        <a th:href="@{'/admin/dashboard-' + ${theater.name}}">
+                            <button class="btn btn-light mt-3" onmouseenter="showButtonList1()" onmouseleave="hideButtonList1()" th:text="${theater.name}"></button>
+                        </a>
+                    </div>
+
 
                 </div>
             </div>
@@ -140,7 +143,7 @@
                 .btn-group-vertical1 {
                     position: absolute;
                     top: 50px; /* Điều chỉnh vị trí xuất hiện của button-list */
-                    right: 500px; /* Điều chỉnh vị trí xuất hiện của button-list */
+                    right: 600px; /* Điều chỉnh vị trí xuất hiện của button-list */
                     background-color: white;
                     border: 1px solid #ccc;
                     padding: 10px;
