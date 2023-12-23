@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="profile" href="https://gmpg.org/xfn/11">
-    <link rel="icon" href="/wp-content/themes/ananas/fe-assets/images/favicon.ico">
-    <title>Thông tin mua hàng &#8211; Galaxy</title>
 
-    <link rel='stylesheet' id='fe-bootstrap-css-css'
-          href='https://ananas.vn/wp-content/themes/ananas/fe-assets/css/bootstrap.min.css?ver=20233105' type='text/css'
-          media='all'/>
-    <link rel='stylesheet' id='fe-style-css'
-          href='https://ananas.vn/wp-content/themes/ananas/fe-assets/css/style.css?ver=20233105' type='text/css'
-          media='all'/>
+
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
 </head>
 
 <body>
@@ -37,7 +37,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title-1">PHƯƠNG THỨC THANH TOÁN</div>
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 form-group">
                         <div class="ck1">
-                            <input type="radio" id="cb5" name="paymentType" class="paymentType" value="AtTheCounter"
+                            <input type="radio" id="cb5" name="paymentType" class="paymentType" value="1"
                                    checked=""/>
                             <label for="cb5"></label>
                             Thanh toán trực tiếp tại quầy &nbsp; &nbsp; <img class="tooltip_attach"
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <div class="ck1">
-                            <input type="radio" id="cb7" name="paymentType" class="paymentType" value="AtTheCounter"/>
+                            <input type="radio" id="cb7" name="paymentType" class="paymentType" value="2"/>
                             <label for="cb7"></label>
                             Thanh toán bằng tài khoản galaxy của bạn &nbsp; &nbsp; <img
                                 class="tooltip_attach"
@@ -64,8 +64,6 @@
                 </div>
 
             </div>
-
-
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 main-cart-right">
 
                 <div class="container mt-5">

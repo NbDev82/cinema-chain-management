@@ -114,4 +114,17 @@ public class CustomerServiceImp implements CustomerService {
         else
             return null;
     }
+
+    @Override
+    public Customer deductMoney(Long cusId, String denominations){
+        Optional<Customer> customer =  customerRepository.findById(cusId);
+        if(customer.isPresent()){
+            int tempBalance =customer.get().getAccountBalance() - Integer.parseInt(denominations);
+            customer.get().setAccountBalance(tempBalance);
+            customerRepository.save(customer.get());
+            return  customer.get();
+        }
+        else
+            return null;
+    }
 }

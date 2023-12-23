@@ -13,4 +13,5 @@ public interface CustomerService {
     EMessage changePassword(String email,String newPassword);
     Customer getCustomerByEmail(String email);
     Customer recharge(Long cusId, String denominations);
+    Customer deductMoney(Long cusId, String denominations);
 }
