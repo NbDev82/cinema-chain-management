@@ -50,8 +50,8 @@ public class AuthenticationController {
             }
             return url;
         } else {
-            model.addAttribute("error", "Email hoặc mật khẩu không chính xác");
-            return "error_view";
+            model.addAttribute("result", EMessage.OLD_PASS_NOT_MATCH.getValue());
+            return "login";
         }
     }
     @GetMapping("/register")

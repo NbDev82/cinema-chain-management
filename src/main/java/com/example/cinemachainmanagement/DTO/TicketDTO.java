@@ -29,4 +29,5 @@ public class TicketDTO {
     private Date purchaseTime;
     private boolean ticketStatus;
     private CustomerDTO customer;
+    private String productImage;
 }
