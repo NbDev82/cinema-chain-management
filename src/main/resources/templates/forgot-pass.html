@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Login</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/passwordResult.css}" />
+</head>
+<body>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form action="/customer_authentication/forgot-pass-result" method="post">
+    <h3>New Password</h3>
+
+    <h3><a href="/home"><i id="homeIcon" class="fa-solid fa-house "></i></a></h3>
+
+    <label for="newPass">New password</label>
+    <input type="password" placeholder="password" name="newPassword" id="newPass">
+
+    <label for="confirmPass">Confirm password</label>
+    <input type="password" placeholder="password" name="confirmPassword" id="confirmPass">
+
+    <label th:text="${result}"></label>
+
+    <button type="submit">Change Password</button>
+</form>
+<script>
+    var homeIcon = document.getElementById("homeIcon")
+    homeIcon.addEventListener('mouseenter',()=>{
+        homeIcon.classList.add("fa-bounce")
+    })
+    homeIcon.addEventListener('mouseleave',()=>{
+        homeIcon.classList.remove("fa-bounce")
+    })
+</script>
+</body>
+</html>

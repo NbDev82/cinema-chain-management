@@ -1,0 +1,58 @@
+/* Style for the footer */
+.footer-bg {
+    background-color: #1A1A1A; /* Background color */
+    color: aliceblue; /* Text color */
+    padding: 30px 0; /* Add padding to space content inside the footer */
+}
+
+/* Style for the widget titles */
+.title-widget {
+    font-size: 20px; /* Title font size */
+    margin-bottom: 10px; /* Add space below the titles */
+}
+
+/* Style for the widget menu lists */
+.widget_nav_menu ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.widget_nav_menu ul li {
+    margin-bottom: 10px; /* Add space between list items */
+}
+
+
+.widget_nav_menu ul li a {
+    color: aliceblue; /* Text color for links */
+    text-decoration: none; /* Remove underlines from links */
+}
+
+.widget_nav_menu ul li a:hover {
+    color: #f26b38; /* Text color for links */
+}
+
+/* Style for the social icons */
+.social-icons ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.social-icons ul li {
+    display: inline; /* Display icons in a horizontal row */
+    margin-right: 10px; /* Add space between icons */
+}
+
+.social-icons a {
+    color: aliceblue; /* Icon color */
+    text-decoration: none; /* Remove underlines from links */
+    font-size: 20px; /* Icon font size */
+}
+
+/* Style for the trade logo */
+.ano-trade {
+    text-align: center; /* Center-align the trade logo */
+}
+
+.wrap-icon img {
+    width: 150px; /* Adjust the width of the trade logo */
+}

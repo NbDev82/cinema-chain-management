@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Forgot Password</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/passwordResult.css}" />
+</head>
+<body>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form action="/customer_authentication/otp" method="get">
+    <h3>Your Email</h3>
+
+    <h3><a href="/home"><i id="homeIcon" class="fa-solid fa-house "></i></a></h3>
+
+    <label for="email">Email</label>
+    <input type="email" placeholder="Email" name="email" id="email">
+
+    <label th:text="${result}"></label>
+
+    <button type="submit">Send OTP</button>
+</form>
+<script>
+    var homeIcon = document.getElementById("homeIcon")
+    homeIcon.addEventListener('mouseenter',()=>{
+        homeIcon.classList.add("fa-bounce")
+    })
+    homeIcon.addEventListener('mouseleave',()=>{
+        homeIcon.classList.remove("fa-bounce")
+    })
+</script>
+</body>
+</html>

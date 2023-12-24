@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt vé xem phim</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/seat-booking.css}" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/seat-booking.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div th:replace="~{header :: header}"></div>
+    </header>
+    <main >
+        <div class="booking__progress-bar flex justify-center items-center flex-nowrap bg-white relative md:mb-8 mb-0 w-full overflow-auto">
+            <ul class="flex  justify-center items-center text-grey-20 md:text-base text-[12px] font-semibold w-full flex-nowrap">
+                <li class="pt-4 mb-4 pl-0 text-blue-20">
+                    <div class="btn-progress-div md:mx-3 mx-1 ml-0">
+                        <a class="btn-progress" href="/static">Chọn phim / Rạp / Suất</a>
+                    </div>
+                </li>
+                <li class="pt-4 mb-4 pl-0 text-blue-10">
+                    <div class="btn-progress-div md:mx-3 mx-1">
+                        <a class="btn-progress" href="/static">Chọn ghế</a>
+                    </div>
+                </li>
+                <li class="pt-4 mb-4 pl-0">
+                    <div class="btn-progress-div md:mx-3 mx-1">
+                        <a class="btn-progress" href="/static">Chọn thức ăn</a>
+                    </div>
+                </li>
+                <li class="pt-4 mb-4 pl-0">
+                    <div class="btn-progress-div md:mx-3 mx-1">
+                        <a class="btn-progress" href="/static">Thanh toán</a>
+                    </div>
+                </li>
+                <li class="pt-4 mb-4 pl-0">
+                    <div class="btn-progress-div md:mx-3 mx-1 mr-0">
+                        <a class="btn-progress" href="/static">Xác nhận</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="progress-bar"></div>
+        </div>
+
+        <div class="row ms-1 mt-1">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="d-flex justify-content-center align-items-center">
+                    <ul class="list-unstyled">
+                        <li th:each="row : ${#numbers.sequence(0, room.seats.size() - 1, 5)}"
+                            class="flex justify-between mb-3 md:gap-0 gap-1 flex-nowrap">
+                            <div class="flex md:gap-2 gap-1 grow justify-center min-w-[398px] flex-1">
+                                <th:block th:each="index : ${#numbers.sequence(row, row + 4)}" th:if="${index lt room.seats.size()}">
+                                        <button type="submit" th:class="${room.seats[index].isReserved} ? 'seat rounded booked' : 'seat rounded'"
+                                                th:text="${room.seats[index].seatNumber}" th:name="selectedSeats" th:value="${room.seats[index].seatId}" onclick="orderSeat(this)"></button>
+                                </th:block>
+                            </div>
+                        </li>
+                        <br>
+                        <li>
+                            <div class="orange-bar"></div><span>Màn hình</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border rounded col-md-4 col-sm-4 col-xs-12">
+                <div class="container mt-5">
+                    <div class="h-6 bg-primary rounded-t-lg"></div>
+                    <div class="bg-white p-4 grid grid-cols-3 xl:gap-2 items-center">
+                        <div class="row-span-2 md:row-span-1 xl:row-span-2 block md:hidden xl:block">
+                            <img alt="" loading="lazy" width="100" height="150" decoding="async" class="w-100 h-150 rounded object-cover duration-500 ease-in-out group-hover:opacity-100 scale-100 blur-0 grayscale-0" th:src="@{${ticket.productImage}}" style="color: transparent;">
+                        </div>
+                        <div class="flex-1 col-span-2 md:col-span-1 row-span-1 xl:col-span-2">
+                            <h3 class="text-sm xl:text-base font-bold xl:mb-2" th:text="${ticket.title}"></h3>
+                            <p class="text-sm xl:block inline-block" th:text="${ticket.genre}"></p>
+                            <div class ="xl:mt-2 ml-2 xl:ml-0 xl:block inline-block">
+                                <span class="inline-flex items-center justify-center w-38 h-7 bg-primary rounded text-sm text-center text-white font-bold not-italic" th:text="${ticket.duration}"></span>
+                            </div>
+                    </div>
+                        <div class="col-span-2 md:col-span-1 xl:col-span-3">
+                            <div>
+                                <div class="xl:mt-4 text-sm xl:text-base"><strong th:text="${ticket.theaterName}"></strong> - <span>Phòng: </span><span class="text-sm xl:text-base" th:text="${ticket.roomNumber}"></span></div>
+                                <div class="xl:mt-2 text-sm xl:text-base">
+                                    <span>Suất: </span>
+                                    <strong th:with="ticket=${ticket}">
+                                        <time th:datetime="${#dates.format(ticket.startTime, 'HH:mm:ss')}"
+                                              th:text="${#dates.format(ticket.startTime, 'HH:mm:ss')}"></time>
+                                    </strong>
+                                    <span> - </span>
+                                    <span class="capitalize text-sm">
+                                        <strong th:with="ticket=${ticket}">
+                                            <time th:datetime="${#dates.format(ticket.date, 'dd/MM/yyyy')}"
+                                                  th:text="${#dates.format(ticket.date, 'dd/MM/yyyy')}"></time>
+                                        </strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="my-4 border-t border-grey-60 border-dashed xl:block hidden"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed bottom-0 left-0 w-full z-100 bg-white xl:hidden transition-all duration-500 ease-in-out overflow-hidden max-h-90vh h-max min-h-max pb-12 pt-2 border border-#DFDFDF rounded-t-xl opacity-100">
+
+                    <div class="grid grid-cols-3 items-center px-4 mb-2 transition opacity-0 relative overflow-hidden opacity-100">
+                        <div class="col-span-3"></div>
+                        <div class="fixed bottom-0">
+                            <div class="justify-start items-center gap-1 flex col-span-2 w-full h-14 fixed bottom-0 left-4 bg-white">
+                                <strong class="text-sm font-normal text-black-10">Tổng cộng: </strong>
+                                <span id="price" class="inline-block font-bold text-primary" th:value="${ticket.price}" th:text="${ticket.price}"></span><strong class="inline-block font-bold text-primary">đ</strong>
+                            </div>
+                            <div class="text-right fixed bottom-0 right-4 h-14 flex items-center">
+                                <div>
+                                    <button class="btn w-65px h-10 py-2 bg-transparent text-primary text-sm rounded-md"><span>Quay lại</span></button>
+                                    <form id="seatForm" method="post" th:action="submit-seats">
+                                        <input type="hidden" id="selectedSeats" name="selectedSeats" th:value="${selectedSeats}" />
+                                        <input type="hidden" id="price1" name="price1" />
+                                        <button type="submit" class="btn w-80px h-10 py-2 bg-primary text-white border text-sm rounded-md hover-bg-orange-20 w-80px" onclick="checkSeat()">
+                                            <span>Tiếp tục</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div th:replace="~{footer :: footer}"></div>
+    </footer>
+    <script th:src="@{/js/seat-booking.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

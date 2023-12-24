@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="styles/customer_profile.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Profile</title>
+</head>
+<body>
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0" th:each="customer : ${customer}">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO26atng_uVSqI91tajjsUmqNsTdF9ysPK4J1Svj6nzj0_Zl23zwXvXpWu4w&s"
+                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                            <h5 th:text = "${customer.firstName}"></h5>
+                            <p>Customer</p>
+
+                            <form action="/customer_authentication/logout" method="get">
+                                <button class="btn btn-light mt-3" style="margin-bottom: 30px">Đăng xuất</button>
+                            </form>
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6>INFORMATION  </h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Name</h6>
+                                        <p class="text-muted" style="width: 500px" th:text = "${customer.firstName}">
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Email</h6>
+                                        <p class="text-muted" th:text = "${customer.email}"></p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Phone</h6>
+                                        <p class="text-muted" th:text = "${customer.phoneNumber}"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .gradient-custom {
+        /* Your existing styles for the container */
+    }
+
+    .gradient-custom a.btn {
+        /* Button styles */
+        display: inline-block;
+        background-color: #007bff; /* Change to your preferred color */
+        color: #fff; /* Text color */
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none; /* Remove default underline */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .gradient-custom a.btn:hover {
+        background-color: #0056b3; /* Change to a darker shade for hover effect */
+    }
+</style>
+
+</body>
+</html>
